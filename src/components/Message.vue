@@ -1,11 +1,18 @@
 <template>
-  <div class="body">
+  <div class="body" :class="'body--' + type">
     <h3 class="text-header">{{ text }}</h3>
-    <button class="btn btn--yellow"
-            @click="$emit('backBegin')"
-    >
-      Попробовать еще раз?
-    </button>
+    <div class="flex">
+      <button class="btn btn--yellow"
+              @click="$emit('backBegin')"
+      >
+        Back to start
+      </button>
+      <button class="btn btn--yellow"
+              @click="$emit('getQuestion')"
+      >
+        Следующий вопрос
+      </button>
+    </div>
   </div>
 </template>
 
@@ -21,5 +28,11 @@ export default {
   }
   .body {
     text-align: right;
+  }
+  .body--error {
+    background: #ff9b7f;
+  }
+  .body--success {
+    background: #b6ff9d;
   }
 </style>

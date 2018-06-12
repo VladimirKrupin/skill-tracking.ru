@@ -11,6 +11,7 @@
         {{ number }}
         </button>
       </div>
+    <span class="question-time" :class="timeClass(time)">{{ time }}</span>
     </div>
 </template>
 
@@ -19,7 +20,8 @@ export default {
   data () {
     return {
       x: randomNumber(100, 500),
-      y: randomNumber(100, 500)
+      y: randomNumber(100, 500),
+      time: 0
     }
   },
   computed: {
@@ -40,13 +42,39 @@ export default {
     }
   },
   methods: {
-    onAnswer (num) {
-      if (num === this.good) {
-        this.$emit('success')
+    onAnswer (answer) {
+      if (answer === this.good) {
+        this.returnStatus('success', answer)
       } else {
-        this.$emit('error', `${this.x} + ${this.y} = ${this.good}!`)
+        this.returnStatus('error', answer)
       }
+    },
+    logTimer () {
+      this.time++
+      if (this.time === 31) {
+        this.returnStatus('error')
+      }
+    },
+    timeClass (time) {
+      if (time > 0 && time <= 10) {
+        return 'color-green'
+      } else if (time > 10 && time <= 20) {
+        return 'color-yellow'
+      } else if (time > 20) {
+        return 'color-red'
+      }
+    },
+    returnStatus (status = '', answer = '') {
+      this.$emit(
+        status,
+        `${this.x} + ${this.y} = ${this.good}`,
+        answer,
+        this.time
+      )
     }
+  },
+  timers: {
+    logTimer: { time: 1000, autostart: true, repeat: true }
   }
 }
 function randomNumber (min, max) {
@@ -55,6 +83,27 @@ function randomNumber (min, max) {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .body {
+    position: relative;
+  }
+  .question-time {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    background: #999;
+    padding: 5px;
+    font-size: 20px;
+  }
+  .color-green {
+    color: #7bff90;
+  }
+  .color-yellow {
+    color: #fff979;
+    font-size: 25px;
+  }
+  .color-red {
+    color: #ff0013;
+    font-size: 30px;
+  }
 </style>

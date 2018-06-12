@@ -2,12 +2,21 @@
   <div id="app">
     <!--<img src="./assets/logo.png">-->
     <!--<router-view/>-->
-    <h1 class="text-header">Math.calculator</h1>
+    <h1 class="text-header">Math.trainer</h1>
     <start-screen
       v-if="state == 'start'"
       @onStart="onStart"
+      @onHistory="showHistory"
     >
     </start-screen>
+    <history
+      v-else-if="state == 'history'"
+      @backBegin="backBegin"
+      :history="this.stats.history"
+      :success="this.stats.success"
+      :errors="this.stats.errors"
+    >
+    </history>
     <question
       v-else-if="state == 'question'"
       @success="onSuccess"
@@ -18,7 +27,9 @@
     <message
       v-else-if="state == 'message'"
       :text="this.message.msgText"
+      :type="this.message.msgType"
       @backBegin="backBegin"
+      @getQuestion="getQuestion"
     >
     </message>
     <result-screen v-else-if="state == 'result'"></result-screen>
@@ -31,9 +42,15 @@ export default {
   data () {
     return {
       state: 'start',
+      stats: {
+        errors: 0,
+        success: 0,
+        attempts: 0,
+        history: []
+      },
       message: {
         msgType: '',
-        msgText: 'lol'
+        msgText: ''
       }
     }
   },
@@ -49,15 +66,25 @@ export default {
       this.currentComponent = this.prevComponent
       this.prevComponent = this.state
     },
-    onSuccess () {
+    onSuccess (expression, answer, time) {
       this.state = 'message'
       this.message.msgType = 'success'
-      this.message.msgText = 'Верно!'
+      this.message.msgText = 'Верно! ' + expression
+      this.stats.success++
+      this.stats.history.push('( ' + time + ' sec ) ' + expression + ' Верно!')
     },
-    onError (msg) {
+    onError (expression, answer, time) {
       this.state = 'message'
       this.message.msgType = 'error'
-      this.message.msgText = 'Не верно! ' + msg
+      this.message.msgText = 'ответ ' + answer + ' Не верно! ' + expression
+      this.stats.errors++
+      this.stats.history.push('( ' + time + ' sec ) ' + expression + ' Не верно! Ваш ответ ' + answer)
+    },
+    showHistory () {
+      this.state = 'history'
+    },
+    getQuestion () {
+      this.state = 'question'
     }
   }
 }
@@ -94,4 +121,8 @@ export default {
   border: none;
   box-shadow: 1px 1px 3px rgba(0,0,0,1);
 }
+  .flex {
+    display: flex;
+    justify-content: space-between;
+  }
 </style>
