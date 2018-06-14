@@ -1,3 +1,12 @@
 <template>
-  <h2>Регистрация</h2>
+  <h1 class="text-header">{{ title }}</h1>
 </template>
+<script>
+export default {
+  data () {
+    return {
+      title: 'Регистрация'
+    }
+  }
+}
+</script>

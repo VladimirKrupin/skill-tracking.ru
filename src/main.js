@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueTimers from 'vue-timers'
+
 import App from './App'
 import router from './router'
 import StartScreen from './components/StartScreen.vue'
@@ -15,6 +16,7 @@ import History from './components/History.vue'
 Vue.config.productionTip = false
 
 Vue.use(VueTimers)
+
 Vue.component('StartScreen', StartScreen)
 Vue.component('ResultScreen', ResultScreen)
 Vue.component('Question', Question)
@@ -28,5 +30,5 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
 })

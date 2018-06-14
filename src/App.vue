@@ -2,9 +2,10 @@
   <div id="app">
     <!--<img src="./assets/logo.png">-->
     <!--<router-view/>-->
-    <h1 class="text-header">Math.trainer</h1>
+    <sign-up v-if="state == 'signup'">
+    </sign-up>
     <start-screen
-      v-if="state == 'start'"
+      v-else-if="state == 'start'"
       @onStart="onStart"
       @onHistory="showHistory"
     >
@@ -41,7 +42,8 @@
 export default {
   data () {
     return {
-      state: 'start',
+      state: 'signup',
+      title: 'Math.trainer',
       stats: {
         errors: 0,
         success: 0,
