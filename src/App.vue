@@ -97,34 +97,34 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /*text-align: center;*/
   color: #2c3e50;
   width: 500px;
   margin: 0 auto;
   /*margin-top: 60px;*/
 }
-.text-header {
-  font-size: 14px;
-  text-align: left;
-}.flex-box {
-   display: flex;
-   justify-content: space-between;
- }
-.body {
-  background: rgba(0,0,0,.1);
-  padding: 20px;
-}
-.text-header {
-  font-size: 25px;
-}
-.btn {
-  padding: 10px 20px;
-  background: #49afff;
-  border: none;
-  box-shadow: 1px 1px 3px rgba(0,0,0,1);
-}
-  .flex {
-    display: flex;
-    justify-content: space-between;
-  }
+/*.text-header {*/
+  /*font-size: 14px;*/
+  /*text-align: left;*/
+/*}.flex-box {*/
+   /*display: flex;*/
+   /*justify-content: space-between;*/
+ /*}*/
+/*.body {*/
+  /*background: rgba(0,0,0,.1);*/
+  /*padding: 20px;*/
+/*}*/
+/*.text-header {*/
+  /*font-size: 25px;*/
+/*}*/
+/*.btn {*/
+  /*padding: 10px 20px;*/
+  /*background: #49afff;*/
+  /*border: none;*/
+  /*box-shadow: 1px 1px 3px rgba(0,0,0,1);*/
+/*}*/
+  /*.flex {*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+  /*}*/
 </style>

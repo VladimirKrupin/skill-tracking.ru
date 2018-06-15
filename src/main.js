@@ -2,6 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueTimers from 'vue-timers'
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import App from './App'
 import router from './router'
@@ -13,9 +16,10 @@ import SignIn from './components/SignIn.vue'
 import SignUp from './components/SignUp.vue'
 import History from './components/History.vue'
 
-Vue.config.productionTip = false
-
+Vue.use(BootstrapVue)
 Vue.use(VueTimers)
+
+Vue.config.productionTip = false
 
 Vue.component('StartScreen', StartScreen)
 Vue.component('ResultScreen', ResultScreen)
@@ -30,5 +34,5 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>',
+  template: '<App/>'
 })
