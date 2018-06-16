@@ -1,6 +1,6 @@
 <template>
-  <div class="body" :class="'body--' + type">
-    <h3 class="text-header">{{ text }}</h3>
+  <div class="box box--style" :class="'box--' + type">
+    <h3 class="box__header">{{ text }}</h3>
     <div class="flex">
       <button class="btn btn--yellow"
               @click="$emit('backBegin')"
@@ -22,17 +22,5 @@ export default {
 }
 </script>
 
-<style scoped>
-  .btn--yellow {
-    background: #fdffa3;
-  }
-  .body {
-    text-align: right;
-  }
-  .body--error {
-    background: #ff9b7f;
-  }
-  .body--success {
-    background: #b6ff9d;
-  }
+<style>
 </style>

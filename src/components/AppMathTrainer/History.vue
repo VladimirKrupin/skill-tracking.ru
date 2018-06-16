@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="box box--style">
     <div class="history">
       <h3>История вопросов</h3>
       <p v-if="history == ''">Ваша история пуста</p>

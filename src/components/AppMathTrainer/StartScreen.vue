@@ -1,6 +1,6 @@
 <template>
-  <div class="body">
-    <h3 class="text-header">Are you ready?</h3>
+  <div class="box box--style">
+    <h3 class="box__header">Are you ready?</h3>
     <button class="btn" @click="$emit('onStart')" >start</button>
     <span class="history" @click="$emit('onHistory')" >Show history</span>
   </div>

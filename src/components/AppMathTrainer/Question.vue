@@ -1,7 +1,7 @@
 <!--suppress ALL -->
 <template>
-  <div class="body">
-    <h3 class="text-header">{{ x }} + {{ y }} = ?</h3>
+  <div class="box box--style">
+    <h3 class="box__header">{{ x }} + {{ y }} = ?</h3>
       <div class="flex-box">
         <button class="btn"
                 v-for="number in answer"
