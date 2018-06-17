@@ -1,0 +1,20 @@
+.image-container {
+  &--style {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    @media screen and (min-width: 560px) {
+      justify-content: space-between;
+    }
+  }
+  &__box {
+    margin-bottom: 5vh;
+    @media screen and (min-width: 560px) {
+      width:45%;
+    }
+  }
+  &__img {
+    width: 100%;
+    box-shadow: 3px 3px 20px rgba(0,0,0,.2);
+  }
+}

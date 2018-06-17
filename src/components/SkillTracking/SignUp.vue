@@ -4,7 +4,7 @@
       <h1 class="text text--lead">{{ title }}</h1>
       <div class="row">
         <div class="col-sm-8">
-          <form action="/action_page.php" @submin.prevent="regUser">
+          <form @submit.prevent="regUser">
             <div class="form-group">
               <label for="email">Email:</label>
               <input type="email" class="form-control" id="email" required v-model="user.email">
@@ -44,7 +44,8 @@ export default {
   },
   methods: {
     regUser () {
-
+      console.log('submit')
+      alert('123123')
     }
   }
 }
