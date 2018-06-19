@@ -7,11 +7,22 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/#/">Home</a>
+          <li class="nav-item" v-on:click="menuClick('Home')" :class="{ active: isActive('Home') }">
+            <a class="nav-link" href="/#/" >Home</a>
+          </li>
+          <li class="nav-item" v-on:click="menuClick('Math')" :class="{ active: isActive('Math') }">
+            <a class="nav-link" href="/#/mathtrainer">Math.trainer</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item" @click="$emit('signin')">
+            <a class="nav-link"><span class="nav-link--text-decoration">Вход</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/#/mathtrainer">Math.trainer</a>
+            <a class="nav-link nav-link--padding">/</a>
+          </li>
+          <li class="nav-item" @click="$emit('signup')">
+            <a class="nav-link"><span class="nav-link--text-decoration">Регистрация</span></a>
           </li>
         </ul>
         <form style="display: none" class="form-inline mt-2 mt-md-0">
@@ -29,7 +40,20 @@
 
 <script>
 export default {
-  name: 'MainHeader'
+  name: 'MainHeader',
+  data () {
+    return {
+      activeItem: 'Home'
+    }
+  },
+  methods: {
+    menuClick (menuItem) {
+      this.activeItem = menuItem
+    },
+    isActive (menuItem) {
+      return this.activeItem === menuItem
+    }
+  }
 }
 </script>
 

@@ -1,6 +1,24 @@
 <template>
   <div>
-    <sign-up></sign-up>
+    <main-header
+      @signin="signin"
+      @signup="signup"
+    ></main-header>
+    <div class="wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8">
+            <sign-in
+              v-if="state === 'signin'"
+            ></sign-in>
+            <sign-up
+              v-if="state === 'signup'"
+            ></sign-up>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer></main-footer>
   </div>
 </template>
 
@@ -23,36 +41,11 @@ export default {
     }
   },
   methods: {
-    backBegin () {
-      this.state = 'start'
+    signin () {
+      this.state = 'signin'
     },
-    onStart () {
-      this.state = 'question'
-    },
-    prev () {
-      this.state = this.prevComponent
-      this.currentComponent = this.prevComponent
-      this.prevComponent = this.state
-    },
-    onSuccess (expression, answer, time) {
-      this.state = 'message'
-      this.message.msgType = 'success'
-      this.message.msgText = 'Верно! ' + expression
-      this.stats.success++
-      this.stats.history.push('( ' + time + ' sec ) ' + expression + ' Верно!')
-    },
-    onError (expression, answer, time) {
-      this.state = 'message'
-      this.message.msgType = 'error'
-      this.message.msgText = 'ответ ' + answer + ' Не верно! ' + expression
-      this.stats.errors++
-      this.stats.history.push('( ' + time + ' sec ) ' + expression + ' Не верно! Ваш ответ ' + answer)
-    },
-    showHistory () {
-      this.state = 'history'
-    },
-    getQuestion () {
-      this.state = 'question'
+    signup () {
+      this.state = 'signup'
     }
   }
 }
