@@ -14,6 +14,17 @@
             <a class="nav-link" href="/#/mathtrainer">Math.trainer</a>
           </li>
         </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item" @click="$emit('signin')">
+            <a class="nav-link"><span class="nav-link--text-decoration">Вход</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link--padding">/</a>
+          </li>
+          <li class="nav-item" @click="$emit('signup')">
+            <a class="nav-link"><span class="nav-link--text-decoration">Регистрация</span></a>
+          </li>
+        </ul>
         <form style="display: none" class="form-inline mt-2 mt-md-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

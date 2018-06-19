@@ -1,44 +1,48 @@
 <template>
-  <div class="wrapper">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8">
-          <!--<img src="./assets/logo.png">-->
-          <!--<router-view/>-->
-          <start-screen
-            v-if="state == 'start'"
-            @onStart="onStart"
-            @onHistory="showHistory"
-          >
-          </start-screen>
-          <history
-            v-else-if="state == 'history'"
-            @backBegin="backBegin"
-            :history="this.stats.history"
-            :success="this.stats.success"
-            :errors="this.stats.errors"
-          >
-          </history>
-          <question
-            v-else-if="state == 'question'"
-            @success="onSuccess"
-            @error="onError"
-            @prev="prev"
-          >
-          </question>
-          <message
-            v-else-if="state == 'message'"
-            :text="this.message.msgText"
-            :type="this.message.msgType"
-            @backBegin="backBegin"
-            @getQuestion="getQuestion"
-          >
-          </message>
-          <result-screen v-else-if="state == 'result'"></result-screen>
-          <div v-else>Unknown state</div>
+  <div>
+    <main-header></main-header>
+      <div class="wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8">
+              <!--<img src="./assets/logo.png">-->
+              <!--<router-view/>-->
+              <start-screen
+                v-if="state == 'start'"
+                @onStart="onStart"
+                @onHistory="showHistory"
+              >
+              </start-screen>
+              <history
+                v-else-if="state == 'history'"
+                @backBegin="backBegin"
+                :history="this.stats.history"
+                :success="this.stats.success"
+                :errors="this.stats.errors"
+              >
+              </history>
+              <question
+                v-else-if="state == 'question'"
+                @success="onSuccess"
+                @error="onError"
+                @prev="prev"
+              >
+              </question>
+              <message
+                v-else-if="state == 'message'"
+                :text="this.message.msgText"
+                :type="this.message.msgType"
+                @backBegin="backBegin"
+                @getQuestion="getQuestion"
+              >
+              </message>
+              <result-screen v-else-if="state == 'result'"></result-screen>
+              <div v-else>Unknown state</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    <main-footer></main-footer>
   </div>
 </template>
 
