@@ -4,7 +4,7 @@
     <form @submit.prevent="regUser">
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" class="form-control" id="email" required>
+        <input v-model="postBody" type="email" class="form-control" id="email" required>
       </div>
       <div class="form-group">
         <label for="pwd">Пароль:</label>
@@ -19,12 +19,17 @@
 </template>
 
 <script>
+// import axios from 'axios'
+// var $ = require("jquery");
+import $ from 'jquery'
 export default {
   data: function () {
     return {
       title: 'Регистрация',
       error: false,
       errorText: '<strong>Упс!</strong> Пароли не совпадают!',
+      response: [],
+      postBody: '',
       user: {
         email: '',
         pwd: '',
@@ -34,8 +39,14 @@ export default {
   },
   methods: {
     regUser () {
-      console.log('submit')
-      alert('123123')
+      $.ajax({
+        url: '/dsf/',
+        dataType: 'json',
+        data: '123',
+        success: function (res) {
+          console.log(res)
+        }
+      })
     }
   }
 }
