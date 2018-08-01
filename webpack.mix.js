@@ -11,15 +11,5 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.options({
-    processCssUrls: false,
-    purifyCss: false,
-    postCss: [
-        require('postcss-discard-comments')({
-            removeAll: true
-        })
-    ],
-    uglify: {
-        comments: false
-    }
-});
+mix.js('resources/assets/js/app.js', 'public/js')
+   .sass('resources/assets/sass/app.scss', 'public/css');
