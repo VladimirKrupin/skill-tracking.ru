@@ -20,7 +20,7 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><router-link :to="{ name: 'home' }">Agate fund</router-link></li>
+                        <li><router-link :to="{ name: 'home' }">Skill Tracking</router-link></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
