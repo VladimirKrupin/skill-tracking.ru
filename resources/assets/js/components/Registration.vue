@@ -4,14 +4,14 @@
         <div class="panel panel-default">
             <div class="panel-heading">Register</div>
             <div class="panel-body">
-                <form class="form-horizontal" method="POST" action="">
+                <form class="form-horizontal">
 
                     <div class="form-group">
                         <label for="name" class="col-md-4 control-label">Name</label>
 
                         <div class="col-md-6">
-                            <input id="name" type="text" class="form-control" name="name" value="   " required autofocus>
-
+                            <input v-model="userData.name" id="name" type="text" class="form-control" name="name">
+                            <p style="white-space: pre-line;">{{ userData.name }}</p>
                             <span class="help-block">
                                     <strong>123123</strong>
                             </span>
@@ -22,7 +22,7 @@
                         <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                         <div class="col-md-6">
-                            <input id="email" type="email" class="form-control" name="email" value="" required>
+                            <input v-model="userData.email" id="email" type="email" class="form-control" name="email">
 
                             <span class="help-block">
                                     <strong>123123</strong>
@@ -34,7 +34,7 @@
                         <label for="password" class="col-md-4 control-label">Password</label>
 
                         <div class="col-md-6">
-                            <input id="password" type="password" class="form-control" name="password" required>
+                            <input v-model="userData.password" id="password" type="password" class="form-control" name="password">
 
                             <span class="help-block">
                                     <strong>dfdsfsdf</strong>
@@ -46,28 +46,58 @@
                         <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
                         <div class="col-md-6">
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            <input v-model="userData.password_confirmation" id="password-confirm" type="password" class="form-control" name="password_confirmation">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
-                            <button type="submit" class="btn btn-primary">
+                            <div class="btn btn-primary" v-on:click="register">
                                 Register
-                            </button>
+                            </div>
                         </div>
                     </div>
+
+                    {{ data }}
                 </form>
             </div>
         </div>
     </div>
 </template>
 <script>
+    import axios from 'axios';
     export default {
         data() {
             return {
-                info: 'Registration'
+                info: 'Registration',
+                data: '',
+                userData: {
+                    "name": '',
+                    "email": '',
+                    "password": '',
+                    "password_confirmation": '',
+                },
+                errors: []
             };
         },
+        methods: {
+            register: function (event) {
+                event.preventDefault();
+                axios.post('/api/register', {
+                    name: this.userData.name,
+                    email: this.userData.email,
+                    password: this.userData.password,
+                    password_confirmation: this.userData.password_confirmation
+                })
+                    .then(response => {
+                        console.log(response)
+                        this.data = response
+                    })
+                    .catch(e => {
+                        console.log(e.response.data)
+                        this.errors.push(e.response.data)
+                    });
+            }
+        }
     }
 </script>

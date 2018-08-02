@@ -9,6 +9,10 @@
 
             <div class="panel-body">
                 <button type="button" class="btn btn-info" v-on:click="greet">Info</button>
+                <br>
+                <br>
+                {{ data }}
+
             </div>
 
         </div>
@@ -22,15 +26,16 @@
     export default {
         data() {
             return {
-                info: '123'
+                info: '123',
+                data: ''
             };
         },
         methods: {
             greet: function (event) {
                 axios
-                    .get('/api/products/1')
+                    .get('/api/prod')
                     .then(response => (
-                        this.info = response.data
+                        this.data = response.data
                     ));
             }
         }

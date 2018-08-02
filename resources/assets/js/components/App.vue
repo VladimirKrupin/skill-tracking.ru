@@ -47,7 +47,8 @@
     export default {
         data() {
             return {
-                info: '123'
+                info: '123',
+                products: ''
             };
         },
         methods: {
@@ -55,7 +56,7 @@
                 axios
                     .get('/api/products/1')
                     .then(response => (
-                        this.info = response.data
+                        this.products = response.data
                     ));
             }
         }
