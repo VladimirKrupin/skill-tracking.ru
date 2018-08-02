@@ -1,8 +1,8 @@
 <template>
     <div>
+        <h1>{{ info }}</h1>
         <div class="panel panel-default">
             <div class="panel-heading">Register</div>
-
             <div class="panel-body">
                 <form class="form-horizontal" method="POST" action="">
 
@@ -62,3 +62,12 @@
         </div>
     </div>
 </template>
+<script>
+    export default {
+        data() {
+            return {
+                info: 'Registration'
+            };
+        },
+    }
+</script>

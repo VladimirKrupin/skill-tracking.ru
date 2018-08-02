@@ -35,7 +35,6 @@
         <div class="row">
             <div class="container">
                 <div class="col-md-8 col-md-offset-2">
-                    <h1>{{ info }}</h1>
                     <router-view></router-view>
                 </div>
             </div>
@@ -51,12 +50,14 @@
                 info: '123'
             };
         },
-        mounted() {
-            axios
-                .get('/api/test')
-                .then(response => (
-                    this.info = response.data.title
-                ));
+        methods: {
+            greet: function (event) {
+                axios
+                    .get('/api/products/1')
+                    .then(response => (
+                        this.info = response.data
+                    ));
+            }
         }
     }
 </script>

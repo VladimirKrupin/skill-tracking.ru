@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>{{ info }}</h1>
         <div class="panel panel-default">
             <div class="panel-heading">Login</div>
 
@@ -55,3 +56,12 @@
         </div>
     </div>
 </template>
+<script>
+    export default {
+        data() {
+            return {
+                info: 'login'
+            };
+        },
+    }
+</script>

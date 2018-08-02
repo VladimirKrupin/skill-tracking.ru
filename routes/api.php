@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 Route::get('test', function() {
     // If the Content-Type and Accept headers are set to 'application/json',
     // this will return a JSON structure. This will be cleaned up later.
-    return response(["title"=>"Hello World"], 200)
+    return response(["title"=>"Home"], 200)
         ->header('Content-Type', 'text/plain');
 });
+
+Route::get('/products/{id}', 'ProductController@show');
