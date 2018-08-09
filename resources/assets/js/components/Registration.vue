@@ -4,41 +4,50 @@
         <div class="panel panel-default">
             <div class="panel-heading">Register</div>
             <div class="panel-body">
-                <form class="form-horizontal">
-
-                    <div class="form-group">
+                <div class="alert alert-success"
+                     v-bind:class="{ 'hide': success === false }">
+                    <strong>Registration Success!</strong>
+                </div>
+                <form id="formRegistration" class="form-horizontal">
+                    <div
+                        class="form-group "
+                        v-bind:class="{ 'has-error': errors.name }">
                         <label for="name" class="col-md-4 control-label">Name</label>
 
                         <div class="col-md-6">
                             <input v-model="userData.name" id="name" type="text" class="form-control" name="name">
-                            <p style="white-space: pre-line;">{{ userData.name }}</p>
-                            <span class="help-block">
-                                    <strong>123123</strong>
+                            <span class="help-block"
+                                  v-bind:class="{ 'hide': !errors.name }">
+                                    <strong>{{errors.name}}</strong>
                             </span>
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group"
+                         v-bind:class="{ 'has-error': errors.email }">
                         <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                         <div class="col-md-6">
                             <input v-model="userData.email" id="email" type="email" class="form-control" name="email">
 
-                            <span class="help-block">
-                                    <strong>123123</strong>
+                            <span class="help-block"
+                                  v-bind:class="{ 'hide': !errors.email }">
+                                    <strong>{{errors.email}}</strong>
                             </span>
                         </div>
                     </div>
 
-                    <div class="form-group has-error">
+                    <div class="form-group"
+                         v-bind:class="{ 'has-error': errors.password }">
                         <label for="password" class="col-md-4 control-label">Password</label>
 
                         <div class="col-md-6">
                             <input v-model="userData.password" id="password" type="password" class="form-control" name="password">
 
-                            <span class="help-block">
-                                    <strong>dfdsfsdf</strong>
-                            </span>
+                            <span class="help-block"
+                                  v-bind:class="{ 'hide': !errors.password }">
+                                    <strong>{{errors.password}}</strong>
+                        </span>
                         </div>
                     </div>
 
@@ -57,7 +66,6 @@
                             </div>
                         </div>
                     </div>
-
                     {{ data }}
                 </form>
             </div>
@@ -77,12 +85,27 @@
                     "password": '',
                     "password_confirmation": '',
                 },
-                errors: []
+                errors: {
+                    "name": '',
+                    "email": '',
+                    "password": '',
+                },
+                success: false,
+                domModel: [{
+                    "formRegistration": ''
+                }]
             };
         },
         methods: {
+            formReset: function () {
+                document.getElementById("formRegistration").reset();
+            },
             register: function (event) {
                 event.preventDefault();
+                this.errors.name = '';
+                this.errors.email = '';
+                this.errors.password = '';
+                this.success = false;
                 axios.post('/api/register', {
                     name: this.userData.name,
                     email: this.userData.email,
@@ -90,12 +113,27 @@
                     password_confirmation: this.userData.password_confirmation
                 })
                     .then(response => {
-                        console.log(response)
-                        this.data = response
+                        console.log('success');
+                        let self = this;
+                        self.success = true;
+                        Object.keys(this.userData).forEach(function(key,index) {
+                            self.userData[key] = '';
+                        });
+                        this.formReset();
+                        setTimeout(function(){
+                            self.success = false
+                        }, 5000);
                     })
                     .catch(e => {
-                        console.log(e.response.data)
-                        this.errors.push(e.response.data)
+                        console.log('catch');
+                        if (e.response.data.errors.name) {
+                            this.errors.name = e.response.data.errors.name[0]
+                        }
+                        if (e.response.data.errors.email) {
+                            this.errors.email = e.response.data.errors.email[0]
+                        }
+                        if (e.response.data.errors.password) {
+                            this.errors.password = e.response.data.errors.password[0]                                       }
                     });
             }
         }
