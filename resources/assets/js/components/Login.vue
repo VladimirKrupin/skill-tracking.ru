@@ -57,11 +57,69 @@
     </div>
 </template>
 <script>
+    import axios from 'axios';
     export default {
         data() {
             return {
-                info: 'login'
+                info: 'Login',
+                data: '',
+                userData: {
+                    "name": '',
+                    "email": '',
+                    "password": '',
+                    "password_confirmation": '',
+                },
+                errors: {
+                    "name": '',
+                    "email": '',
+                    "password": '',
+                },
+                success: false,
+                domModel: [{
+                    "formRegistration": ''
+                }]
             };
         },
+        methods: {
+            formReset: function () {
+                document.getElementById("formRegistration").reset();
+            },
+            register: function (event) {
+                event.preventDefault();
+                this.errors.name = '';
+                this.errors.email = '';
+                this.errors.password = '';
+                this.success = false;
+                axios.post('/api/register', {
+                    name: this.userData.name,
+                    email: this.userData.email,
+                    password: this.userData.password,
+                    password_confirmation: this.userData.password_confirmation
+                })
+                    .then(response => {
+                        console.log('success');
+                        let self = this;
+                        self.success = true;
+                        Object.keys(this.userData).forEach(function(key,index) {
+                            self.userData[key] = '';
+                        });
+                        this.formReset();
+                        setTimeout(function(){
+                            self.success = false
+                        }, 5000);
+                    })
+                    .catch(e => {
+                        console.log('catch');
+                        if (e.response.data.errors.name) {
+                            this.errors.name = e.response.data.errors.name[0]
+                        }
+                        if (e.response.data.errors.email) {
+                            this.errors.email = e.response.data.errors.email[0]
+                        }
+                        if (e.response.data.errors.password) {
+                            this.errors.password = e.response.data.errors.password[0]                                       }
+                    });
+            }
+        }
     }
 </script>
