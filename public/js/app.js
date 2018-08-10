@@ -484,6 +484,12 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(19);
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 var g;
@@ -508,12 +514,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(19);
 
 /***/ }),
 /* 4 */
@@ -12095,7 +12095,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(14).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(14).setImmediate))
 
 /***/ }),
 /* 14 */
@@ -12165,7 +12165,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 15 */
@@ -12358,7 +12358,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(5)))
 
 /***/ }),
 /* 16 */
@@ -15043,7 +15043,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
@@ -16160,6 +16160,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
 //
@@ -16219,11 +16221,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            info: 'login'
+            info: 'Login',
+            data: '',
+            userData: {
+                "name": '',
+                "email": '',
+                "password": '',
+                "password_confirmation": ''
+            },
+            errors: {
+                "name": '',
+                "email": '',
+                "password": ''
+            },
+            success: false,
+            domModel: [{
+                "formRegistration": ''
+            }]
         };
+    },
+
+    methods: {
+        formReset: function formReset() {
+            document.getElementById("formRegistration").reset();
+        },
+        register: function register(event) {
+            var _this = this;
+
+            event.preventDefault();
+            this.errors.name = '';
+            this.errors.email = '';
+            this.errors.password = '';
+            this.success = false;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/register', {
+                name: this.userData.name,
+                email: this.userData.email,
+                password: this.userData.password,
+                password_confirmation: this.userData.password_confirmation
+            }).then(function (response) {
+                console.log('success');
+                var self = _this;
+                self.success = true;
+                Object.keys(_this.userData).forEach(function (key, index) {
+                    self.userData[key] = '';
+                });
+                _this.formReset();
+                setTimeout(function () {
+                    self.success = false;
+                }, 5000);
+            }).catch(function (e) {
+                console.log('catch');
+                if (e.response.data.errors.name) {
+                    _this.errors.name = e.response.data.errors.name[0];
+                }
+                if (e.response.data.errors.email) {
+                    _this.errors.email = e.response.data.errors.email[0];
+                }
+                if (e.response.data.errors.password) {
+                    _this.errors.password = e.response.data.errors.password[0];
+                }
+            });
+        }
     }
 });
 
@@ -16405,7 +16467,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
@@ -16547,8 +16609,17 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -16629,7 +16700,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             info: 'Registration',
-            data: '',
             userData: {
                 "name": '',
                 "email": '',
@@ -16639,18 +16709,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             errors: {
                 "name": '',
                 "email": '',
-                "password": ''
+                "password": '',
+                "password_confirmation": ''
             },
-            success: false,
-            domModel: [{
-                "formRegistration": ''
-            }]
+            success: false
         };
     },
 
     methods: {
         formReset: function formReset() {
             document.getElementById("formRegistration").reset();
+        },
+        details: function details(event) {
+            var headers = {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+            };
+            var options = {
+                method: 'POST',
+                headers: headers,
+                url: '/api/details'
+            };
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()(options).then(function (response) {
+                console.log('success');
+                console.log(response);
+            }).catch(function (e) {
+                console.log('catch');
+                console.log(e);
+            });
         },
         register: function register(event) {
             var _this = this;
@@ -16659,14 +16745,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.errors.name = '';
             this.errors.email = '';
             this.errors.password = '';
+            this.errors.password_confirmation = '';
             this.success = false;
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/register', {
+            var data = {
                 name: this.userData.name,
                 email: this.userData.email,
                 password: this.userData.password,
                 password_confirmation: this.userData.password_confirmation
-            }).then(function (response) {
+            };
+            var headers = {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+            };
+            var options = {
+                method: 'POST',
+                headers: headers,
+                data: data,
+                url: '/api/register'
+            };
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()(options).then(function (response) {
                 console.log('success');
+                var res = JSON.parse(response.data.replace("f", ""));
                 var self = _this;
                 self.success = true;
                 Object.keys(_this.userData).forEach(function (key, index) {
@@ -16676,16 +16775,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 setTimeout(function () {
                     self.success = false;
                 }, 5000);
+                localStorage.setItem('id_token', res.success.token);
             }).catch(function (e) {
                 console.log('catch');
-                if (e.response.data.errors.name) {
-                    _this.errors.name = e.response.data.errors.name[0];
+                var errors = JSON.parse(e.response.data.replace("f", ""));
+
+                if (errors.error.name !== undefined) {
+                    _this.errors.name = errors.error.name[0];
                 }
-                if (e.response.data.errors.email) {
-                    _this.errors.email = e.response.data.errors.email[0];
+                if (errors.error.email !== undefined) {
+                    _this.errors.email = errors.error.email[0];
                 }
-                if (e.response.data.errors.password) {
-                    _this.errors.password = e.response.data.errors.password[0];
+                if (errors.error.password !== undefined) {
+                    _this.errors.password = errors.error.password[0];
+                }
+                if (errors.error.password_confirmation !== undefined) {
+                    _this.errors.password_confirmation = errors.error.password_confirmation[0];
                 }
             });
         }
@@ -16877,48 +16982,68 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-4 control-label",
-                  attrs: { for: "password-confirm" }
-                },
-                [_vm._v("Confirm Password")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.userData.password_confirmation,
-                      expression: "userData.password_confirmation"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "password-confirm",
-                    type: "password",
-                    name: "password_confirmation"
+            _c(
+              "div",
+              {
+                staticClass: "form-group",
+                class: { "has-error": _vm.errors.password_confirmation }
+              },
+              [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-4 control-label",
+                    attrs: { for: "password-confirm" }
                   },
-                  domProps: { value: _vm.userData.password_confirmation },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                  [_vm._v("Confirm Password")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.userData.password_confirmation,
+                        expression: "userData.password_confirmation"
                       }
-                      _vm.$set(
-                        _vm.userData,
-                        "password_confirmation",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "password-confirm",
+                      type: "password",
+                      name: "password_confirmation"
+                    },
+                    domProps: { value: _vm.userData.password_confirmation },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.userData,
+                          "password_confirmation",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                })
-              ])
-            ]),
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "help-block",
+                      class: { hide: !_vm.errors.password_confirmation }
+                    },
+                    [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.errors.password_confirmation))
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("div", { staticClass: "col-md-6 col-md-offset-4" }, [
@@ -16933,10 +17058,22 @@ var render = function() {
                       "\n                            Register\n                        "
                     )
                   ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn btn-primary",
+                    on: { click: _vm.details }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            details\n                        "
+                    )
+                  ]
                 )
               ])
-            ]),
-            _vm._v("\n                " + _vm._s(_vm.data) + "\n            ")
+            ])
           ]
         )
       ])

@@ -47,16 +47,23 @@
                             <span class="help-block"
                                   v-bind:class="{ 'hide': !errors.password }">
                                     <strong>{{errors.password}}</strong>
-                        </span>
+                            </span>
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group"
+                         v-bind:class="{ 'has-error': errors.password_confirmation }">
                         <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
                         <div class="col-md-6">
                             <input v-model="userData.password_confirmation" id="password-confirm" type="password" class="form-control" name="password_confirmation">
+
+                            <span class="help-block"
+                                  v-bind:class="{ 'hide': !errors.password_confirmation }">
+                                    <strong>{{errors.password_confirmation}}</strong>
+                            </span>
                         </div>
+
                     </div>
 
                     <div class="form-group">
@@ -64,9 +71,11 @@
                             <div class="btn btn-primary" v-on:click="register">
                                 Register
                             </div>
+                            <div class="btn btn-primary" v-on:click="details">
+                                details
+                            </div>
                         </div>
                     </div>
-                    {{ data }}
                 </form>
             </div>
         </div>
@@ -78,7 +87,6 @@
         data() {
             return {
                 info: 'Registration',
-                data: '',
                 userData: {
                     "name": '',
                     "email": '',
@@ -89,31 +97,62 @@
                     "name": '',
                     "email": '',
                     "password": '',
+                    "password_confirmation": '',
                 },
                 success: false,
-                domModel: [{
-                    "formRegistration": ''
-                }]
             };
         },
         methods: {
             formReset: function () {
                 document.getElementById("formRegistration").reset();
             },
+            details: function (event) {
+                let headers = {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+                };
+                const options = {
+                    method: 'POST',
+                    headers: headers,
+                    url: '/api/details',
+                };
+                axios(options)
+                    .then(response => {
+                        console.log('success');
+                        console.log(response);
+                    })
+                    .catch(e => {
+                        console.log('catch');
+                        console.log(e);
+                    });
+            },
             register: function (event) {
                 event.preventDefault();
                 this.errors.name = '';
                 this.errors.email = '';
                 this.errors.password = '';
+                this.errors.password_confirmation = '';
                 this.success = false;
-                axios.post('/api/register', {
+                let data = {
                     name: this.userData.name,
                     email: this.userData.email,
                     password: this.userData.password,
                     password_confirmation: this.userData.password_confirmation
-                })
+                };
+                let headers = {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+                };
+                const options = {
+                    method: 'POST',
+                    headers: headers,
+                    data: data,
+                    url: '/api/register',
+                };
+                axios(options)
                     .then(response => {
                         console.log('success');
+                        let res = JSON.parse(response.data.replace("f", ""));
                         let self = this;
                         self.success = true;
                         Object.keys(this.userData).forEach(function(key,index) {
@@ -123,17 +162,25 @@
                         setTimeout(function(){
                             self.success = false
                         }, 5000);
+                        localStorage.setItem('id_token', res.success.token)
                     })
                     .catch(e => {
                         console.log('catch');
-                        if (e.response.data.errors.name) {
-                            this.errors.name = e.response.data.errors.name[0]
+                        let errors = JSON.parse(e.response.data.replace("f", ""));
+
+                        if (errors.error.name !== undefined) {
+                            this.errors.name = errors.error.name[0]
                         }
-                        if (e.response.data.errors.email) {
-                            this.errors.email = e.response.data.errors.email[0]
+                        if (errors.error.email !== undefined) {
+                            this.errors.email = errors.error.email[0]
                         }
-                        if (e.response.data.errors.password) {
-                            this.errors.password = e.response.data.errors.password[0]                                       }
+                        if (errors.error.password !== undefined) {
+                            this.errors.password = errors.error.password[0]
+                        }
+                        if (errors.error.password_confirmation !== undefined) {
+                            this.errors.password_confirmation = errors.error.password_confirmation[0]
+                        }
+
                     });
             }
         }
