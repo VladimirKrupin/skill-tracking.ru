@@ -152,7 +152,7 @@
                 axios(options)
                     .then(response => {
                         console.log('success');
-                        let res = JSON.parse(response.data.replace("f", ""));
+                        let res = response.data;
                         let self = this;
                         self.success = true;
                         Object.keys(this.userData).forEach(function(key,index) {
@@ -166,7 +166,7 @@
                     })
                     .catch(e => {
                         console.log('catch');
-                        let errors = JSON.parse(e.response.data.replace("f", ""));
+                        let errors = e.response.data;
 
                         if (errors.error.name !== undefined) {
                             this.errors.name = errors.error.name[0]
