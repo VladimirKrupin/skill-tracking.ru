@@ -24,10 +24,17 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right"
+                        v-bind:class="{ 'hide': userData.name}">
                         <!-- Authentication Links -->
                         <li><router-link :to="{ name: 'login' }">Login</router-link></li>
                         <li><router-link :to="{ name: 'registration' }">Registration</router-link></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right"
+                        v-bind:class="{ 'hide': !userData.name}">
+                        <!-- Authentication Links -->
+                        <li><router-link :to="{ name: 'login' }">{{userData.name}}</router-link></li>
+                        <li v-on:click="logout"><a class="router-link-exact-active router-link-active">logOut</a></li>
                     </ul>
                 </div>
             </div>
@@ -47,18 +54,39 @@
     export default {
         data() {
             return {
-                info: '123',
-                products: ''
+                userData: {
+                    "name": '',
+                },
             };
         },
         methods: {
-            greet: function (event) {
-                axios
-                    .get('/api/products/1')
-                    .then(response => (
-                        this.products = response.data
-                    ));
+            auth: function () {
+                let headers = {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+                };
+                const options = {
+                    method: 'POST',
+                    headers: headers,
+                    data: {},
+                    url: '/api/details',
+                };
+                axios(options)
+                    .then(response => {
+                        console.log('success');
+                        this.userData.name = response.data.success.name;
+                    })
+                    .catch(e => {
+                        console.log(e.response.data.error);
+                    });
+            },
+            logout: function () {
+                localStorage.setItem('id_token', '');
+                this.userData.name = '';
             }
+        },
+        mounted(){
+            this.auth()
         }
     }
 </script>

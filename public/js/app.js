@@ -15088,25 +15088,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            info: '123',
-            products: ''
+            userData: {
+                "name": ''
+            }
         };
     },
 
     methods: {
-        greet: function greet(event) {
+        auth: function auth() {
             var _this = this;
 
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/products/1').then(function (response) {
-                return _this.products = response.data;
+            var headers = {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+            };
+            var options = {
+                method: 'POST',
+                headers: headers,
+                data: {},
+                url: '/api/details'
+            };
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()(options).then(function (response) {
+                console.log('success');
+                _this.userData.name = response.data.success.name;
+            }).catch(function (e) {
+                console.log(e.response.data.error);
             });
+        },
+        logout: function logout() {
+            localStorage.setItem('id_token', '');
+            this.userData.name = '';
         }
+    },
+    mounted: function mounted() {
+        this.auth();
     }
 });
 
@@ -16010,29 +16038,65 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
-              _c(
-                "li",
-                [
-                  _c("router-link", { attrs: { to: { name: "login" } } }, [
-                    _vm._v("Login")
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                [
+            _c(
+              "ul",
+              {
+                staticClass: "nav navbar-nav navbar-right",
+                class: { hide: _vm.userData.name }
+              },
+              [
+                _c(
+                  "li",
+                  [
+                    _c("router-link", { attrs: { to: { name: "login" } } }, [
+                      _vm._v("Login")
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _c(
+                      "router-link",
+                      { attrs: { to: { name: "registration" } } },
+                      [_vm._v("Registration")]
+                    )
+                  ],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "ul",
+              {
+                staticClass: "nav navbar-nav navbar-right",
+                class: { hide: !_vm.userData.name }
+              },
+              [
+                _c(
+                  "li",
+                  [
+                    _c("router-link", { attrs: { to: { name: "login" } } }, [
+                      _vm._v(_vm._s(_vm.userData.name))
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("li", { on: { click: _vm.logout } }, [
                   _c(
-                    "router-link",
-                    { attrs: { to: { name: "registration" } } },
-                    [_vm._v("Registration")]
+                    "a",
+                    {
+                      staticClass: "router-link-exact-active router-link-active"
+                    },
+                    [_vm._v("logOut")]
                   )
-                ],
-                1
-              )
-            ])
+                ])
+              ]
+            )
           ]
         )
       ])
@@ -16204,70 +16268,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             info: 'Login',
-            data: '',
             userData: {
-                "name": '',
-                "email": '',
-                "password": '',
-                "password_confirmation": ''
-            },
-            errors: {
-                "name": '',
                 "email": '',
                 "password": ''
             },
-            success: false,
-            domModel: [{
-                "formRegistration": ''
-            }]
+            error: false
         };
     },
 
     methods: {
-        formReset: function formReset() {
-            document.getElementById("formRegistration").reset();
-        },
-        register: function register(event) {
+        autorization: function autorization(event) {
             var _this = this;
 
             event.preventDefault();
-            this.errors.name = '';
-            this.errors.email = '';
-            this.errors.password = '';
-            this.success = false;
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/register', {
-                name: this.userData.name,
+            this.error = false;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/login', {
                 email: this.userData.email,
-                password: this.userData.password,
-                password_confirmation: this.userData.password_confirmation
+                password: this.userData.password
             }).then(function (response) {
                 console.log('success');
-                var self = _this;
-                self.success = true;
-                Object.keys(_this.userData).forEach(function (key, index) {
-                    self.userData[key] = '';
-                });
-                _this.formReset();
-                setTimeout(function () {
-                    self.success = false;
-                }, 5000);
+                console.log(response.data.success);
+
+                localStorage.setItem('id_token', response.data.success.token);
+                _this.$router.push('/');
+            }).catch(function (e) {
+                if (e.response.data.error !== undefined) {
+                    _this.error = true;
+                }
+            });
+        },
+        details: function details(event) {
+            var headers = {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+            };
+            var options = {
+                method: 'POST',
+                headers: headers,
+                url: '/api/details'
+            };
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()(options).then(function (response) {
+                console.log('success');
+                console.log(response);
             }).catch(function (e) {
                 console.log('catch');
-                if (e.response.data.errors.name) {
-                    _this.errors.name = e.response.data.errors.name[0];
-                }
-                if (e.response.data.errors.email) {
-                    _this.errors.email = e.response.data.errors.email[0];
-                }
-                if (e.response.data.errors.password) {
-                    _this.errors.password = e.response.data.errors.password[0];
-                }
+                console.log(e);
             });
         }
     }
@@ -16284,15 +16344,7 @@ var render = function() {
   return _c("div", [
     _c("h1", [_vm._v(_vm._s(_vm.info))]),
     _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel panel-default" }, [
+    _c("div", { staticClass: "panel panel-default" }, [
       _c("div", { staticClass: "panel-heading" }, [_vm._v("Login")]),
       _vm._v(" "),
       _c("div", { staticClass: "panel-body" }, [
@@ -16300,6 +16352,15 @@ var staticRenderFns = [
           "form",
           { staticClass: "form-horizontal", attrs: { method: "POST" } },
           [
+            _c(
+              "div",
+              {
+                staticClass: "alert alert-danger",
+                class: { hide: !_vm.error }
+              },
+              [_c("strong", [_vm._v("Autorization error!")])]
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c(
                 "label",
@@ -16312,13 +16373,24 @@ var staticRenderFns = [
               _vm._v(" "),
               _c("div", { staticClass: "col-md-6" }, [
                 _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.userData.email,
+                      expression: "userData.email"
+                    }
+                  ],
                   staticClass: "form-control",
-                  attrs: {
-                    id: "email",
-                    type: "email",
-                    name: "email",
-                    required: "",
-                    autofocus: ""
+                  attrs: { name: "email", id: "email", type: "text" },
+                  domProps: { value: _vm.userData.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.userData, "email", $event.target.value)
+                    }
                   }
                 }),
                 _vm._v(" "),
@@ -16338,40 +16410,58 @@ var staticRenderFns = [
               _vm._v(" "),
               _c("div", { staticClass: "col-md-6" }, [
                 _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.userData.password,
+                      expression: "userData.password"
+                    }
+                  ],
                   staticClass: "form-control",
-                  attrs: {
-                    id: "password",
-                    type: "password",
-                    name: "password",
-                    required: ""
+                  attrs: { name: "password", id: "password", type: "password" },
+                  domProps: { value: _vm.userData.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.userData, "password", $event.target.value)
+                    }
                   }
                 }),
                 _vm._v(" "),
-                _c("span", { staticClass: "help-block" }, [_c("strong")])
+                _vm._m(0)
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "col-md-6 col-md-offset-4" }, [
-                _c("div", { staticClass: "checkbox" }, [
-                  _c("label", [
-                    _c("input", {
-                      attrs: { type: "checkbox", name: "remember" }
-                    }),
-                    _vm._v(" Remember Me\n                            ")
-                  ])
-                ])
-              ])
-            ]),
+            _vm._m(1),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("div", { staticClass: "col-md-8 col-md-offset-4" }, [
                 _c(
                   "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "submit" },
+                    on: { click: _vm.autorization }
+                  },
                   [
                     _vm._v(
                       "\n                            Login\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn btn-primary",
+                    on: { click: _vm.details }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            details\n                        "
                     )
                   ]
                 ),
@@ -16385,6 +16475,29 @@ var staticRenderFns = [
             ])
           ]
         )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "help-block" }, [_c("strong")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "col-md-6 col-md-offset-4" }, [
+        _c("div", { staticClass: "checkbox" }, [
+          _c("label", [
+            _c("input", { attrs: { type: "checkbox", name: "remember" } }),
+            _vm._v(" Remember Me\n                            ")
+          ])
+        ])
       ])
     ])
   }

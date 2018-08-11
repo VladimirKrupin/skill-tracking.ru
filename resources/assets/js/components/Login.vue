@@ -7,11 +7,16 @@
             <div class="panel-body">
                 <form class="form-horizontal" method="POST">
 
+                    <div class="alert alert-danger"
+                         v-bind:class="{ 'hide': !error}">
+                        <strong>Autorization error!</strong>
+                    </div>
+
                     <div class="form-group">
                         <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                         <div class="col-md-6">
-                            <input id="email" type="email" class="form-control" name="email" required autofocus>
+                            <input v-model="userData.email" name="email" id="email" type="text" class="form-control">
 
                             <span class="help-block">
                             </span>
@@ -22,7 +27,7 @@
                         <label for="password" class="col-md-4 control-label">Password</label>
 
                         <div class="col-md-6">
-                            <input id="password" type="password" class="form-control" name="password" required>
+                            <input v-model="userData.password" name="password" id="password" type="password" class="form-control">
 
                             <span class="help-block">
                                 <strong></strong>
@@ -42,9 +47,13 @@
 
                     <div class="form-group">
                         <div class="col-md-8 col-md-offset-4">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" v-on:click="autorization">
                                 Login
                             </button>
+
+                            <div class="btn btn-primary" v-on:click="details">
+                                details
+                            </div>
 
                             <a class="btn btn-link" href="">
                                 Forgot Your Password?
@@ -62,62 +71,52 @@
         data() {
             return {
                 info: 'Login',
-                data: '',
                 userData: {
-                    "name": '',
-                    "email": '',
-                    "password": '',
-                    "password_confirmation": '',
-                },
-                errors: {
-                    "name": '',
                     "email": '',
                     "password": '',
                 },
-                success: false,
-                domModel: [{
-                    "formRegistration": ''
-                }]
+                error: false,
             };
         },
         methods: {
-            formReset: function () {
-                document.getElementById("formRegistration").reset();
-            },
-            register: function (event) {
+            autorization: function (event) {
                 event.preventDefault();
-                this.errors.name = '';
-                this.errors.email = '';
-                this.errors.password = '';
-                this.success = false;
-                axios.post('/api/register', {
-                    name: this.userData.name,
+                this.error = false
+                axios.post('/api/login', {
                     email: this.userData.email,
                     password: this.userData.password,
-                    password_confirmation: this.userData.password_confirmation
                 })
                     .then(response => {
                         console.log('success');
-                        let self = this;
-                        self.success = true;
-                        Object.keys(this.userData).forEach(function(key,index) {
-                            self.userData[key] = '';
-                        });
-                        this.formReset();
-                        setTimeout(function(){
-                            self.success = false
-                        }, 5000);
+                        console.log(response.data.success);
+
+                        localStorage.setItem('id_token', response.data.success.token);
+                        this.$router.push('/');
+                    })
+                    .catch(e => {
+                        if (e.response.data.error !== undefined){
+                            this.error = true
+                        }
+                    });
+            },
+            details: function (event) {
+                let headers = {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+                };
+                const options = {
+                    method: 'POST',
+                    headers: headers,
+                    url: '/api/details',
+                };
+                axios(options)
+                    .then(response => {
+                        console.log('success');
+                        console.log(response);
                     })
                     .catch(e => {
                         console.log('catch');
-                        if (e.response.data.errors.name) {
-                            this.errors.name = e.response.data.errors.name[0]
-                        }
-                        if (e.response.data.errors.email) {
-                            this.errors.email = e.response.data.errors.email[0]
-                        }
-                        if (e.response.data.errors.password) {
-                            this.errors.password = e.response.data.errors.password[0]                                       }
+                        console.log(e);
                     });
             }
         }
