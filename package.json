@@ -19,6 +19,7 @@
     "vue": "^2.1.10"
   },
   "dependencies": {
+    "vue-localstorage": "^0.6.2",
     "vue-router": "^3.0.1"
   }
 }

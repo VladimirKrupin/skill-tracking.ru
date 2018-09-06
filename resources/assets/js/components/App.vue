@@ -1,66 +1,79 @@
 <template>
     <div>
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
+        <div id="wrapper" v-if="auth === 1">
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
-                        <span class="sr-only">Toggle Navigation</span>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="">
-                    </a>
+                    <a class="navbar-brand"><router-link :to="{ name: 'home' }">Skill Tracking</router-link></a>
                 </div>
+                <!-- /.navbar-header -->
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        <li><router-link :to="{ name: 'home' }">Skill Tracking</router-link></li>
-                    </ul>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a @click="logOut"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+                <!-- /.navbar-top-links -->
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right"
-                        v-bind:class="{ 'hide': userData.name}">
-                        <!-- Authentication Links -->
-                        <li><router-link :to="{ name: 'login' }">Login</router-link></li>
-                        <li><router-link :to="{ name: 'registration' }">Registration</router-link></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right"
-                        v-bind:class="{ 'hide': !userData.name}">
-                        <!-- Authentication Links -->
-                        <li><router-link :to="{ name: 'login' }">{{userData.name}}</router-link></li>
-                        <li v-on:click="logout"><a class="router-link-exact-active router-link-active">logOut</a></li>
-                    </ul>
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li>
+                                <a><i class="fa fa-edit fa-fw"></i><router-link :to="{ name: 'sendfile' }">Отправка файлов</router-link></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.sidebar-collapse -->
                 </div>
-            </div>
-        </nav>
-        <div class="row">
-            <div class="container">
-                <div class="col-md-8 col-md-offset-2">
-                    <router-view></router-view>
-                </div>
-            </div>
+                <!-- /.navbar-static-side -->
+            </nav>
+            <router-view></router-view>
+        </div>
+        <div v-if="auth === 0">
+            <Login
+                v-if="uri === ''"
+                @checkUserToParent="checkUser"
+            ></Login>
+            <Registration
+                v-if="uri === 'registration'"
+            >
+            </Registration>
         </div>
     </div>
 </template>
 <script>
     import axios from 'axios';
-
     export default {
         data() {
             return {
-                userData: {
-                    "name": '',
-                },
+                auth: 0,
+                uri: window.location.pathname.replace(/\//, '')
             };
         },
         methods: {
-            auth: function () {
+            logOut: function () {
+                localStorage.removeItem('id_token');
+                this.auth = 0;
+            },
+            checkUser: function () {
                 let headers = {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('id_token')
@@ -74,19 +87,15 @@
                 axios(options)
                     .then(response => {
                         console.log('success');
-                        this.userData.name = response.data.success.name;
+                        this.auth = 1;
                     })
                     .catch(e => {
                         console.log(e.response.data.error);
                     });
             },
-            logout: function () {
-                localStorage.setItem('id_token', '');
-                this.userData.name = '';
-            }
         },
-        mounted(){
-            this.auth()
+        mounted: function () {
+            this.checkUser();
         }
     }
 </script>
