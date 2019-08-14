@@ -1,0 +1,52 @@
+// Here you can add other styles
+
+.bg-theme {
+  background-color: #f6f7f7;
+}
+
+.text {
+  &--weight-b {
+    font-weight: bold;
+  }
+  &--color-grey {
+    color: #888;
+  }
+}
+
+.block-theme {
+  &--bordered {
+    border: 1px solid #e4e7ea;
+    padding: 20px;
+    border-radius: 3px;
+  }
+}
+
+.form__btn {
+  background-color: #007bff;
+}
+
+.form__forget {
+  color: #007bff;
+}
+
+.link {
+  color: #007bff;
+  &--icon {
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+.col-table {
+  &--min {
+    min-width: 50px;
+  }
+  &--middle {
+    min-width: 100px;
+  }
+  &--max {
+    min-width: 150px;
+  }
+}
