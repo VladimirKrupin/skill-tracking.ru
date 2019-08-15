@@ -1,0 +1,88 @@
+#local project
+version: '2'
+networks:
+  skillnetworkdev:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
+services:
+  dev_docker_web:
+    build:
+      context: ./
+      dockerfile: Docker/web_dev_dockerfile
+    volumes:
+    - ./Frontend:/Frontend
+    - ./Backend:/Backend
+    - ./Autorun/conf:/Autorun/conf
+    - ./Autorun/pass:/pass
+    networks:
+      skillnetworkdev:
+        ipv4_address: 172.21.0.2
+    ports:
+    - "8071:80"
+    links:
+    - dev_docker_php
+    restart: always
+  dev_docker_php:
+    build:
+      context: ./
+      dockerfile: Docker/php_dockerfile
+    volumes:
+    - ./Backend:/Backend
+    networks:
+      skillnetworkdev:
+        ipv4_address: 172.21.0.3
+    links:
+    - dev_docker_mysql
+    restart: always
+  dev_docker_mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=YOU PASSWORD
+      - MYSQL_DATABASE=YOU DATABASE
+    networks:
+      skillnetworkdev:
+        ipv4_address: 172.21.0.4
+    ports:
+    - "8073:3306"
+    volumes:
+    - ./mysql:/var/lib/mysql
+    - ./autorun/scripts-mysql:/scripts-mysql
+    restart: always
+  dev_docker_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+    - dev_docker_mysql
+    environment:
+      PMA_HOST: dev_docker_mysql
+      PMA_PORT: 3306
+    networks:
+      skillnetworkdev:
+        ipv4_address: 172.21.0.5
+    ports:
+    - '8074:80'
+    restart: always
+  dev_docker_nodejs:
+    build:
+      context: ./
+      dockerfile: Docker/node_dockerfile
+    volumes:
+    - ./Frontend:/usr/src/app
+    - ./Backend:/Backend
+    - ./Autorun/scripts:/usr/src/scripts
+    networks:
+      skillnetworkdev:
+        ipv4_address: 172.21.0.6
+    restart: always
+  dev_docker_composer:
+    build:
+      context: ./
+      dockerfile: Docker/composer_dockerfile
+    command: php -S localhost:3054
+    volumes:
+      - ./Backend:/app
+    networks:
+      skillnetworkdev:
+        ipv4_address: 172.21.0.7
+    restart: always

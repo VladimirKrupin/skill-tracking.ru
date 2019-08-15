@@ -1,0 +1,86 @@
+#local project
+version: '2'
+networks:
+  skillenetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+services:
+  docker_web:
+    build:
+      context: ./
+      dockerfile: Docker/web_dockerfile
+    volumes:
+    - ./Frontend:/Frontend
+    - ./Backend:/Backend
+    - ./Autorun/conf:/Autorun/conf
+    networks:
+      skillenetwork:
+        ipv4_address: 172.20.0.2
+    ports:
+    - "8081:80"
+    links:
+    - docker_php
+    restart: always
+  docker_php:
+    build:
+      context: ./
+      dockerfile: Docker/php_dockerfile
+    volumes:
+    - ./Backend:/Backend
+    networks:
+      skillenetwork:
+        ipv4_address: 172.20.0.3
+    depends_on:
+    - docker_mysql
+    restart: always
+  docker_mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=YOU PASSWORD
+      - MYSQL_DATABASE=YOU DATABASE
+    networks:
+      skillenetwork:
+        ipv4_address: 172.20.0.4
+    ports:
+    - "8083:3306"
+    volumes:
+    - ./mysql:/var/lib/mysql
+    - ./autorun/scripts-mysql:/scripts-mysql
+    restart: always
+  docker_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+    - docker_mysql
+    environment:
+      PMA_HOST: docker_mysql
+      PMA_PORT: 3306
+    networks:
+      skillenetwork:
+        ipv4_address: 172.20.0.5
+    ports:
+    - '8084:80'
+    restart: always
+  docker_nodejs:
+    build:
+      context: ./
+      dockerfile: Docker/node_dockerfile
+    volumes:
+    - ./Frontend:/usr/src/app
+    - ./Autorun/scripts:/usr/src/scripts
+    networks:
+      skillenetwork:
+        ipv4_address: 172.20.0.6
+    restart: always
+  docker_composer:
+    build:
+      context: ./
+      dockerfile: Docker/composer_dockerfile
+    command: php -S localhost:3054
+    volumes:
+      - ./Backend:/app
+    networks:
+      skillenetwork:
+        ipv4_address: 172.20.0.7
+    restart: always

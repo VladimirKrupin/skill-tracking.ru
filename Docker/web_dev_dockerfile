@@ -1,0 +1,5 @@
+FROM nginx
+
+ADD ./Autorun/conf/vhost.dev.conf /etc/nginx/conf.d/default.conf
+
+WORKDIR /Frontend
