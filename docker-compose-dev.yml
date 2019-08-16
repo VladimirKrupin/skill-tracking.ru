@@ -5,7 +5,7 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.21.0.0/24
+        - subnet: 172.30.0.0/24
 services:
   dev_docker_web:
     build:
@@ -18,7 +18,7 @@ services:
     - ./Autorun/pass:/pass
     networks:
       skillnetworkdev:
-        ipv4_address: 172.21.0.2
+        ipv4_address: 172.30.0.2
     ports:
     - "8071:80"
     links:
@@ -32,23 +32,23 @@ services:
     - ./Backend:/Backend
     networks:
       skillnetworkdev:
-        ipv4_address: 172.21.0.3
+        ipv4_address: 172.30.0.3
     links:
     - dev_docker_mysql
     restart: always
   dev_docker_mysql:
     image: mysql:5.7
     environment:
-      - MYSQL_ROOT_PASSWORD=YOU PASSWORD
-      - MYSQL_DATABASE=YOU DATABASE
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_DATABASE=skill_test
     networks:
       skillnetworkdev:
-        ipv4_address: 172.21.0.4
+        ipv4_address: 172.30.0.4
     ports:
     - "8073:3306"
     volumes:
     - ./mysql:/var/lib/mysql
-    - ./autorun/scripts-mysql:/scripts-mysql
+    - ./Autorun/scripts-mysql:/scripts-mysql
     restart: always
   dev_docker_phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -59,7 +59,7 @@ services:
       PMA_PORT: 3306
     networks:
       skillnetworkdev:
-        ipv4_address: 172.21.0.5
+        ipv4_address: 172.30.0.5
     ports:
     - '8074:80'
     restart: always
@@ -70,10 +70,13 @@ services:
     volumes:
     - ./Frontend:/usr/src/app
     - ./Backend:/Backend
+    - ./Node:/usr/src/node
     - ./Autorun/scripts:/usr/src/scripts
+    ports:
+      - "8072:8080"
     networks:
       skillnetworkdev:
-        ipv4_address: 172.21.0.6
+        ipv4_address: 172.30.0.6
     restart: always
   dev_docker_composer:
     build:
@@ -84,5 +87,5 @@ services:
       - ./Backend:/app
     networks:
       skillnetworkdev:
-        ipv4_address: 172.21.0.7
+        ipv4_address: 172.30.0.7
     restart: always

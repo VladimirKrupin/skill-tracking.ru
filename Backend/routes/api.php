@@ -14,3 +14,5 @@ use Illuminate\Http\Request;
 */
 
 //USER CONTROLLER REQUESTS
+Route::get('/testProtected/', 'TestController@index')->middleware('auth:api');
+Route::get('/test/', 'TestController@index');

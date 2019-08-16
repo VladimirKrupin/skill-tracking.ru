@@ -38,8 +38,8 @@ services:
   docker_mysql:
     image: mysql:5.7
     environment:
-      - MYSQL_ROOT_PASSWORD=YOU PASSWORD
-      - MYSQL_DATABASE=YOU DATABASE
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=skill
     networks:
       skillenetwork:
         ipv4_address: 172.20.0.4
@@ -47,7 +47,7 @@ services:
     - "8083:3306"
     volumes:
     - ./mysql:/var/lib/mysql
-    - ./autorun/scripts-mysql:/scripts-mysql
+    - ./Autorun/scripts-mysql:/scripts-mysql
     restart: always
   docker_phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -68,7 +68,10 @@ services:
       dockerfile: Docker/node_dockerfile
     volumes:
     - ./Frontend:/usr/src/app
+    - ./Node:/usr/src/node
     - ./Autorun/scripts:/usr/src/scripts
+    ports:
+      - "8082:8080"
     networks:
       skillenetwork:
         ipv4_address: 172.20.0.6

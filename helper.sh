@@ -1,53 +1,36 @@
 #!/bin/bash
-#Color console constant
-PURPLE='\033[0;35m'
-BLUE='\033[1;34m'
-YELLOW='\033[0;33m'
-GREEN='\033[0;32m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No PURPLE
-N='\n\n';
-LINE="${GREEN}-------------------------------------${NC}";
-RED='\033[0;31m';
-printf "${LINE}\n\n"
-printf "${GREEN}       START SKILL TRACKING PROJECT${NC}\n\n\n\n"
-printf "${GREEN}       Made by Vladimir Krupin \033[1mhttps://vk.com/vladimir_krupin_ru\033[m\n\n\n\n${NC}"
-printf "${LINE}\n\n"
 
-file="backend/.env"
-env="";
-user_permissions="false";
+. Autorun/sh/head.sh
+
+printf "${BLUE}DO YOU NOT REMEMBER CHANGE NGINX SERVER NAMES IN Autorun/conf/vhost.conf AND Autorun/conf/vhost.dev.conf ?${NC}\n"
+printf "${BLUE}Default file work, but you site have another server name, you must change it, and if you need, change nginx setting for you project.${NC}\n"
+printf "${BLUE}This files use server nginx in docker container.${NC}\n\n"
+printf "${BLUE}Files Autorun/conf/local.conf and Autorun/conf/server.conf diligrate request in docker container, it for example, you can change it and use for you project.${NC}\n"
+printf "${BLUE}Autorun/pass/.htpasswd use for protect you web site, generate this for example 'htpasswd -c Autorun/pass admin'.${NC}\n\n"
+printf "${YELLOW}For next install project put [y]${NC}\n"
+read -r -p "" response
+case "$response" in
+        "y")
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
+
 if [ -f "$file" ]
 then
-    while read LINE; do
-        if [ "$LINE" = "APP_ENV=production" ]
-        then
-            env='skilltrackingru';
-        fi
-        if [ "$LINE" = "APP_ENV=developer" ]
-        then
-            env='devskilltrackingru_dev';
-        fi
-        if [ "$LINE" = "APP_MODE=server" ]
-        then
-            user_permissions='';
-        fi
-        if [ "$LINE" = "APP_MODE=local" ]
-        then
-            user_permissions='sudo';
-        fi
-    done < $file
+
 
     if [ "$env" = "" ]
         then
-            echo "${RED} WARNING! not fund correct APP_ENV in backend/.env this must be [ APP_ENV=production or APP_ENV=developer ] ${NC}"
+            echo "${RED} WARNING! not fund correct APP_ENV in Backend/.env this must be [ APP_ENV=production or APP_ENV=developer ] ${NC}"
             echo "${RED} ВНИМАНИЕ! не удалось определить APP_ENV, она должна иметь значение [ APP_ENV=production or APP_ENV=developer ] ${NC}"
             exit 1
     fi
 
     if [ "$user_permissions" = "false" ]
         then
-            echo "${RED} WARNING! not fund correct APP_MODE in backend/.env this must be [ APP_MODE=server or APP_MODE=local ] ${NC}"
+            echo "${RED} WARNING! not fund correct APP_MODE in Backend/.env this must be [ APP_MODE=server or APP_MODE=local ] ${NC}"
             echo "${RED} ВНИМАНИЕ! не удалось определить APP_MODE, она должна иметь значение [ APP_MODE=server or APP_MODE=local ] ${NC}"
             exit 1
     fi

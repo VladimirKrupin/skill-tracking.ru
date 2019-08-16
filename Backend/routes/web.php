@@ -1,2 +1,2 @@
 <?php
-Route::get('/start/', 'OAuths\OauthsController@OAuthVk');
+Route::get('/start/', 'TestController@web');

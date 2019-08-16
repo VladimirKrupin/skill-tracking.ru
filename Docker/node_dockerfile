@@ -6,4 +6,12 @@ COPY ./Frontend/package*.json ./
 
 COPY ./Frontend .
 
+WORKDIR /usr/src/node
+
+COPY ./Node/package*.json ./
+
+COPY ./Node .
+
 WORKDIR /usr/src/scripts
+
+CMD [ "sh", "nodejs-start.sh" ]
