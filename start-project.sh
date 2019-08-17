@@ -42,12 +42,12 @@ then
     ${user_permissions} docker-compose -f ${docker_file} up -d
     printf "${GREEN}DONE${NC} ${PURPLE}${user_permissions} docker-compose -f $docker_file up -d --build${NC}${N}"
 
-    ${user_permissions} docker exec -it ${env}_docker_php_1 php artisan cache:clear
-    printf "${GREEN}DONE${NC} ${PURPLE}${user_permissions} exec -it ${env}_docker_php_1 php artisan cache:clear${NC}${N}"
-
     #Up Backend:
     ${user_permissions} docker exec -it ${env}_docker_composer_1 composer install
     printf "${GREEN}DONE${NC} ${PURPLE}${user_permissions} docker exec -it ${env}_docker_composer_1 composer install${NC}${N}"
+
+    ${user_permissions} docker exec -it ${env}_docker_php_1 php artisan cache:clear
+    printf "${GREEN}DONE${NC} ${PURPLE}${user_permissions} exec -it ${env}_docker_php_1 php artisan cache:clear${NC}${N}"
 
     #show worked containers
     ${user_permissions} docker ps
@@ -64,14 +64,13 @@ then
             #continue start project
             ;;
     esac
-
     #remove remote access mysql for production and create settings for mysql
-    if [ "$env" = "skill-trackingru" ]
+    if [ "$env" = "$folder_prod_name" ]
     then
         #create permission for users and create users in docker-mysql-container:
         ${user_permissions} docker exec -it ${env}_docker_mysql_1 sh /scripts-mysql/mysql-set-prod-access.sh
         printf "${GREEN}DONE${NC} ${PURPLE}${user_permissions} docker exec -it ${env}_docker_mysql_1 sh /scripts-mysql/mysql-set-prod-access.sh${NC}${N}"
-    elif [ "$env" = "devskill-trackingru_dev" ]
+    elif [ "$env" = "$folder_dev_name" ]
     then
         #create permission for users and create users in docker-mysql-container, create table test in docker-mysql-container:
         ${user_permissions} docker exec -it ${env}_docker_mysql_1 sh /scripts-mysql/mysql-set-dev-access.sh
