@@ -17,3 +17,7 @@ use Illuminate\Http\Request;
 Route::get('/testProtected/', 'TestController@index')->middleware('auth:api');
 Route::get('/test/', 'TestController@index');
 Route::get('/login/', 'User\UserController@login');
+
+Route::any('/', function () {
+    return 'skill-tracking.api';
+});
