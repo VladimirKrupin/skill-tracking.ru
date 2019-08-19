@@ -19,7 +19,20 @@ case "$response" in
 
 if [ -f "$file" ]
 then
-
+    read -r -p "" response
+        case "$response" in
+            "prod")
+                    docker_file='docker-compose-prod.yml';
+                    env=${folder_prod_name};
+                ;;
+            "dev")
+                    docker_file='docker-compose-dev.yml';
+                    env=${folder_dev_name};
+                ;;
+            *)
+                exit 1
+                ;;
+        esac
 
     if [ "$env" = "" ]
         then
