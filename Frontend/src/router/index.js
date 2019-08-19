@@ -3,8 +3,6 @@ import Router from 'vue-router'
 // Containers
 const DefaultContainer = () => import('@/containers/DefaultContainer');
 
-const Files = () => import('@/views/files/Files');
-const Profile = () => import('@/views/profile/Profile');
 const Login = () => import('@/views/login/Login');
 const MainPage = () => import('@/views/mainPage/MainPage');
 

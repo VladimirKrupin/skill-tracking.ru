@@ -6,8 +6,6 @@
       <SidebarToggler class="d-lg-none" display="md" mobile />
 
       <b-link class="navbar-brand" to="/">
-        <img style="margin-left: -10px" class="navbar-brand-full" src="/img/brand/logo.png" width="60" height="60" alt="Fun gifs Logo">
-        <img class="navbar-brand-minimized" src="/img/brand/logo-min.png" width="30" height="30" alt="CoreUI Logo">
       </b-link>
 
       <SidebarToggler class="d-md-down-none" display="lg" />
