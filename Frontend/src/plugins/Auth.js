@@ -14,7 +14,7 @@ export default function (Vue) {
       let params = { email, password };
 
       let promise = new Promise((resolve, reject) => {
-        axios.post('https://api.fun-gifs.ru/api/login', params)
+        axios.post('/api/login', params)
           .then(response => {
             console.log(response.data);
             if (response.data.access_token !== undefined) {
@@ -47,7 +47,7 @@ export default function (Vue) {
       let access_token = await this.getToken();
 
       if (access_token) {
-        axios.defaults.baseURL = "https://api.fun-gifs.ru/api/checkaccesstoken";
+        axios.defaults.baseURL = "/api/checkaccesstoken";
         return true;
       } else {
         return false;
@@ -62,7 +62,7 @@ export default function (Vue) {
     setToken(access_token) {
       localStorage.setItem('access_token', access_token);
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
-      axios.defaults.baseURL = 'https://api.fun-gifs.ru/api/';
+      axios.defaults.baseURL = '/api/';
 
     },
 
