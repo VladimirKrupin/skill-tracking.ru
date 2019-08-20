@@ -1,6 +1,7 @@
 <?php
 Route::get('/start/', 'TestController@web');
-Route::get('/createUser/', 'User\UserController@create');
+
+Auth::routes();
 
 Route::any('/', function () {
     return 'skill-tracking.api';

@@ -5,6 +5,7 @@ use App\Http\Helpers\Logs;
 use App\Http\Helpers\PodioItemValues;
 use App\Http\Models\User\UsersPasswordChange;
 use App\Http\Models\User\UsersPasswordReset;
+use App\Http\Resources\UsersResource;
 use App\Mail\RegistrationSuccessEmployee;
 use App\Mail\User\ChangePassword;
 use Illuminate\Http\Request;
@@ -24,13 +25,13 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
         $input = [
-            'email' => 'vladimir.krupin133@mail.ru',
-            'password' => '123123',
-            'password_confirmation' => '123123',
-            'name' => 'Vladimir Krupin',
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'password_confirmation' => $request->input('password_confirmation'),
+            'name' => $request->input('name'),
         ];
         $validator = Validator::make($input, [
             'email' => 'required|email|unique:users',
@@ -47,7 +48,7 @@ class UserController extends Controller
         }
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        var_dump($user);
+        var_dump($user->toArray());
     }
 
     public function login(Request $request){
@@ -88,6 +89,5 @@ class UserController extends Controller
             'data' => ['token' => $user->createToken('MyApp')->accessToken],
         ]);
     }
-
 
 }
