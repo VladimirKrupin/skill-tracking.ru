@@ -50,3 +50,19 @@
     min-width: 150px;
   }
 }
+* {
+  //background-color: #000000;
+  padding: 0;
+  margin: 0;
+}
+
+#gradient {
+  background: rgba(179,220,237,0.9);
+  background: -moz-linear-gradient(-45deg, rgba(179,220,237,0.9) 0%, rgba(41,184,229,0.89) 11%, rgba(41,184,229,0.89) 24%, rgba(69,169,199,0.88) 38%, rgba(85,194,224,0.87) 60%, rgba(69,169,199,0.86) 78%, rgba(188,224,238,0.85) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(179,220,237,0.9)), color-stop(11%, rgba(41,184,229,0.89)), color-stop(24%, rgba(41,184,229,0.89)), color-stop(38%, rgba(69,169,199,0.88)), color-stop(60%, rgba(85,194,224,0.87)), color-stop(78%, rgba(69,169,199,0.86)), color-stop(100%, rgba(188,224,238,0.85)));
+  background: -webkit-linear-gradient(-45deg, rgba(179,220,237,0.9) 0%, rgba(41,184,229,0.89) 11%, rgba(41,184,229,0.89) 24%, rgba(69,169,199,0.88) 38%, rgba(85,194,224,0.87) 60%, rgba(69,169,199,0.86) 78%, rgba(188,224,238,0.85) 100%);
+  background: -o-linear-gradient(-45deg, rgba(179,220,237,0.9) 0%, rgba(41,184,229,0.89) 11%, rgba(41,184,229,0.89) 24%, rgba(69,169,199,0.88) 38%, rgba(85,194,224,0.87) 60%, rgba(69,169,199,0.86) 78%, rgba(188,224,238,0.85) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(179,220,237,0.9) 0%, rgba(41,184,229,0.89) 11%, rgba(41,184,229,0.89) 24%, rgba(69,169,199,0.88) 38%, rgba(85,194,224,0.87) 60%, rgba(69,169,199,0.86) 78%, rgba(188,224,238,0.85) 100%);
+  background: linear-gradient(135deg, rgba(179,220,237,0.9) 0%, rgba(41,184,229,0.89) 11%, rgba(41,184,229,0.89) 24%, rgba(69,169,199,0.88) 38%, rgba(85,194,224,0.87) 60%, rgba(69,169,199,0.86) 78%, rgba(188,224,238,0.85) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee', GradientType=1 );
+}

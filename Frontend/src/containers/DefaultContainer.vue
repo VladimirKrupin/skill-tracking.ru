@@ -6,16 +6,17 @@
       <SidebarToggler class="d-lg-none" display="md" mobile />
 
       <b-link class="navbar-brand" to="/">
+        ST
       </b-link>
 
       <SidebarToggler class="d-md-down-none" display="lg" />
 
       <div class="ml-auto">
         <div class="d-flex align-items-center col-sm-12 col-12 offset-md-1 col-md-5 col-lg-5">
-          <div class="d-flex flex-column mr-1 user-info">
-            <h5 class="mb-1"><span class="badge badge-pill badge-primary font-weight-light">Андминистратор</span></h5>
-            <span class="text-md-left text-nowrap text-dark">User name</span>
-          </div>
+<!--          <div class="d-flex flex-column mr-1 user-info">-->
+<!--            <h5 class="mb-1"><span class="badge badge-pill badge-primary font-weight-light">Андминистратор</span></h5>-->
+<!--            <span class="text-md-left text-nowrap text-dark">User name</span>-->
+<!--          </div>-->
           <b-navbar-nav class="ml-auto">
             <DefaultHeaderDropdownAccnt/>
           </b-navbar-nav>
@@ -48,7 +49,7 @@
     <TheFooter>
       <!--footer-->
       <div>
-        <a target="_blank" href="https://fun-gifs.ru">Перейти на сайт</a>
+        <a target="_blank" href="https://skill-tracking.ru">Перейти на сайт</a>
       </div>
       <div class="ml-auto">
         <span class="mr-1">© 2019 Skill Tracking официальный сайт. Все права защищены.</span>
@@ -105,6 +106,12 @@ export default {
 }
 </script>
 <style>
+  .brand-minimized .app-header .navbar-brand {
+    width: 50px;
+  }
+  .app-header .navbar-brand {
+    width: 50px;
+  }
   @media (max-width: 992px) {
     .app-header .navbar-brand {
       left: 20%;
