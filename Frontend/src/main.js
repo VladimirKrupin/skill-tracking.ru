@@ -21,7 +21,6 @@ store.dispatch('profile/setUserData');
 
 import settings from './config/settings';
 let Env = settings.get('local');
-
 window.apiHost = Env.apiHost;
 
 new Vue({
