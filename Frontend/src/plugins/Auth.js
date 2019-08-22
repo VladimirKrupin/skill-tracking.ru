@@ -1,4 +1,6 @@
 import axios from 'axios';
+import settings from '../config/settings';
+let Env = settings.get('local');
 
 export default function (Vue) {
   Vue.auth = {
@@ -14,7 +16,7 @@ export default function (Vue) {
       let params = { email, password };
 
       let promise = new Promise((resolve, reject) => {
-        axios.post('/api/login', params)
+        axios.post(Env.apiHost+'/api/login', params)
           .then(response => {
             console.log(response.data);
             if (response.data.access_token !== undefined) {
@@ -47,7 +49,7 @@ export default function (Vue) {
       let access_token = await this.getToken();
 
       if (access_token) {
-        axios.defaults.baseURL = "/api/checkaccesstoken";
+        axios.defaults.baseURL = Env.apiHost+"/api/checkaccesstoken";
         return true;
       } else {
         return false;
@@ -62,8 +64,7 @@ export default function (Vue) {
     setToken(access_token) {
       localStorage.setItem('access_token', access_token);
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
-      axios.defaults.baseURL = '/api/';
-
+      axios.defaults.baseURL = Env.apiHost+'/api/';
     },
 
     /**

@@ -70,10 +70,6 @@
       methods: {
         autorization: function (event) {
           event.preventDefault();
-          // заглущка для логина
-          localStorage.setItem('access_token', 'same_token');
-          this.$router.push({ name: 'MainPage' });
-          return false;
           this.error = '';
           const options = {
             method: 'POST',
@@ -84,7 +80,7 @@
               password: this.userData.password,
             },
 
-            url: '1111',
+            url: window.apiHost+'/api/login/',
           };
           axios(options)
             .then(response => {
@@ -93,6 +89,7 @@
                 return false;
               }else if(response.data.status === 'ok'){
                 localStorage.setItem('access_token', response.data.data.token);
+                this.$router.push({ name: 'MainPage' });
               }
             })
             .catch(e => {
