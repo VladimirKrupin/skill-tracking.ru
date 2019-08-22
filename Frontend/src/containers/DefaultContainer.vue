@@ -6,22 +6,23 @@
       <SidebarToggler class="d-lg-none" display="md" mobile />
 
       <b-link class="navbar-brand" to="/">
-        ST
+        <span class="navbar-brand-minimized logo-text-min">ST</span>
+        <span class="navbar-brand-full logo-text-max">Skill Tracking</span>
       </b-link>
 
       <SidebarToggler class="d-md-down-none" display="lg" />
 
       <div class="ml-auto">
-        <div class="d-flex align-items-center col-sm-12 col-12 offset-md-1 col-md-5 col-lg-5">
+        <div class="d-flex align-items-center col-sm-12 col-12 col-md-5 col-lg-5">
 <!--          <div class="d-flex flex-column mr-1 user-info">-->
 <!--            <h5 class="mb-1"><span class="badge badge-pill badge-primary font-weight-light">Андминистратор</span></h5>-->
 <!--            <span class="text-md-left text-nowrap text-dark">User name</span>-->
 <!--          </div>-->
-          <b-navbar-nav class="ml-auto">
+          <b-navbar-nav>
             <DefaultHeaderDropdownAccnt/>
           </b-navbar-nav>
           <!--<AsideToggler class="d-none d-lg-block" />-->
-          <div class="container"></div>
+<!--          <div class="container"></div>-->
         </div>
       </div>
 
@@ -106,25 +107,4 @@ export default {
 }
 </script>
 <style>
-  .brand-minimized .app-header .navbar-brand {
-    width: 50px;
-  }
-  .app-header .navbar-brand {
-    width: 50px;
-  }
-  @media (max-width: 992px) {
-    .app-header .navbar-brand {
-      left: 20%;
-    }
-  }
-  @media (max-width: 525px) {
-    .app-header .navbar-brand {
-      display: none;
-    }
-  }
-  @media (max-width: 420px) {
-    .app-header .user-info {
-      display: none !important;
-    }
-  }
 </style>
