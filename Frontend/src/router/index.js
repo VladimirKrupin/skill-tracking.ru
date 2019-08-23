@@ -6,6 +6,7 @@ const DefaultContainer = () => import('@/containers/DefaultContainer');
 const Login = () => import('@/views/login/Login');
 const MainPage = () => import('@/views/mainPage/MainPage');
 const Profile = () => import('@/views/profile/Profile');
+const Registration = () => import('@/views/registration/Registration');
 
 //main
 
@@ -35,7 +36,6 @@ export default new Router({
         requiresAuth: true
       }
     },
-
     {
       path: '/login',
       name: 'Login',
@@ -43,6 +43,14 @@ export default new Router({
         requiresAuth: false
       },
       component: Login,
+    },
+    {
+      path: '/registration',
+      name: 'Registration',
+      meta: {
+        requiresAuth: false
+      },
+      component: Registration,
     },
   ]
 })

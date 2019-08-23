@@ -22,23 +22,16 @@
                     {{item}}
                   </div>
                 </div>
-                <b-row class="flex-row align-items-center mb-2">
-                  <b-col cols="12" class="text-right">
-                    <b-button to="/forgot-password" variant="link" class="px-0 form__forget">забыли пароль?</b-button>
-                  </b-col>
+                <b-row class="flex-row justify-content-between mb-2">
+                  <b-button to="/registration" variant="link" class="btn-link-left">Регистрация</b-button>
+                  <b-button to="/forgot-password" variant="link" class=" btn-link">забыли пароль?</b-button>
                 </b-row>
                 <b-row>
                   <b-col cols="12" class="text-center mb-3">
                     <b-button v-on:click="autorization" variant="primary" class="form__btn btn btn-lg btn-primary btn-block">войти</b-button>
                   </b-col>
                 </b-row>
-                <b-row>
-                  <b-col cols="12">
-                    <p class="mt-3 mb-3 text-muted text-center">
-                      &#9400; 2019 skill-tracking официальный сайт.
-                    </p>
-                  </b-col>
-                </b-row>
+
               </b-form>
             </b-col>
           </b-row>
@@ -101,8 +94,16 @@
     background-color: #007bff;
   }
 
-  .form__forget {
+  .btn-link {
     color: #007bff;
+  }
+  .btn-link {
+    color: #007bff;
+    text-align: right;
+  }
+  .btn-link-left {
+    color: #007bff;
+    text-align: left;
   }
 
   .link {
