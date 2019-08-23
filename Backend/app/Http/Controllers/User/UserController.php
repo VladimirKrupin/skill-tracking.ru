@@ -1,27 +1,13 @@
 <?php
 namespace App\Http\Controllers\User;
-use App\Http\Helpers\Common;
-use App\Http\Helpers\Logs;
-use App\Http\Helpers\PodioItemValues;
-use App\Http\Models\User\UsersPasswordChange;
-use App\Http\Models\User\UsersPasswordReset;
-use App\Http\Resources\UsersResource;
-use App\Mail\RegistrationSuccessEmployee;
-use App\Mail\User\ChangePassword;
-use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
 use App\Http\Models\User\User;
-use App\Http\Models\User\OauthAccessToken;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use App;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\User\UserLoginResource;
+use App\Http\Response\UnauthorizedResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Validator;
-use App\Mail\RegistrationSuccess;
-use App\Mail\User\ResetPassword;
-use App\Mail\User\ResetPasswordSuccess;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -57,37 +43,19 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'data' => ['errors' => ['Не корректный email или пароль']],
-            ]);
-        }
+
+        if ($validator->fails()) {return UnauthorizedResponse::get();}
 
         $input = $request->all();
 
-        $user = User::where('email', $input['email'])->first();
+        if (! $user = User::where('email', $input['email'])->first()){return response(['error'=>'message'],401);}
 
-        if (empty($user)){
-            return response()->json([
-                'status' => 'error',
-                'data' => ['errors' => ['Не верный логин или пароль']],
-            ]);
-        }
+        if (! Hash::check($input['password'], $user->getAuthPassword())){return response(['error'=>'message'],401);}
 
-        $validCredentials = Hash::check($input['password'], $user->getAuthPassword());
+        return new UserLoginResource( (object) ['token' => $user->createToken('MyApp')->accessToken]);
 
-        if (!$validCredentials) {
-            return response()->json([
-                'status' => 'error',
-                'data' => ['errors' => ['Не верный логин или пароль']],
-            ]);
-        }
 
-        return response()->json([
-            'status' => 'ok',
-            'data' => ['token' => $user->createToken('MyApp')->accessToken],
-        ]);
+
     }
 
 }

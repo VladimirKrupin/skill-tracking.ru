@@ -70,7 +70,7 @@
       methods: {
         autorization: function (event) {
           event.preventDefault();
-          this.error = '';
+          this.errors = '';
           const options = {
             method: 'POST',
             headers: {
@@ -84,16 +84,12 @@
           };
           axios(options)
             .then(response => {
-              if (response.data.status === 'error'){
-                this.errors = response.data.data.errors;
-                return false;
-              }else if(response.data.status === 'ok'){
-                localStorage.setItem('access_token', response.data.data.token);
-                this.$router.push({ name: 'MainPage' });
-              }
+              localStorage.setItem('access_token', response.data.token);
+              this.$router.push({ name: 'MainPage' });
             })
-            .catch(e => {
-              console.log(e);
+            .catch(error => {
+              this.errors = [error.response.data.error];
+              console.log(error);
             });
         }
       }
