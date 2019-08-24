@@ -1,49 +1,36 @@
 <template>
     <footer class="footer has-cards">
-        <div class="container container-lg">
-            <div class="row">
-                <div class="col-md-6 mb-5 mb-md-0">
-                    <div class="card card-lift--hover shadow border-0">
-                        <router-link to="/landing" title="Landing Page">
-                            <img v-lazy="'img/theme/landing.jpg'" class="card-img">
-                        </router-link>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-5 mb-lg-0">
-                    <div class="card card-lift--hover shadow border-0">
-                        <router-link to="/profile" title="Profile Page">
-                            <img v-lazy="'img/theme/profile.jpg'" class="card-img">
-                        </router-link>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="container">
             <div class="row row-grid align-items-center my-md">
                 <div class="col-lg-6">
-                    <h3 class="text-primary font-weight-light mb-2">Thank you for supporting us!</h3>
-                    <h4 class="mb-0 font-weight-light">Let's get in touch on any of these platforms.</h4>
+                    <h3 class="text-primary font-weight-light mb-2">{{$lang.landing.thanks}}</h3>
+                    <h4 class="mb-0 font-weight-light">{{$lang.landing.thanks_text}}</h4>
                 </div>
                 <div class="col-lg-6 text-lg-center btn-wrapper">
-                    <a target="_blank" rel="noopener" href="https://twitter.com/creativetim"
+                    <a target="_blank" rel="noopener" :href="socials.tw"
                        class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip"
-                       data-original-title="Follow us">
+                       :title="$lang.landing.tw">
                         <i class="fa fa-twitter"></i>
                     </a>
-                    <a target="_blank" rel="noopener" href="https://www.facebook.com/creativetim"
+                    <a target="_blank" rel="noopener" :href="socials.fb"
                        class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip"
-                       data-original-title="Like us">
+                       :title="$lang.landing.fb">
                         <i class="fa fa-facebook-square"></i>
                     </a>
-                    <a target="_blank" rel="noopener" href="https://dribbble.com/creativetim"
-                       class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip"
-                       data-original-title="Follow us">
-                        <i class="fa fa-dribbble"></i>
+                    <a target="_blank" rel="noopener" :href="socials.vk"
+                       class="btn btn-neutral btn-icon-only btn-lg btn-round" data-toggle="tooltip"
+                       :title="$lang.landing.vk">
+                        <i class="fa fa-vk"></i>
                     </a>
-                    <a target="_blank" rel="noopener" href="https://github.com/creativetimofficial"
+                    <a target="_blank" rel="noopener" :href="socials.git"
                        class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg" data-toggle="tooltip"
-                       data-original-title="Star on Github">
+                       :title="$lang.landing.git">
                         <i class="fa fa-github"></i>
+                    </a>
+                    <a target="_blank" rel="noopener" :href="socials.inst"
+                       class="btn btn-neutral btn-icon-only btn-instagram btn-round btn-lg" data-toggle="tooltip"
+                       :title="$lang.landing.inst">
+                        <i class="fa fa-instagram"></i>
                     </a>
                 </div>
             </div>
@@ -52,23 +39,22 @@
                 <div class="col-md-6">
                     <div class="copyright">
                         &copy; {{year}}
-                        <a href="https://www.creative-tim.com" target="_blank" rel="noopener">Creative Tim</a> & <a href="https://www.binarcode.com" target="_blank" rel="noopener">Binar Code</a>
+                        <a target="_blank" rel="noopener">{{$lang.landing.signature}}</a>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <ul class="nav nav-footer justify-content-end">
                         <li class="nav-item">
-                            <a href="https://www.creative-tim.com" class="nav-link" target="_blank" rel="noopener">Creative Tim</a>
+                            <a :href="socials.coders_link" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.coders_label}}</a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank" rel="noopener">About
-                                Us</a>
+                            <a :href="socials.about_us" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.about_us}}</a>
                         </li>
                         <li class="nav-item">
-                            <a href="http://blog.creative-tim.com" class="nav-link" target="_blank" rel="noopener">Blog</a>
+                            <a :href="socials.news" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.news}}</a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://github.com/creativetimofficial/argon-design-system/blob/master/LICENSE.md"
+                            <a :href="socials.mit"
                                class="nav-link" target="_blank" rel="noopener">MIT License</a>
                         </li>
                     </ul>
@@ -82,7 +68,8 @@ export default {
   name: 'app-footer',
   data() {
     return {
-      year: new Date().getFullYear()
+        socials: window.socials,
+        year: new Date().getFullYear()
     }
   }
 };

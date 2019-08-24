@@ -30,6 +30,17 @@ require('./config/guards');
 import settings from './config/settings';
 let Env = settings.get('local');
 window.apiHost = Env.apiHost;
+window.socials = {
+  'git':'https://github.com/VladimirKrupin/skill-tracking.ru',
+  'vk':'https://vk.com/?id=244842255',
+  'fb':'https://www.facebook.com/profile.php?id=100021975798495',
+  'inst':'https://www.instagram.com/vladimir_togliatti/',
+  'tw':'https://twitter.com/Vladimir_Krpn',
+  'coders_link':'https://vk.com/?id=244842255',
+  'about_us':'https://vk.com/?id=244842255',
+  'news':'https://vk.com/?id=244842255',
+  'mit':'https://github.com/VladimirKrupin/skill-tracking.ru/LICENSE.md',
+};
 
 var Lang = require('vuejs-localization');
 Lang.requireAll(require.context('./Lang', true, /\.js$/));

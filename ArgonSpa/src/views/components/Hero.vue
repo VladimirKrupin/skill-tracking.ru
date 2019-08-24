@@ -16,22 +16,23 @@
             <div class="col px-0">
                 <div class="row justify-content-center align-items-center">
                     <div class="col-lg-7 text-center pt-lg">
-                        <img src="img/brand/white.png" style="width: 200px;" class="img-fluid">
-                        <p class="lead text-white mt-4 mb-5">The awesome app. Check progress in your skill.</p>
+                        <!--<img src="img/brand/white.png" style="width: 200px;" class="img-fluid">-->
+                        <h4 class="text-white">{{$lang.landing.awesome}}</h4>
+                        <p class="lead text-white mt-4 mb-5">{{$lang.landing.awesome_text}}</p>
                         <div class="btn-wrapper">
                             <base-button tag="a"
-                                         href="https://demos.creative-tim.com/vue-argon-design-system/documentation"
+                                         href="#"
                                          class="mb-3 mb-sm-0"
                                          type="info"
-                                         icon="fa fa-code">
-                                Components
+                                         icon="fa fa-apple">
+                                App store
                             </base-button>
                             <base-button tag="a"
-                                         href="https://www.creative-tim.com/product/vue-argon-design-system"
+                                         href="#"
                                          class="mb-3 mb-sm-0"
                                          type="white"
-                                         icon="ni ni-cloud-download-95">
-                                Download Vue
+                                         icon="fa fa-google">
+                                Google play
                             </base-button>
                         </div>
                     </div>

@@ -1,4 +1,27 @@
 //landing.js
 module.exports = {
-    start_using : 'Start now'
+    start_using : 'Start now',
+    started : 'Getting started',
+    started_text : 'Detailed instructions to help you get started using our app.',
+    started_video : 'Video lessons.',
+    started_video_text : 'If you do not want to read, then watch our instructional videos.',
+    pages : 'pages',
+    main : 'main',
+    profile : 'profile',
+    login : 'login',
+    register : 'register',
+    awesome : 'Awesome app',
+    awesome_text : 'Watch out progress in your skills and we help you with it.',
+    thanks : 'Thank you for supporting us!',
+    thanks_text : 'Let\'s get in touch on any of these platforms.',
+    fb : 'Like us on Facebook',
+    inst : 'Follow us on Instagram',
+    vk : 'Follow us on Vkontakte',
+    tw : 'Follow us on Twitter',
+    git : 'Star us on Github',
+    coders : 'Star us on Github',
+    coders_label : 'Coders team',
+    about_us : 'About Us',
+    news : 'News',
+    signature : 'Skill Tracking official web site.',
 }
