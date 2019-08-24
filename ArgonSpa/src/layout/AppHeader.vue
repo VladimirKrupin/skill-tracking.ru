@@ -121,12 +121,6 @@ export default {
             socials: window.socials
         };
     },
-    mounted: function () {
-        this.$lang.setLang('ru')
-    },
-    // created:function () {
-    //     this.$lang.setLang('en')
-    // }
 };
 </script>
 <style>

@@ -15,6 +15,9 @@ import { FadeTransition } from "vue2-transitions";
 export default {
   components: {
     FadeTransition
-  }
+  },
+    mounted: function () {
+        this.$lang.setLang('en')
+    },
 };
 </script>

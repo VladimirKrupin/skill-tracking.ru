@@ -45,10 +45,8 @@
                         </a>
                     </div>
                     <div class="col-sm-4 mt-4 mt-sm-0 text-right">
-                        <span class="text-white alpha-7">Coded by</span>
-                        <a href="https://vk.com/?id=244842255" style="color: white;text-decoration: underline" target="_blank" title="Vladimir Krupin vk.com page">
-                            Vladimir Krupin
-                        </a>
+                        <span class="text-white alpha-7">Coded by </span>
+                        <a :href="socials.coders_link" target="_blank" class="coders_link">{{$lang.landing.coders_label}}</a>
                     </div>
                 </div>
             </div>
@@ -56,7 +54,21 @@
     </section>
 </template>
 <script>
-export default {};
+export default {
+    data: function () {
+        return {
+            socials: window.socials,
+        }
+    }
+};
 </script>
 <style>
+    .coders_link {
+        color: white;
+        text-decoration: underline
+    }
+    .coders_link:hover {
+        color: white;
+        text-decoration: none;
+    }
 </style>

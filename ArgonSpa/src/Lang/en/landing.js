@@ -3,7 +3,7 @@ module.exports = {
     start_using : 'Start now',
     started : 'Getting started',
     started_text : 'Detailed instructions to help you get started using our app.',
-    started_video : 'Video lessons.',
+    started_video : 'Video lessons',
     started_video_text : 'If you do not want to read, then watch our instructional videos.',
     pages : 'pages',
     main : 'main',
