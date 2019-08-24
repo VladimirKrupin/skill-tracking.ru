@@ -17,7 +17,7 @@
                 <div class="row justify-content-center align-items-center">
                     <div class="col-lg-7 text-center pt-lg">
                         <img src="img/brand/white.png" style="width: 200px;" class="img-fluid">
-                        <p class="lead text-white mt-4 mb-5">A beautiful Design System for Bootstrap 4. It's Free and Open Source.</p>
+                        <p class="lead text-white mt-4 mb-5">The awesome app. Check progress in your skill.</p>
                         <div class="btn-wrapper">
                             <base-button tag="a"
                                          href="https://demos.creative-tim.com/vue-argon-design-system/documentation"
@@ -39,14 +39,14 @@
                 <div class="row align-items-center justify-content-around stars-and-coded">
                     <div class="col-sm-4">
                         <span class="text-white alpha-7 ml-3">Star us on</span>
-                        <a href="https://github.com/creativetimofficial/argon-design-system" target="_blank" title="Support us on Github">
+                        <a href="https://github.com/VladimirKrupin/skill-tracking.ru" target="_blank" title="Support us on Github">
                             <img src="img/brand/github-white-slim.png" style="height: 22px; margin-top: -3px">
                         </a>
                     </div>
                     <div class="col-sm-4 mt-4 mt-sm-0 text-right">
                         <span class="text-white alpha-7">Coded by</span>
-                        <a href="https://www.creative-tim.com" target="_blank" title="Creative Tim - Premium Bootstrap Themes and Templates">
-                            <img src="img/brand/creativetim-white-slim.png" class="ml-3" style="height: 30px;">
+                        <a href="https://vk.com/?id=244842255" style="color: white;text-decoration: underline" target="_blank" title="Vladimir Krupin vk.com page">
+                            Vladimir Krupin
                         </a>
                     </div>
                 </div>

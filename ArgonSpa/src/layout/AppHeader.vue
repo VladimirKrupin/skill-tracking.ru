@@ -20,7 +20,7 @@
                 <base-dropdown class="nav-item" menu-classes="dropdown-menu-xl">
                     <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
                         <i class="ni ni-ui-04 d-lg-none"></i>
-                        <span class="nav-link-inner--text">{{$lang.messages.hello_world}}</span>
+                        <span class="nav-link-inner--text">{{$lang.landing.start_using}}</span>
                     </a>
                     <div class="dropdown-menu-inner">
                         <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/"
@@ -60,40 +60,40 @@
             </ul>
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://www.facebook.com/creativetim" target="_blank" rel="noopener"
+                    <a class="nav-link nav-link-icon" href="https://www.facebook.com/profile.php?id=100021975798495" target="_blank" rel="noopener"
                        data-toggle="tooltip" title="Like us on Facebook">
                         <i class="fa fa-facebook-square"></i>
                         <span class="nav-link-inner--text d-lg-none">Facebook</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://www.instagram.com/creativetimofficial"
+                    <a class="nav-link nav-link-icon" href="https://www.instagram.com/vladimir_togliatti/"
                        target="_blank" rel="noopener" data-toggle="tooltip" title="Follow us on Instagram">
                         <i class="fa fa-instagram"></i>
                         <span class="nav-link-inner--text d-lg-none">Instagram</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://twitter.com/creativetim" target="_blank" rel="noopener"
+                    <a class="nav-link nav-link-icon" href="https://twitter.com/Vladimir_Krpn" target="_blank" rel="noopener"
                        data-toggle="tooltip" title="Follow us on Twitter">
                         <i class="fa fa-twitter-square"></i>
                         <span class="nav-link-inner--text d-lg-none">Twitter</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://github.com/creativetimofficial/vue-argon-design-system"
+                    <a class="nav-link nav-link-icon" href="https://github.com/VladimirKrupin/skill-tracking.ru"
                        target="_blank" rel="noopener" data-toggle="tooltip" title="Star us on Github">
                         <i class="fa fa-github"></i>
                         <span class="nav-link-inner--text d-lg-none">Github</span>
                     </a>
                 </li>
                 <li class="nav-item d-none d-lg-block ml-lg-4">
-                    <a href="https://www.creative-tim.com/product/vue-argon-design-system" target="_blank" rel="noopener"
+                    <a href="#" target="_blank" rel="noopener"
                        class="btn btn-neutral btn-icon">
                 <span class="btn-inner--icon">
                   <i class="fa fa-cloud-download mr-2"></i>
                 </span>
-                        <span class="nav-link-inner--text">Download</span>
+                        <span class="nav-link-inner--text">Download App</span>
                     </a>
                 </li>
             </ul>
