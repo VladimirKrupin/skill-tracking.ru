@@ -39,7 +39,7 @@ window.socials = {
   'coders_link':'https://vk.com/?id=244842255',
   'about_us':'https://vk.com/?id=244842255',
   'news':'https://vk.com/?id=244842255',
-  'mit':'https://github.com/VladimirKrupin/skill-tracking.ru/LICENSE.md',
+  'mit':'https://github.com/VladimirKrupin/skill-tracking.ru/blob/master/LICENSE',
 };
 
 var Lang = require('vuejs-localization');
