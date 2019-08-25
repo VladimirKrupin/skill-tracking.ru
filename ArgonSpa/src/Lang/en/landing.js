@@ -1,4 +1,4 @@
-//landing.js
+//en/landing.js
 module.exports = {
     start_using : 'Start now',
     started : 'Getting started',
@@ -10,6 +10,7 @@ module.exports = {
     profile : 'profile',
     login : 'login',
     register : 'register',
+    policy : 'policy',
     awesome : 'Awesome app',
     awesome_text : 'Watch out progress in your skills and we help you with it.',
     thanks : 'Thank you for supporting us!',

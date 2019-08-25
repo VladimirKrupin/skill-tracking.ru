@@ -6,6 +6,7 @@ import Components from "./views/Components.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
+import Policy from "./views/Policy.vue";
 
 Vue.use(Router);
 
@@ -45,6 +46,15 @@ export default new Router({
       components: {
         header: AppHeader,
         default: Profile,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/policy",
+      name: "policy",
+      components: {
+        header: AppHeader,
+        default: Policy,
         footer: AppFooter
       }
     }

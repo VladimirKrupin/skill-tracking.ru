@@ -17,7 +17,7 @@ export default {
     FadeTransition
   },
     mounted: function () {
-        this.$lang.setLang('en')
+        this.$lang.setLang('ru');
     },
 };
 </script>

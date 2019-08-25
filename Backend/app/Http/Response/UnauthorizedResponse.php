@@ -2,13 +2,14 @@
 namespace App\Http\Response;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Http\Response;
 
-class UnauthorizedResponse extends Response
+class UnauthorizedResponse
 {
     static function get($message = null)
     {
         // Set default locale
         App::setLocale('en');
-        return response(['error'=>($message)?$message:__('errors.unauthorized')],401,['Access-Control-Allow-Origin'=>'*']);
+        return new Response(['error'=>($message)?$message:__('errors.unauthorized')],401,['Access-Control-Allow-Origin'=>'*']);
     }
 }

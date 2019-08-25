@@ -1,4 +1,4 @@
-//landing.js
+//ru/landing.js
 module.exports = {
     start_using : 'Начни сейчас',
     started : 'С чего начать',
@@ -10,6 +10,7 @@ module.exports = {
     profile : 'профиль',
     login : 'вход',
     register : 'регистрация',
+    policy : 'Политика',
     awesome : 'Удивительное приложение',
     awesome_text : 'Следите за прогрессом в ваших навыках, и мы поможем вам в этом.',
     thanks : 'Спасибо Вам за поддержку!',

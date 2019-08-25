@@ -6,6 +6,7 @@ use App\Http\Models\User\User;
 use App\Http\Resources\User\UserLoginResource;
 use App\Http\Response\UnauthorizedResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -48,13 +49,11 @@ class UserController extends Controller
 
         $input = $request->all();
 
-        if (! $user = User::where('email', $input['email'])->first()){return response(['error'=>'message'],401);}
+        if (! $user = User::where('email', $input['email'])->first()){return UnauthorizedResponse::get(__('errors.unknown_user'));}
 
-        if (! Hash::check($input['password'], $user->getAuthPassword())){return response(['error'=>'message'],401);}
+        if (! Hash::check($input['password'], $user->getAuthPassword())){return UnauthorizedResponse::get(__('errors.wrong_password'));}
 
         return new UserLoginResource( (object) ['token' => $user->createToken('MyApp')->accessToken]);
-
-
 
     }
 
