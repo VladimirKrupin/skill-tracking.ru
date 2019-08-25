@@ -4,6 +4,7 @@ module.exports = {
     started : 'Getting started',
     started_text : 'Detailed instructions to help you get started using our app.',
     started_video : 'Video lessons',
+    start_app : 'App',
     started_video_text : 'If you do not want to read, then watch our instructional videos.',
     pages : 'pages',
     main : 'main',
@@ -25,4 +26,5 @@ module.exports = {
     about_us : 'About Us',
     news : 'News',
     signature : 'Skill Tracking official web site.',
+    auth : 'Authorization',
 }

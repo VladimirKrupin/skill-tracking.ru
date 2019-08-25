@@ -52,9 +52,16 @@
                     </a>
                     <router-link to="/" class="dropdown-item">{{$lang.landing.main}}</router-link>
                     <router-link to="/profile" class="dropdown-item">{{$lang.landing.profile}}</router-link>
+                    <router-link to="/policy" class="dropdown-item">{{$lang.landing.policy}}</router-link>
+                </base-dropdown>
+
+                <base-dropdown tag="li" class="nav-item">
+                    <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
+                        <i class="ni ni-collection d-lg-none"></i>
+                        <span class="nav-link-inner--text">{{$lang.landing.auth}}</span>
+                    </a>
                     <router-link to="/login" class="dropdown-item">{{$lang.landing.login}}</router-link>
                     <router-link to="/register" class="dropdown-item">{{$lang.landing.register}}</router-link>
-                    <router-link to="/policy" class="dropdown-item">{{$lang.landing.policy}}</router-link>
                 </base-dropdown>
             </ul>
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">
@@ -65,27 +72,27 @@
                         <span class="nav-link-inner--text d-lg-none">Facebook</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" :href="socials.inst"
-                       target="_blank" rel="noopener" data-toggle="tooltip" :title="$lang.landing.inst">
-                        <i class="fa fa-instagram"></i>
-                        <span class="nav-link-inner--text d-lg-none">Instagram</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" :href="socials.tw" target="_blank" rel="noopener"
-                       data-toggle="tooltip" :title="$lang.landing.tw">
-                        <i class="fa fa-twitter-square"></i>
-                        <span class="nav-link-inner--text d-lg-none">Twitter</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" :href="socials.vk" target="_blank" rel="noopener"
-                       data-toggle="tooltip" :title="$lang.landing.vk">
-                        <i class="fa fa-vk"></i>
-                        <span class="nav-link-inner--text d-lg-none">Vk</span>
-                    </a>
-                </li>
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link nav-link-icon" :href="socials.inst"-->
+                       <!--target="_blank" rel="noopener" data-toggle="tooltip" :title="$lang.landing.inst">-->
+                        <!--<i class="fa fa-instagram"></i>-->
+                        <!--<span class="nav-link-inner&#45;&#45;text d-lg-none">Instagram</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link nav-link-icon" :href="socials.tw" target="_blank" rel="noopener"-->
+                       <!--data-toggle="tooltip" :title="$lang.landing.tw">-->
+                        <!--<i class="fa fa-twitter-square"></i>-->
+                        <!--<span class="nav-link-inner&#45;&#45;text d-lg-none">Twitter</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link nav-link-icon" :href="socials.vk" target="_blank" rel="noopener"-->
+                       <!--data-toggle="tooltip" :title="$lang.landing.vk">-->
+                        <!--<i class="fa fa-vk"></i>-->
+                        <!--<span class="nav-link-inner&#45;&#45;text d-lg-none">Vk</span>-->
+                    <!--</a>-->
+                <!--</li>-->
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" :href="socials.git"
                        target="_blank" rel="noopener" data-toggle="tooltip" :title="$lang.landing.git">
@@ -96,12 +103,33 @@
                 <li class="nav-item d-none d-lg-block ml-lg-4">
                     <a href="#" target="_blank" rel="noopener"
                        class="btn btn-neutral btn-icon">
-                <span class="btn-inner--icon">
-                    <i class="fa fa-play  mr-2"></i>
-                </span>
-                        <span class="nav-link-inner--text">{{$lang.landing.started_video}}</span>
+                            <span class="btn-inner--icon">
+                                <i class="fa fa-play  mr-2"></i>
+                            </span>
+                        <span class="nav-link-inner--text">{{$lang.landing.start_app}}</span>
                     </a>
                 </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                <div class="small-dropdown">
+                    <base-dropdown tag="li" class="nav-item">
+                        <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
+                            <i class="ni ni-collection d-lg-none"></i>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link nav-link-icon"
+                                       data-toggle="tooltip">
+                                        {{lang}}
+                                        <i class="fa fa-cogs"></i>
+                                    </a>
+                                </li>
+                        </a>
+                        <li v-on:click="langHandler(l)" v-for="(l,key) in langs" :key="key"
+                            class="dropdown-item"
+                            v-bind:class="localStorageLang(l)">
+                            {{l}}
+                        </li>
+                    </base-dropdown>
+                </div>
             </ul>
         </base-nav>
     </header>
@@ -110,6 +138,8 @@
 import BaseNav from "@/components/BaseNav";
 import BaseDropdown from "@/components/BaseDropdown";
 import CloseButton from "@/components/CloseButton";
+import { mapGetters } from 'vuex';
+
 
 export default {
   components: {
@@ -117,12 +147,42 @@ export default {
     CloseButton,
     BaseDropdown
   },
+    computed: {
+        ...mapGetters('profile', {
+            lang: 'lang',
+            userData: 'userData',
+        }),
+    },
     data() {
         return {
-            socials: window.socials
+            socials: window.socials,
+            langs: [
+                'en',
+                'ru',
+            ]
         };
+    },
+    methods:{
+        localStorageLang: function (lang) {
+            if (localStorage.getItem('lang') === lang){
+                return 'active router-link-active';
+            }
+            return '';
+        },
+        langHandler: function (lang){
+            this.$store.dispatch('profile/changeLang',{lang:lang});
+            this.$lang.setLang(lang);
+        },
     },
 };
 </script>
 <style>
+    .small-dropdown .dropdown-menu {
+        max-width: 50px;
+        min-width: 50px;
+        width: 50px;
+    }
+    .dropdown-item {
+        cursor: pointer;
+    }
 </style>

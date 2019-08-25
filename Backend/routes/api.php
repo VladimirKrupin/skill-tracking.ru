@@ -16,10 +16,12 @@ use Illuminate\Http\Request;
 //USER CONTROLLER REQUESTS
 Route::post('/testProtectedCollection/', 'TestController@index')->middleware('auth:api');
 Route::post('/testProtected/', 'TestController@index')->middleware('auth:api');
-Route::post('/createUser/', 'User\UserController@create');
+Route::get('/createUser/', 'User\UserController@create');
 
 Route::get('/test/', 'TestController@index');
+
 Route::post('/login/', 'User\UserController@login');
+Route::get('/getUserData/', 'User\UserController@getUserData')->middleware('auth:api');
 
 Route::any('/', function () {
     return 'skill-tracking.api';

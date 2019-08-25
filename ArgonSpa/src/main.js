@@ -47,9 +47,7 @@ Lang.requireAll(require.context('./Lang', true, /\.js$/));
 Vue.config.productionTip = false;
 Vue.use(Argon);
 Vue.use(Lang);
-
 store.dispatch('profile/setUserData');
-
 new Vue({
   router,
   store,

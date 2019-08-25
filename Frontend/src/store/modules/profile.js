@@ -11,7 +11,7 @@ const getters = {
 const mutations = {
   setUserData(state, payload) {
     state.userData = payload.userData;
-  },
+  }
 };
 
 const actions = {

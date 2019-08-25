@@ -4,6 +4,7 @@ module.exports = {
     started : 'С чего начать',
     started_text : 'Подробная иструкция, которая поможет вам начать использовать наще приложение.',
     started_video : 'Видео уроки',
+    start_app : 'Приложение',
     started_video_text : 'Если не хотите читать, то смотрите наши обучающие видео.',
     pages : 'Страницы',
     main : 'главная',
@@ -24,4 +25,5 @@ module.exports = {
     about_us : 'О нас',
     news : 'Новости',
     signature : 'Skill Tracking Официальный сайт.',
+    auth : 'Авторизация',
 }

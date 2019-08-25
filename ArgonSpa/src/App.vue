@@ -11,13 +11,16 @@
 </template>
 <script>
 import { FadeTransition } from "vue2-transitions";
+import { mapGetters } from 'vuex';
+
 
 export default {
   components: {
     FadeTransition
   },
     mounted: function () {
-        this.$lang.setLang('ru');
     },
+    computed: {
+    }
 };
 </script>

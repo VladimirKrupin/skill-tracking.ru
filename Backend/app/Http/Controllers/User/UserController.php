@@ -7,6 +7,7 @@ use App\Http\Resources\User\UserLoginResource;
 use App\Http\Response\UnauthorizedResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -35,7 +36,6 @@ class UserController extends Controller
         }
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        var_dump($user->toArray());
     }
 
     public function login(Request $request){
@@ -55,6 +55,10 @@ class UserController extends Controller
 
         return new UserLoginResource( (object) ['token' => $user->createToken('MyApp')->accessToken]);
 
+    }
+
+    public function getUserData(Request $request){
+        return UserDataResource(Auth::user());
     }
 
 }
