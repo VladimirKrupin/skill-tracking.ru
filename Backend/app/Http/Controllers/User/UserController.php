@@ -3,6 +3,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\User\User;
+use App\Http\Resources\User\UserDataResource;
 use App\Http\Resources\User\UserLoginResource;
 use App\Http\Response\UnauthorizedResponse;
 use Illuminate\Http\Request;
@@ -58,7 +59,7 @@ class UserController extends Controller
     }
 
     public function getUserData(Request $request){
-        return UserDataResource(Auth::user());
+        return new UserDataResource(Auth::user());
     }
 
 }

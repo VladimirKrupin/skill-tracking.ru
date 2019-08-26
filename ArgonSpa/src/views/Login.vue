@@ -121,7 +121,7 @@ export default {
             };
             axios(options)
                 .then(response => {
-                    localStorage.setItem('access_token', response.data.token);
+                    localStorage.setItem('access_token', response.data.data.token);
                     this.success = true;
                     this.$router.push({ name: 'MainPage' });
                 })
