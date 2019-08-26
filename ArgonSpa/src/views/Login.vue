@@ -54,7 +54,7 @@
                                     {{$lang.login.remember_me}}
                                 </base-checkbox>
                                 <div class="alert alert-danger alert-dismissable mt-3 mb-0" v-if="errors">
-                                    <div v-for="item in errors">
+                                    <div v-for="(item,key) in errors" :key="key">
                                         {{item}}
                                     </div>
                                 </div>

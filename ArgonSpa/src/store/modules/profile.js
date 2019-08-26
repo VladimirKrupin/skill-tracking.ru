@@ -2,11 +2,12 @@ import axios from 'axios';
 
 const state = {
   userData: [],
+  lang: '',
 };
 
 const getters = {
     userData: state => state.userData,
-    lang: state => (state.userData.lang)?console.log(state.userData.lang):'en',
+    lang: state => state.lang,
 };
 
 const mutations = {
@@ -14,7 +15,7 @@ const mutations = {
     state.userData = payload.userData;
   },
   setLang(state, payload) {
-    state.userData.lang = payload.lang;
+    state.lang = payload.lang;
   },
 };
 
@@ -30,11 +31,11 @@ const actions = {
       axios(options)
           .then(response => {
               context.commit('setUserData', { userData: response.data.userData });
+              context.commit('setLang', { userData: response.data.userData.lang });
           })
           .catch(e => {
               console.log(e);
               localStorage.removeItem('access_token');
-              context.commit('setLang', {lang:'en'});
           });
   },
   changeLang(context,payload) {
