@@ -1,46 +1,81 @@
 import axios from 'axios';
 
 const state = {
-  userData: [],
+  email: '',
+  name: '',
   lang: '',
 };
 
 const getters = {
-    userData: state => state.userData,
+    email: state => state.email,
+    name: state => state.name,
     lang: state => state.lang,
 };
 
 const mutations = {
-  setUserData(state, payload) {
-    state.userData = payload.userData;
-  },
-  setLang(state, payload) {
-    state.lang = payload.lang;
-  },
+    setEmail(state, payload) {
+        state.email = payload.email;
+    },
+    setName(state, payload) {
+        state.name = payload.name;
+    },
+    setLang(state, payload) {
+            state.lang = payload.lang;
+    },
 };
 
 const actions = {
   setUserData(context) {
-      const options = {
-          method: 'GET',
-          headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-          },
-          url: window.apiHost + '/api/getUserData',
-      };
-      axios(options)
-          .then(response => {
-              context.commit('setUserData', { userData: response.data.userData });
-              context.commit('setLang', { userData: response.data.userData.lang });
-          })
-          .catch(e => {
-              console.log(e);
-              localStorage.removeItem('access_token');
-          });
+      if (localStorage.getItem('access_token') !== null){
+          const options = {
+              method: 'GET',
+              headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+              },
+              url: window.apiHost + '/api/getUserData/',
+          };
+          axios(options)
+              .then(response => {
+                  console.log(response);
+                  context.commit('setEmail', { email: response.data.data.email });
+                  context.commit('setName', { name: response.data.data.name });
+                  context.commit('setLang', { lang: response.data.data.lang });
+                  if (localStorage.getItem('lang') !== response.data.data.lang){
+                      context.dispatch('changeLang', { lang: response.data.data.lang });
+                  }
+              })
+              .catch(e => {
+                  console.log(e);
+              });
+      }
   },
   changeLang(context,payload) {
+      console.log('changeLang '+payload.lang);
       localStorage.setItem('lang',payload.lang);
       context.commit('setLang', { lang: payload.lang });
+  },
+  setDbLang(context,payload) {
+      console.log('setDbLang '+payload.lang);
+      context.dispatch('changeLang', { lang: payload.lang });
+      if (localStorage.getItem('access_token') !== null){
+          const options = {
+              method: 'POST',
+              headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+              },
+              url: window.apiHost + '/api/putLang/',
+              data: {
+                  lang: payload.lang
+              }
+          };
+          axios(options)
+              .then(response => {
+                  console.log(response);
+              })
+              .catch(e => {
+                  console.log(e);
+              });
+      }
   },
 };
 

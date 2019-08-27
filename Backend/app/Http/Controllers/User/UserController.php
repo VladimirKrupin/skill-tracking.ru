@@ -3,9 +3,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\User\User;
+use App\Http\Resources\Common\SuccessResource;
 use App\Http\Resources\User\UserDataResource;
 use App\Http\Resources\User\UserLoginResource;
+use App\Http\Response\SuccessResponse;
 use App\Http\Response\UnauthorizedResponse;
+use App\Http\Response\ValidatorResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +63,19 @@ class UserController extends Controller
 
     public function getUserData(Request $request){
         return new UserDataResource(Auth::user());
+    }
+
+    public function putLang(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lang' => 'required|string|min:2|max:2',
+        ]);
+
+        if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
+
+        User::where('id',Auth::user()['id'])->update(['lang'=>$request->input('lang')]);
+
+        return new SuccessResponse();
+
     }
 
 }

@@ -6,7 +6,10 @@ router.beforeEach( async (to, from, next) => {
   let is_authenticated  = await Vue.prototype.$auth.check();
 
   if (to.matched.some(record => record.meta.requiresAuth) && ! is_authenticated) {
-    next({ name: 'login' });
+    // next({ name: 'login' });
+      // window.location.href = '/login/';
+      window.location.replace(window.location.origin+"/#/login");
+      window.location.reload();
   } else {
     next();
   }
@@ -18,8 +21,11 @@ router.onReady( async (route) => {
   let is_authenticated = await Vue.prototype.$auth.check();
 
   if ( auth && ! is_authenticated && route.name !== 'login') {
-    router.push({ name: 'login' });
+    // router.push({ name: 'login' });
+      // window.location.href = '/login/';
+      window.location.replace(window.location.origin+"/#/login");
+      window.location.reload();
   } else if ( auth && is_authenticated && route.name === 'login') {
-    router.push({ name: 'MainPage' });
+    // router.push({ name: 'MainPage' });
   }
 });

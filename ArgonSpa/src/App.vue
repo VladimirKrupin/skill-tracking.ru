@@ -28,12 +28,25 @@ export default {
         }
     },
     mounted: function () {
-      console.log(this.checkLang());
+        this.$cookie.set('lang', this.checkLang(), 1);
         this.$store.dispatch('profile/changeLang',{lang:this.checkLang()});
-        this.$lang.setLang(this.checkLang());
-        localStorage.setItem('lang',this.checkLang());
     },
     computed: {
-    }
+        ...mapGetters('profile', {
+            lang: 'lang',
+        }),
+        langWatcher () {
+            return this.lang;
+        }
+    },
+    watch: {
+        langWatcher (newlang, oldlang) {
+            console.log('langWatcher '+oldlang+' -> '+newlang);
+            this.$cookie.set('lang', newlang, 1);
+            this.$store.dispatch('profile/changeLang',{lang:newlang});
+            this.$lang.setLang(newlang);
+
+        }
+    },
 };
 </script>

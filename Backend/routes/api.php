@@ -20,8 +20,9 @@ Route::get('/createUser/', 'User\UserController@create');
 
 Route::get('/test/', 'TestController@index');
 
-Route::post('/login/', 'User\UserController@login');
+Route::post('/login/', 'User\UserController@login')->middleware('lang');
 Route::get('/getUserData/', 'User\UserController@getUserData')->middleware('auth:api');
+Route::post('/putLang/', 'User\UserController@putLang')->middleware('auth:api');
 
 Route::any('/', function () {
     return 'skill-tracking.api';

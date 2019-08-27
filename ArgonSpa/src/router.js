@@ -8,11 +8,30 @@ import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import Policy from "./views/Policy.vue";
 
+// Containers
+const DefaultContainer = () => import('@/containers/DefaultContainer');
+const Statistic = () => import('./views/statistics/Statistics');
+
 Vue.use(Router);
 
 export default new Router({
   linkExactActiveClass: "active",
   routes: [
+    {
+        path: '/app',
+        name: "DefaultContainer",
+        component: DefaultContainer,
+        children: [
+            {
+                path: '/statistic',
+                name: 'Statistic',
+                component: Statistic,
+            },
+        ],
+        meta: {
+            requiresAuth: true
+        }
+    },
     {
       path: "/",
       name: "MainPage",

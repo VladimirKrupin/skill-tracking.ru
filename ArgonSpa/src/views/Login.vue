@@ -109,6 +109,7 @@ export default {
             event.preventDefault();
             this.errors = '';
             const options = {
+                // withCredentials: true,
                 method: 'POST',
                 headers: {
                 },
@@ -123,7 +124,7 @@ export default {
                 .then(response => {
                     localStorage.setItem('access_token', response.data.data.token);
                     this.success = true;
-                    this.$router.push({ name: 'MainPage' });
+                    this.$router.push({ name: 'DefaultContainer ' });
                 })
                 .catch(error => {
                     console.log(error.response);

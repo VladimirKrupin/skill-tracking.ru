@@ -12,7 +12,7 @@ module.exports = {
     login : 'login',
     register : 'register',
     policy : 'policy',
-    awesome : 'Awesome app',
+    awesome : 'Welcome',
     awesome_text : 'Watch out progress in your skills and we help you with it.',
     thanks : 'Thank you for supporting us!',
     thanks_text : 'Let\'s get in touch on any of these platforms.',

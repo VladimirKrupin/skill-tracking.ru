@@ -2,13 +2,13 @@
     <header class="header-global">
         <base-nav class="navbar-main" transparent type="" effect="light" expand>
             <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
-                <img src="img/brand/white.png" alt="logo">
+                <img src="/img/brand/white.png" alt="logo">
             </router-link>
 
             <div class="row" slot="content-header" slot-scope="{closeMenu}">
                 <div class="col-6 collapse-brand">
                     <a href="/">
-                        <img src="img/brand/blue.png">
+                        <img src="/img/brand/blue.png">
                     </a>
                 </div>
                 <div class="col-6 collapse-close">
@@ -101,13 +101,19 @@
                     </a>
                 </li>
                 <li class="nav-item d-none d-lg-block ml-lg-4">
-                    <a href="#" target="_blank" rel="noopener"
-                       class="btn btn-neutral btn-icon">
-                            <span class="btn-inner--icon">
-                                <i class="fa fa-play  mr-2"></i>
+                    <router-link to="/app">
+                        <span
+                           class="btn btn-neutral btn-icon">
+                                <span class="btn-inner--icon">
+                                    <i class="fa fa-play  mr-2"></i>
+                                </span>
+                            <span class="nav-link-inner--text">
+
+                                {{$lang.landing.start_app}}
+
                             </span>
-                        <span class="nav-link-inner--text">{{$lang.landing.start_app}}</span>
-                    </a>
+                        </span>
+                    </router-link>
                 </li>
             </ul>
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
@@ -150,8 +156,7 @@ export default {
     computed: {
         ...mapGetters('profile', {
             lang: 'lang',
-            userData: 'userData',
-        }),
+        })
     },
     data() {
         return {
@@ -170,8 +175,7 @@ export default {
             return '';
         },
         langHandler: function (lang){
-            this.$store.dispatch('profile/changeLang',{lang:lang});
-            this.$lang.setLang(lang);
+            this.$store.dispatch('profile/setDbLang',{lang:lang});
         },
     },
 };
