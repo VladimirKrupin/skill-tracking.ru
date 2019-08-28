@@ -17,7 +17,7 @@ class Locale {
      */
     public function handle($request, Closure $next)
     {
-        var_dump($request->cookies);
+        var_dump($_SESSION);
         $language = Session::get('lang', Config::get('app.locale'));
         App::setLocale($language);
         return $next($request);

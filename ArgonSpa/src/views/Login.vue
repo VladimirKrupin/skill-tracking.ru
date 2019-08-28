@@ -61,8 +61,18 @@
                                 <div class="alert alert-success alert-dismissable mt-3 mb-0" v-if="success">
                                     {{$lang.login.success}}
                                 </div>
-                                <div class="text-center">
-                                    <base-button v-on:click="autorization" type="primary" class="my-4">{{$lang.login.sign_in}}</base-button>
+                                <div class="text-center ">
+                                    <router-link v-if="logged()" to="/app">
+                                        <span class="btn btn-neutral btn-icon my-4">
+                                            <span class="btn-inner--icon">
+                                                <i class="fa fa-play mr-2"></i>
+                                            </span>
+                                            <span class="nav-link-inner--text">
+                                                {{$lang.landing.start_app}}
+                                            </span>
+                                        </span>
+                                    </router-link>
+                                    <base-button v-if="!logged()" v-on:click="autorization" type="primary" class="my-4">{{$lang.login.sign_in}}</base-button>
                                 </div>
                             </form>
                         </template>
@@ -122,14 +132,23 @@ export default {
             };
             axios(options)
                 .then(response => {
+                    console.log(response.data);
                     localStorage.setItem('access_token', response.data.data.token);
                     this.success = true;
-                    this.$router.push({ name: 'DefaultContainer ' });
                 })
                 .catch(error => {
-                    console.log(error.response);
-                    this.errors = [error.response.data.error];
+                    // console.log(error.response);
+                    // this.errors = [error.response.data.error];
                 });
+        },
+        logged: function () {
+            console.log(localStorage.getItem('access_token'));
+            console.log(typeof localStorage.getItem('access_token'));
+            return (
+                localStorage.getItem('access_token') !== null &&
+                localStorage.getItem('access_token') !== undefined &&
+                localStorage.getItem('access_token') !== 'undefined'
+            );
         }
     }
 }
