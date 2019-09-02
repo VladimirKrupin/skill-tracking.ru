@@ -119,7 +119,7 @@ export default {
             event.preventDefault();
             this.errors = '';
             const options = {
-                // withCredentials: true,
+                withCredentials: true,
                 method: 'POST',
                 headers: {
                 },
@@ -137,8 +137,10 @@ export default {
                     this.success = true;
                 })
                 .catch(error => {
-                    // console.log(error.response);
-                    // this.errors = [error.response.data.error];
+                    console.log(error);
+                    if (error.response.data !== undefined){
+                        this.errors = [error.response.data.error];
+                    }
                 });
         },
         logged: function () {

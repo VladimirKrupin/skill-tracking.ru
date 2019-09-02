@@ -14,6 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
@@ -48,6 +49,11 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
+
+
+//        var_dump($request->cookie('lang_vue'));
+//        var_dump(Cookie::get('lang_vue'));
+//        print_r($_COOKIE);
 
         if ($validator->fails()) {return UnauthorizedResponse::get();}
 

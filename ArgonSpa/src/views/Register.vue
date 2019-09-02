@@ -19,7 +19,7 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <small>Sign in with</small>
+                                <small>{{$lang.register.sign_up_with}}</small>
                             </div>
                             <div class="btn-wrapper text-center">
                                 <base-button type="neutral">
@@ -34,37 +34,40 @@
                             </div>
                         </template>
                         <template>
-                            <div class="text-center text-muted mb-4">
-                                <small>Or sign up with credentials</small>
+                            <div class="text-center text-muted mb-3 mt-4">
+                                <small>{{$lang.register.sign_up_credentials}}</small>
                             </div>
                             <form role="form">
                                 <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Name"
-                                            addon-left-icon="ni ni-hat-3">
-                                </base-input>
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Email"
+                                            class="mb-2"
+                                            :placeholder="$lang.register.email"
                                             addon-left-icon="ni ni-email-83">
                                 </base-input>
-                                <base-input alternative
+                                <base-input v-if="extended"
+                                            alternative
+                                            class="mb-2"
+                                            :placeholder="$lang.register.name"
+                                            addon-left-icon="ni ni-hat-3">
+                                </base-input>
+                                <base-input v-if="extended"
+                                            alternative
+                                            class="mb-2"
                                             type="password"
-                                            placeholder="Password"
+                                            :placeholder="$lang.register.password"
                                             addon-left-icon="ni ni-lock-circle-open">
                                 </base-input>
-                                <div class="text-muted font-italic">
-                                    <small>password strength:
-                                        <span class="text-success font-weight-700">strong</span>
+                                <div class="text-muted font-italic mb-2">
+                                    <small>{{$lang.register.pass_strength}}:
+                                        <span class="text-success font-weight-700">{{$lang.register.strength_normal}}</span>
                                     </small>
                                 </div>
                                 <base-checkbox>
-                                    <span>I agree with the
-                                        <a href="#">Privacy Policy</a>
-                                    </span>
+                                    <div>{{$lang.register.i_agree}}
+                                        <router-link to="/policy">{{$lang.register.privacy_policy}}</router-link>
+                                    </div>
                                 </base-checkbox>
                                 <div class="text-center">
-                                    <base-button type="primary" class="my-4">Create account</base-button>
+                                    <base-button type="primary" class="my-4">{{$lang.register.create_account}}</base-button>
                                 </div>
                             </form>
                         </template>
@@ -75,7 +78,13 @@
     </section>
 </template>
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            extended: false,
+        };
+    },
+};
 </script>
 <style>
 </style>
