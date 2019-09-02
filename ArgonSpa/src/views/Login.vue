@@ -79,14 +79,14 @@
                     </card>
                     <div class="row mt-3">
                         <div class="col-6">
-                            <a href="#" class="text-light">
+                            <router-link to="/forgot" class="text-light">
                                 <small>{{$lang.login.forgot}}</small>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="col-6 text-right">
-                            <a href="#" class="text-light">
+                            <router-link to="/register" class="text-light">
                                 <small>{{$lang.login.create}}</small>
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -119,15 +119,12 @@ export default {
             event.preventDefault();
             this.errors = '';
             const options = {
-                withCredentials: true,
                 method: 'POST',
-                headers: {
-                },
+                headers: window.defaultHeaders(),
                 data: {
                     email: this.userData.email,
                     password: this.userData.password,
                 },
-
                 url: window.apiHost+'/api/login/',
             };
             axios(options)

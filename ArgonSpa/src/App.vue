@@ -28,8 +28,6 @@ export default {
         }
     },
     mounted: function () {
-        this.$cookie.set('lang', this.checkLang());
-        this.$cookie.set('lang_vue', this.checkLang());
         this.$store.dispatch('profile/changeLang',{lang:this.checkLang()});
     },
     computed: {
@@ -43,8 +41,6 @@ export default {
     watch: {
         langWatcher (newlang, oldlang) {
             console.log('langWatcher '+oldlang+' -> '+newlang);
-            this.$cookie.set('lang', newlang);
-            this.$cookie.set('lang_vue', newlang);
             this.$store.dispatch('profile/changeLang',{lang:newlang});
             this.$lang.setLang(newlang);
 

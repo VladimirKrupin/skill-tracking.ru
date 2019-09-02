@@ -72,6 +72,18 @@
                             </form>
                         </template>
                     </card>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <router-link to="/forgot" class="text-light">
+                                <small>{{$lang.login.forgot}}</small>
+                            </router-link>
+                        </div>
+                        <div class="col-6 text-right">
+                            <router-link to="/login" class="text-light">
+                                <small>{{$lang.login.sign_in}}</small>
+                            </router-link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

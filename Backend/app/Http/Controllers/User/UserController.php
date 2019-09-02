@@ -50,11 +50,6 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
-
-//        var_dump($request->cookie('lang_vue'));
-//        var_dump(Cookie::get('lang_vue'));
-//        print_r($_COOKIE);
-
         if ($validator->fails()) {return UnauthorizedResponse::get();}
 
         $input = $request->all();

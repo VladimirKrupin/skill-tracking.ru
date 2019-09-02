@@ -53,6 +53,13 @@ window.socials = {
   'mit':'https://github.com/VladimirKrupin/skill-tracking.ru/blob/master/LICENSE',
 };
 
+window.defaultHeaders = function () {
+    return {
+      'Lang':''+localStorage.getItem('lang'),
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+    }
+};
+
 var Lang = require('vuejs-localization');
 Lang.requireAll(require.context('./Lang', true, /\.js$/));
 Vue.config.productionTip = false;
