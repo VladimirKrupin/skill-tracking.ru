@@ -39,35 +39,42 @@
                             </div>
                             <form role="form">
                                 <base-input alternative
-                                            class="mb-2"
+                                            v-on:input="fixError()"
+                                            v-bind:class="mailErrorClass() + extendClass()"
                                             :placeholder="$lang.register.email"
-                                            addon-left-icon="ni ni-email-83">
+                                            addon-left-icon="ni ni-email-83"
+                                            v-model="email">
                                 </base-input>
                                 <base-input v-if="extended"
                                             alternative
                                             class="mb-2"
                                             :placeholder="$lang.register.name"
-                                            addon-left-icon="ni ni-hat-3">
+                                            addon-left-icon="ni ni-hat-3"
+                                            v-model="name">
                                 </base-input>
                                 <base-input v-if="extended"
                                             alternative
                                             class="mb-2"
                                             type="password"
                                             :placeholder="$lang.register.password"
-                                            addon-left-icon="ni ni-lock-circle-open">
+                                            addon-left-icon="ni ni-lock-circle-open"
+                                            v-model="password">
                                 </base-input>
-                                <div class="text-muted font-italic mb-2">
+                                <div v-if="password" class="text-muted font-italic mb-3">
                                     <small>{{$lang.register.pass_strength}}:
                                         <span class="text-success font-weight-700">{{$lang.register.strength_normal}}</span>
                                     </small>
                                 </div>
-                                <base-checkbox>
+                                <base-checkbox
+                                        v-model="agree"
+                                        v-bind:class="(agreeError)?'checkbox-error':''"
+                                >
                                     <div>{{$lang.register.i_agree}}
                                         <router-link to="/policy">{{$lang.register.privacy_policy}}</router-link>
                                     </div>
                                 </base-checkbox>
                                 <div class="text-center">
-                                    <base-button type="primary" class="my-4">{{$lang.register.create_account}}</base-button>
+                                    <base-button v-on:click="register" type="primary" v-bind:class="validValues()?'':'btn-disabled'" class="my-4">{{$lang.register.create_account}}</base-button>
                                 </div>
                             </form>
                         </template>
@@ -93,10 +100,64 @@
 export default {
     data() {
         return {
-            extended: false,
+            extended: true,
+            email: '',
+            name: '',
+            password: '',
+            agree: false,
+            agreeError: false,
+            mailError: false,
         };
     },
+    methods: {
+        register: function (){
+            this.valid();
+            if (this.validValues()){
+                console.log('Success register');
+            }
+        },
+        validValues: function (){
+            return (this.agree && this.validEmail(this.email));
+        },
+        valid: function () {
+            if (this.extended){
+                // valid logic for extended form
+            }
+            if (!this.agree){
+                this.agreeError = true;
+            }else {
+                this.agreeError = false;
+            }
+            if (!this.validEmail(this.email)){
+                this.mailError = true;
+            }else {
+                this.mailError = false;
+            }
+        },
+        validEmail: function (email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        },
+        fixError(){
+            this.mailError = false;
+        },
+        mailErrorClass(){
+            return this.mailError?'border-red ':'';
+        },
+        extendClass(){
+            return this.extended?'mb-2':'mb-3';
+        },
+    }
 };
 </script>
 <style>
+    .btn-disabled {
+        opacity: .4;
+    }
+    .border-red {
+        border: 1px solid red !important;
+    }
+    .checkbox-error .custom-control-label::before {
+        border: 1px solid red;
+    }
 </style>
