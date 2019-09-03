@@ -131,6 +131,7 @@ export default {
                 .then(response => {
                     console.log(response.data);
                     localStorage.setItem('access_token', response.data.data.token);
+                    this.$store.dispatch('profile/setUserData');
                     this.success = true;
                 })
                 .catch(error => {
@@ -141,8 +142,6 @@ export default {
                 });
         },
         logged: function () {
-            console.log(localStorage.getItem('access_token'));
-            console.log(typeof localStorage.getItem('access_token'));
             return (
                 localStorage.getItem('access_token') !== null &&
                 localStorage.getItem('access_token') !== undefined &&

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Mail\RegistrationSuccess;
 use App\Http\Models\User\User;
 use App\Http\Resources\Common\SuccessResource;
 use App\Http\Resources\User\UserDataResource;
@@ -11,13 +12,41 @@ use App\Http\Response\UnauthorizedResponse;
 use App\Http\Response\ValidatorResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
+    public function register(Request $request)
+    {
+//        var_dump(App::getLocale());
+        $input = [
+            'email' => $request->input('email'),
+        ];
+        $validator = Validator::make($input, [
+            'email' => 'required|email|unique:users',
+        ]);
+        if ($validator->fails()) {
+            $error_str = '';
+            foreach ($validator->errors()->all() as $error){
+                $error_str .= ' '.$error;
+            }
+            return ValidatorResponse::get(['error' => "$error_str"]);
+        }
+        $pass = str_random(8);
+        $input['password'] = bcrypt($pass);
+        $input['lang'] = $request->header('lang');
+        if (User::create($input)){
+            $user = User::where('email',$input['email'])->first();
+            Mail::to($input['email'])->send(new RegistrationSuccess($input['email'],$pass));
+            return new UserLoginResource( (object) ['token' => $user->createToken('MyApp')->accessToken]);
+        }
+    }
+
     public function create(Request $request)
     {
         $input = [

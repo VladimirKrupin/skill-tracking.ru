@@ -12,4 +12,5 @@ module.exports = {
     email : 'Email',
     name : 'Имя',
     password : 'Пароль',
+    success : 'Регистрация прошла успешно',
 }

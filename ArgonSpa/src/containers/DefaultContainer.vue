@@ -13,10 +13,10 @@
       <SidebarToggler class="d-md-down-none" display="lg" />
       <div class="ml-auto">
         <div class="d-flex align-items-center col-sm-12 col-12 col-md-5 col-lg-5">
-<!--          <div class="d-flex flex-column mr-1 user-info">-->
+          <div class="d-flex flex-column mr-1 user-info">
 <!--            <h5 class="mb-1"><span class="badge badge-pill badge-primary font-weight-light">Андминистратор</span></h5>-->
-<!--            <span class="text-md-left text-nowrap text-dark">User name</span>-->
-<!--          </div>-->
+            <span class="text-md-left text-nowrap text-dark">{{(userName)?userName:email}}</span>
+          </div>
           <b-navbar-nav>
             <DefaultHeaderDropdownAccnt/>
           </b-navbar-nav>

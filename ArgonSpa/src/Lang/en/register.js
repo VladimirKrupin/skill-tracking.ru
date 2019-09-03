@@ -12,4 +12,5 @@ module.exports = {
     email : 'Email',
     name : 'Name',
     password : 'Password',
+    success : 'Registration completed successfully',
 }

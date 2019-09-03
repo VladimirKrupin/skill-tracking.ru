@@ -73,8 +73,26 @@
                                         <router-link to="/policy">{{$lang.register.privacy_policy}}</router-link>
                                     </div>
                                 </base-checkbox>
+                                <div class="alert alert-danger alert-dismissable mt-3 mb-0" v-if="errors">
+                                    <div v-for="(item,key) in errors" :key="key">
+                                        {{item}}
+                                    </div>
+                                </div>
+                                <div class="alert alert-success alert-dismissable mt-3 mb-0" v-if="success">
+                                    {{$lang.register.success}}
+                                </div>
                                 <div class="text-center">
-                                    <base-button v-on:click="register" type="primary" v-bind:class="validValues()?'':'btn-disabled'" class="my-4">{{$lang.register.create_account}}</base-button>
+                                    <router-link v-if="logged()" to="/app">
+                                        <span class="btn btn-neutral btn-icon my-4">
+                                            <span class="btn-inner--icon">
+                                                <i class="fa fa-play mr-2"></i>
+                                            </span>
+                                            <span class="nav-link-inner--text">
+                                                {{$lang.landing.start_app}}
+                                            </span>
+                                        </span>
+                                    </router-link>
+                                    <base-button v-if="!logged()" v-on:click="register" type="primary" v-bind:class="validValues()?'':'btn-disabled'" class="my-4">{{$lang.register.create_account}}</base-button>
                                 </div>
                             </form>
                         </template>
@@ -97,23 +115,55 @@
     </section>
 </template>
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
-            extended: true,
+            extended: false,
             email: '',
             name: '',
             password: '',
             agree: false,
             agreeError: false,
             mailError: false,
+            errors: '',
+            success: false,
         };
     },
     methods: {
         register: function (){
             this.valid();
             if (this.validValues()){
-                console.log('Success register');
+                let formData;
+                if (this.extended){
+                    formData = {
+                        // data for extended register form
+                    }
+                }else {
+                    formData = {
+                        email: this.email
+                    }
+                }
+                this.errors = '';
+                const options = {
+                    method: 'POST',
+                    headers: window.defaultHeaders(),
+                    data: formData,
+                    url: window.apiHost+'/api/register/',
+                };
+                axios(options)
+                    .then(response => {
+                        console.log(response.data);
+                        localStorage.setItem('access_token', response.data.data.token);
+                        this.$store.dispatch('profile/setUserData');
+                        this.success = true;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        if (error.response.data !== undefined){
+                            this.errors = [error.response.data.error];
+                        }
+                    });
             }
         },
         validValues: function (){
@@ -147,6 +197,13 @@ export default {
         extendClass(){
             return this.extended?'mb-2':'mb-3';
         },
+        logged: function () {
+            return (
+                localStorage.getItem('access_token') !== null &&
+                localStorage.getItem('access_token') !== undefined &&
+                localStorage.getItem('access_token') !== 'undefined'
+            );
+        }
     }
 };
 </script>
