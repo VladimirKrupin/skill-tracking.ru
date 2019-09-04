@@ -1,5 +1,7 @@
 import axios from 'axios';
-
+import settings from "../../config/settings";
+import env from "../../config/env";
+let appSettings = settings.get(env.get());
 const state = {
   email: '',
   name: '',
@@ -32,7 +34,7 @@ const actions = {
               headers: {
                   'Authorization': 'Bearer ' + localStorage.getItem('access_token')
               },
-              url: window.apiHost + '/api/getUserData/',
+              url: appSettings.apiHost + '/api/getUserData/',
           };
           axios(options)
               .then(response => {
@@ -50,27 +52,24 @@ const actions = {
       }
   },
   changeLang(context,payload) {
-      console.log('changeLang '+payload.lang);
       localStorage.setItem('lang',payload.lang);
       context.commit('setLang', { lang: payload.lang });
   },
   setDbLang(context,payload) {
-      console.log('setDbLang '+payload.lang);
-      context.dispatch('changeLang', { lang: payload.lang });
       if (localStorage.getItem('access_token') !== null){
           const options = {
               method: 'POST',
               headers: {
                   'Authorization': 'Bearer ' + localStorage.getItem('access_token')
               },
-              url: window.apiHost + '/api/putLang/',
+              url: appSettings.apiHost + '/api/putLang/',
               data: {
                   lang: payload.lang
               }
           };
           axios(options)
               .then(response => {
-                  console.log(response);
+                  console.log('Switch on '+payload.lang);
               })
               .catch(e => {
                   console.log(e);

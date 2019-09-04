@@ -66,35 +66,35 @@
             </ul>
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" :href="socials.fb" target="_blank" rel="noopener"
+                    <a class="nav-link nav-link-icon" :href="this.socials.fb" target="_blank" rel="noopener"
                        data-toggle="tooltip" :title="$lang.landing.fb">
                         <i class="fa fa-facebook-square"></i>
                         <span class="nav-link-inner--text d-lg-none">Facebook</span>
                     </a>
                 </li>
                 <!--<li class="nav-item">-->
-                    <!--<a class="nav-link nav-link-icon" :href="socials.inst"-->
+                    <!--<a class="nav-link nav-link-icon" :href="this.socials.inst"-->
                        <!--target="_blank" rel="noopener" data-toggle="tooltip" :title="$lang.landing.inst">-->
                         <!--<i class="fa fa-instagram"></i>-->
                         <!--<span class="nav-link-inner&#45;&#45;text d-lg-none">Instagram</span>-->
                     <!--</a>-->
                 <!--</li>-->
                 <!--<li class="nav-item">-->
-                    <!--<a class="nav-link nav-link-icon" :href="socials.tw" target="_blank" rel="noopener"-->
+                    <!--<a class="nav-link nav-link-icon" :href="this.socials.tw" target="_blank" rel="noopener"-->
                        <!--data-toggle="tooltip" :title="$lang.landing.tw">-->
                         <!--<i class="fa fa-twitter-square"></i>-->
                         <!--<span class="nav-link-inner&#45;&#45;text d-lg-none">Twitter</span>-->
                     <!--</a>-->
                 <!--</li>-->
                 <!--<li class="nav-item">-->
-                    <!--<a class="nav-link nav-link-icon" :href="socials.vk" target="_blank" rel="noopener"-->
+                    <!--<a class="nav-link nav-link-icon" :href="this.socials.vk" target="_blank" rel="noopener"-->
                        <!--data-toggle="tooltip" :title="$lang.landing.vk">-->
                         <!--<i class="fa fa-vk"></i>-->
                         <!--<span class="nav-link-inner&#45;&#45;text d-lg-none">Vk</span>-->
                     <!--</a>-->
                 <!--</li>-->
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" :href="socials.git"
+                    <a class="nav-link nav-link-icon" :href="this.socials.git"
                        target="_blank" rel="noopener" data-toggle="tooltip" :title="$lang.landing.git">
                         <i class="fa fa-github"></i>
                         <span class="nav-link-inner--text d-lg-none">Github</span>
@@ -160,7 +160,6 @@ export default {
     },
     data() {
         return {
-            socials: window.socials,
             langs: [
                 'en',
                 'ru',
@@ -175,6 +174,7 @@ export default {
             return '';
         },
         langHandler: function (lang){
+            this.$store.dispatch('profile/changeLang',{lang:lang});
             this.$store.dispatch('profile/setDbLang',{lang:lang});
         },
     },

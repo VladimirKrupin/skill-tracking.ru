@@ -29,44 +29,23 @@ import Auth from "./plugins/Auth";
 import Argon from "./plugins/argon-kit";
 import './registerServiceWorker'
 import { store } from './store'
-var VueCookie = require('vue-cookie');
-// Tell Vue to use the plugin
-Vue.use(VueCookie);
+import commonMixin from './mixin/common';
+import env from "./config/env";
+
 Vue.use(BootstrapVue);
 Vue.use(Auth);
 
 require('./config/guards');
 
-import settings from './config/settings';
-let Env = settings.get('local');
-window.apiHost = Env.apiHost;
-window.frontHost = Env.frontHost;
-window.socials = {
-  'git':'https://github.com/VladimirKrupin/skill-tracking.ru',
-  'vk':'https://vk.com/?id=244842255',
-  'fb':'https://www.facebook.com/profile.php?id=100021975798495',
-  'inst':'https://www.instagram.com/vladimir_togliatti/',
-  'tw':'https://twitter.com/Vladimir_Krpn',
-  'coders_link':'https://vk.com/?id=244842255',
-  'about_us':'https://vk.com/?id=244842255',
-  'news':'https://vk.com/?id=244842255',
-  'mit':'https://github.com/VladimirKrupin/skill-tracking.ru/blob/master/LICENSE',
-};
-
-window.defaultHeaders = function () {
-    return {
-      'Lang':''+localStorage.getItem('lang'),
-      'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-    }
-};
-
-var Lang = require('vuejs-localization');
+let Lang = require('vuejs-localization');
 Lang.requireAll(require.context('./Lang', true, /\.js$/));
-Vue.config.productionTip = false;
+Vue.config.productionTip = env.production();
 Vue.use(Argon);
 Vue.use(Lang);
 
 store.dispatch('profile/setUserData');
+
+Vue.mixin(commonMixin.get());
 
 new Vue({
   router,

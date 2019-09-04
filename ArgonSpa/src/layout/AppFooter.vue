@@ -7,27 +7,27 @@
                     <h4 class="mb-0 font-weight-light">{{$lang.landing.thanks_text}}</h4>
                 </div>
                 <div class="col-lg-6 text-lg-center btn-wrapper">
-                    <a target="_blank" rel="noopener" :href="socials.tw"
+                    <a target="_blank" rel="noopener" :href="this.socials.tw"
                        class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip"
                        :title="$lang.landing.tw">
                         <i class="fa fa-twitter"></i>
                     </a>
-                    <a target="_blank" rel="noopener" :href="socials.fb"
+                    <a target="_blank" rel="noopener" :href="this.socials.fb"
                        class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip"
                        :title="$lang.landing.fb">
                         <i class="fa fa-facebook-square"></i>
                     </a>
-                    <a target="_blank" rel="noopener" :href="socials.vk"
+                    <a target="_blank" rel="noopener" :href="this.socials.vk"
                        class="btn btn-neutral btn-icon-only btn-lg btn-round" data-toggle="tooltip"
                        :title="$lang.landing.vk">
                         <i class="fa fa-vk"></i>
                     </a>
-                    <a target="_blank" rel="noopener" :href="socials.git"
+                    <a target="_blank" rel="noopener" :href="this.socials.git"
                        class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg" data-toggle="tooltip"
                        :title="$lang.landing.git">
                         <i class="fa fa-github"></i>
                     </a>
-                    <a target="_blank" rel="noopener" :href="socials.inst"
+                    <a target="_blank" rel="noopener" :href="this.socials.inst"
                        class="btn btn-neutral btn-icon-only btn-instagram btn-round btn-lg" data-toggle="tooltip"
                        :title="$lang.landing.inst">
                         <i class="fa fa-instagram"></i>
@@ -45,16 +45,16 @@
                 <div class="col-md-6">
                     <ul class="nav nav-footer justify-content-end">
                         <li class="nav-item">
-                            <a :href="socials.coders_link" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.coders_label}}</a>
+                            <a :href="this.socials.coders_link" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.coders_label}}</a>
                         </li>
                         <li class="nav-item">
-                            <a :href="socials.about_us" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.about_us}}</a>
+                            <a :href="this.socials.about_us" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.about_us}}</a>
                         </li>
                         <li class="nav-item">
-                            <a :href="socials.news" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.news}}</a>
+                            <a :href="this.socials.news" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.news}}</a>
                         </li>
                         <li class="nav-item">
-                            <a :href="socials.mit"
+                            <a :href="this.socials.mit"
                                class="nav-link" target="_blank" rel="noopener">MIT License</a>
                         </li>
                     </ul>
@@ -68,7 +68,6 @@ export default {
   name: 'app-footer',
   data() {
     return {
-        socials: window.socials,
         year: new Date().getFullYear()
     }
   }

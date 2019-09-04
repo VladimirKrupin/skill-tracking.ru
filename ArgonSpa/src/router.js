@@ -5,6 +5,7 @@ import AppFooter from "./layout/AppFooter";
 import Components from "./views/Components.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
+import Forgot from "./views/Forgot.vue";
 import Profile from "./views/Profile.vue";
 import Policy from "./views/Policy.vue";
 
@@ -65,6 +66,15 @@ export default new Router({
       components: {
         header: AppHeader,
         default: Profile,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/forgot",
+      name: "forgot",
+      components: {
+        header: AppHeader,
+        default: Forgot,
         footer: AppFooter
       }
     },

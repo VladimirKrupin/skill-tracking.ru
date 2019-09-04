@@ -120,12 +120,12 @@ export default {
             this.errors = '';
             const options = {
                 method: 'POST',
-                headers: window.defaultHeaders(),
+                headers: this.defaultHeaders,
                 data: {
                     email: this.userData.email,
                     password: this.userData.password,
                 },
-                url: window.apiHost+'/api/login/',
+                url: this.apiHost+'/api/login/',
             };
             axios(options)
                 .then(response => {
@@ -136,18 +136,11 @@ export default {
                 })
                 .catch(error => {
                     console.log(error);
-                    if (error.response.data !== undefined){
+                    if (error.response !== undefined){
                         this.errors = [error.response.data.error];
                     }
                 });
         },
-        logged: function () {
-            return (
-                localStorage.getItem('access_token') !== null &&
-                localStorage.getItem('access_token') !== undefined &&
-                localStorage.getItem('access_token') !== 'undefined'
-            );
-        }
     }
 }
 </script>

@@ -74,7 +74,7 @@
           data: {
             email: this.email,
           },
-          url: window.apiHost + '/registration',
+          url: this.apiHost + '/registration',
         };
         axios(options)
           .then(response => {

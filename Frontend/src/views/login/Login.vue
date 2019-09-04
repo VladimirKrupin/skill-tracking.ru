@@ -73,7 +73,7 @@
               password: this.userData.password,
             },
 
-            url: window.apiHost+'/api/login/',
+            url: this.apiHost+'/api/login/',
           };
           axios(options)
             .then(response => {

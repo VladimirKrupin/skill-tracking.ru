@@ -147,9 +147,9 @@ export default {
                 this.errors = '';
                 const options = {
                     method: 'POST',
-                    headers: window.defaultHeaders(),
+                    headers: this.defaultHeaders,
                     data: formData,
-                    url: window.apiHost+'/api/register/',
+                    url: this.apiHost+'/api/register/',
                 };
                 axios(options)
                     .then(response => {
@@ -159,8 +159,7 @@ export default {
                         this.success = true;
                     })
                     .catch(error => {
-                        console.log(error);
-                        if (error.response.data !== undefined){
+                        if (error.response !== undefined){
                             this.errors = [error.response.data.error];
                         }
                     });
@@ -197,13 +196,8 @@ export default {
         extendClass(){
             return this.extended?'mb-2':'mb-3';
         },
-        logged: function () {
-            return (
-                localStorage.getItem('access_token') !== null &&
-                localStorage.getItem('access_token') !== undefined &&
-                localStorage.getItem('access_token') !== 'undefined'
-            );
-        }
+    },
+    mounted() {
     }
 };
 </script>

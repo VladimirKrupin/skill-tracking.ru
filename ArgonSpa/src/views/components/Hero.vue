@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-sm-4 mt-4 mt-sm-0 text-right">
                         <span class="text-white alpha-7">Coded by </span>
-                        <a :href="socials.coders_link" target="_blank" class="coders_link">{{$lang.landing.coders_label}}</a>
+                        <a :href="this.socials.coders_link" target="_blank" class="coders_link">{{$lang.landing.coders_label}}</a>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,6 @@ export default {
     },
     data: function () {
         return {
-            socials: window.socials,
         }
     }
 };
