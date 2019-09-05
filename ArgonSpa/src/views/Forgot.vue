@@ -77,6 +77,7 @@ export default {
             this.valid();
             if (this.validValues()){
                 this.errors = '';
+                this.success = false;
                 const options = {
                     method: 'POST',
                     headers: this.defaultHeaders,

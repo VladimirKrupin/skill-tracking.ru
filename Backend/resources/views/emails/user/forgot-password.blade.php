@@ -9,7 +9,8 @@
     <!-- Fonts -->
 </head>
 <body>
-{{$mailData['hash']}}
-{{$mailData['host']}}
+<p>{{__('forgot.text')}} <a href="{{$mailData['host']}}/forgot/#{{$mailData['hash']}}">{{__('forgot.link')}}</a></p>
+
+
 </body>
 </html>
