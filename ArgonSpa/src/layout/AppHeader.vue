@@ -62,6 +62,7 @@
                     </a>
                     <router-link to="/login" class="dropdown-item">{{$lang.landing.login}}</router-link>
                     <router-link to="/register" class="dropdown-item">{{$lang.landing.register}}</router-link>
+                    <router-link to="/forgot" class="dropdown-item">{{$lang.landing.forgot}}</router-link>
                 </base-dropdown>
             </ul>
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">

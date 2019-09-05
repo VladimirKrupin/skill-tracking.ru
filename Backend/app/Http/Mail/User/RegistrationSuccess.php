@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Mail;
+namespace App\Http\Mail\User;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -25,7 +25,7 @@ class RegistrationSuccess extends Mailable
 
     public function build()
     {
-        return $this->view('emails.registration-success')
+        return $this->view('emails.user.registration-success')
             ->subject(__('register.register_success'));
     }
 }

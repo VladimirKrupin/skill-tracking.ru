@@ -36,4 +36,8 @@ class User extends Authenticatable
 
         return $this->api_token;
     }
+
+    public function forgotPassword(){
+        return $this->hasOne('App\Http\Models\User\ForgotPassword','email','email');
+    }
 }
