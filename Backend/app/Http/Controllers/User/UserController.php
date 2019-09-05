@@ -116,12 +116,13 @@ class UserController extends Controller
         //валидация запроса
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
+            'host' => 'required|string|max:25',
         ]);
 
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
 
         $email = $request->input('email');
-        $host =  $request->getSchemeAndHttpHost();
+        $host =  $request->input('host');
 
         if (!$user = User::where('email',$request->input('email'))->with('forgotPassword')->first()){
             return ValidatorResponse::get(__('errors.not_found_user'));

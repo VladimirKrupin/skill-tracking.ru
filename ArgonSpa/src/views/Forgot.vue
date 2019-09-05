@@ -81,7 +81,10 @@ export default {
                 const options = {
                     method: 'POST',
                     headers: this.defaultHeaders,
-                    data: {email: this.email},
+                    data: {
+                        email: this.email,
+                        host: window.document.location.origin
+                    },
                     url: this.apiHost+'/api/forgot/',
                 };
                 axios(options)
