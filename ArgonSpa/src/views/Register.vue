@@ -92,7 +92,10 @@
                                             </span>
                                         </span>
                                     </router-link>
-                                    <base-button v-if="!logged()" v-on:click="register" type="primary" v-bind:class="validValues()?'':'btn-disabled'" class="my-4">{{$lang.register.create_account}}</base-button>
+                                    <base-button v-if="!logged()" v-on:click="register" type="primary" v-bind:class="validValues()?'':'btn-disabled'" class="my-4">
+                                        {{$lang.register.create_account}}
+                                        <div v-if="loader" class="loader loader-btn"></div>
+                                    </base-button>
                                 </div>
                             </form>
                         </template>
@@ -128,6 +131,7 @@ export default {
             mailError: false,
             errors: '',
             success: false,
+            loader: false,
         };
     },
     methods: {
@@ -145,6 +149,7 @@ export default {
                     }
                 }
                 this.errors = '';
+                this.loader = true;
                 const options = {
                     method: 'POST',
                     headers: this.defaultHeaders,
@@ -157,11 +162,13 @@ export default {
                         localStorage.setItem('access_token', response.data.data.token);
                         this.$store.dispatch('profile/setUserData');
                         this.success = true;
+                        this.loader = false;
                     })
                     .catch(error => {
                         if (error.response !== undefined){
                             this.errors = [error.response.data.error];
                         }
+                        this.loader = false;
                     });
             }
         },

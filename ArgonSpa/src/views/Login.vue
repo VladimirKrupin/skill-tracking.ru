@@ -72,7 +72,10 @@
                                             </span>
                                         </span>
                                     </router-link>
-                                    <base-button v-if="!logged()" v-on:click="autorization" type="primary" class="my-4">{{$lang.login.sign_in}}</base-button>
+                                    <base-button v-if="!logged()" v-on:click="autorization" type="primary" class="my-4">
+                                        {{$lang.login.sign_in}}
+                                        <div v-if="loader" class="loader loader-btn"></div>
+                                    </base-button>
                                 </div>
                             </form>
                         </template>
@@ -108,6 +111,7 @@ export default {
                 "password": ''
             },
             countVar: '',
+            loader: false,
         };
     },
     name: 'Login',
@@ -118,6 +122,7 @@ export default {
         autorization: function (event) {
             event.preventDefault();
             this.errors = '';
+            this.loader = true;
             const options = {
                 method: 'POST',
                 headers: this.defaultHeaders,
@@ -133,12 +138,14 @@ export default {
                     localStorage.setItem('access_token', response.data.data.token);
                     this.$store.dispatch('profile/setUserData');
                     this.success = true;
+                    this.loader = false;
                 })
                 .catch(error => {
                     console.log(error);
                     if (error.response !== undefined){
                         this.errors = [error.response.data.error];
                     }
+                    this.loader = false;
                 });
         },
     }

@@ -146,7 +146,18 @@ class UserController extends Controller
             $diff_in_hours = $today->diffInHours($user_forgot['updated_at'], false);
             if ($user_forgot['attempts'] === 2 && $diff_in_hours < 24){
                 return ValidatorResponse::get(['error' => __('errors.attempts')]);
-            }else{
+            }elseif($user_forgot['attempts'] === 2 && $diff_in_hours > 24){
+                ForgotPassword::where('email', $email)->update([
+                    'hash' => $hash,
+                    'attempts' => 1
+                ]);
+                $mailData = [
+                    'hash' => $hash,
+                    'host' => $host
+                ];
+                Mail::to($email)->send(new ForgotPasswordMail($mailData));
+            }
+            else{
                 ForgotPassword::where('email', $email)->update([
                     'hash' => $hash,
                     'attempts' => $user_forgot['attempts']+1

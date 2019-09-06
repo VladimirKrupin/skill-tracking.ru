@@ -39,7 +39,10 @@
                                     {{$lang.forgot.success}}
                                 </div>
                                 <div class="text-center">
-                                    <base-button  v-on:click="forgot" type="primary" v-bind:class="validValues()?'':'btn-disabled'" class="my-4">{{$lang.forgot.restore}}</base-button>
+                                    <base-button  v-on:click="forgot" type="primary" v-bind:class="validValues()?'':'btn-disabled'" class="my-4">
+                                        {{$lang.forgot.restore}}
+                                        <div v-if="loader" class="loader loader-btn"></div>
+                                    </base-button>
                                 </div>
                             </form>
                         </template>
@@ -70,6 +73,7 @@ export default {
             mailError: false,
             errors: '',
             success: false,
+            loader: false,
         };
     },
     methods: {
@@ -78,6 +82,7 @@ export default {
             if (this.validValues()){
                 this.errors = '';
                 this.success = false;
+                this.loader = true;
                 const options = {
                     method: 'POST',
                     headers: this.defaultHeaders,
@@ -91,11 +96,13 @@ export default {
                     .then(response => {
                         console.log(response.data);
                         this.success = true;
+                        this.loader = false;
                     })
                     .catch(error => {
                         if (error.response !== undefined){
                             this.errors = [error.response.data.error];
                         }
+                        this.loader = false;
                     });
             }
         },
