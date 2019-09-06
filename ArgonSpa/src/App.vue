@@ -64,6 +64,10 @@ export default {
         top: 0;
     }
 
+    .loader-msg {
+        position: relative;
+    }
+
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }

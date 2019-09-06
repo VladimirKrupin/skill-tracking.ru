@@ -1,6 +1,7 @@
 //en/forgot.js
 module.exports = {
-    success : 'Success! Confirm request on reset password, click on link in your inbox email.',
+    success : 'Success! Confirm request on reset password, click on link from mail in your inbox email.',
+    successReset : 'Password reset successfully! A new password has been mailed to you.',
     forgot : 'Input your email',
     restore : 'restore',
 }

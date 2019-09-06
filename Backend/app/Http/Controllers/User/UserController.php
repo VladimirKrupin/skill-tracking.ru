@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Mail\User\ForgotPasswordMail;
 use App\Http\Mail\User\RegistrationSuccess;
+use App\Http\Mail\User\ResetPasswordMail;
 use App\Http\Models\User\ForgotPassword;
 use App\Http\Models\User\User;
 use App\Http\Resources\Common\SuccessResource;
@@ -143,7 +144,7 @@ class UserController extends Controller
         }else{
             $user_forgot = $user['forgotPassword']->toArray();
             $today = Carbon::today();
-            $diff_in_hours = $today->diffInHours($user_forgot['updated_at'], false);
+            $diff_in_hours = $today->diffInHours($user_forgot['updated_at'], true);
             if ($user_forgot['attempts'] === 2 && $diff_in_hours < 24){
                 return ValidatorResponse::get(['error' => __('errors.attempts')]);
             }elseif($user_forgot['attempts'] === 2 && $diff_in_hours > 24){
@@ -169,36 +170,41 @@ class UserController extends Controller
                 Mail::to($email)->send(new ForgotPasswordMail($mailData));
             }
         }
-
-        die;
-
-        // посмотрим сбрасывали уже пароль пароль
-        $user_reset = UsersPasswordReset::where('email',$request->input('email'))->first();
-
-        if ($user_reset) {
-            if (!$this->checkAttemts($user_reset)) {
-                return response()->json(['error' => ['email' => ['Количество попыток восстановления ограничено, попробуйте позже']]], 200);
-            }
-            return response()->json(['resendmail' => ['message' => ['Не пришло письмо?']], 'error' => ['email' => ['Письмо уже было отправлено, проверте почту и следуйте инструкциям в письме']]], 200);
-        }
-
-        //если все нормально
-        //сделаем ему хэш и секрет хэш, секрет отправим в письме, а ключ отправим в респонсе, потом будем проверять
-        $hash = str_random(200);
-        $link = $request->input('host').'/forgot-password/#'.$hash;
-
-        UsersPasswordReset::create([
-            'email' => $request->input('email'),
-            'hash' => $hash,
+    }
+    public function resetPassword(Request $request)
+    {
+        //валидация запроса
+        $validator = Validator::make($request->all(), [
+            'hash' => 'required|string|max:50',
         ]);
 
-        Mail::to($request->input('email'))->send(new ResetPassword($link));
+        if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
 
-        return response()->json([
-            'success'=>'Письмо с инструкцией для сброса пароля было отправленно вам на почту. Откройте его и следуйте инструкции.',
-            'hash' => $hash
-        ], 200);
+        $hash =  $request->input('hash');
 
+        $forgot_password = ForgotPassword::where('hash', $hash)->first();
+
+        if (!$forgot_password){
+            return ValidatorResponse::get(['error'=>__('forgot.bad_link')]);
+        }
+
+        $forgot_email = $forgot_password->email;
+        $forgot_password->attempts = 2;
+        $forgot_password->hash = 0;
+        $forgot_password->save();
+        $pass = str_random(8);
+
+        $user = User::where('email',$forgot_email)->first();
+        $user->password = bcrypt($pass);
+        $user->save();
+
+        $mailData = [
+            'pass' => $pass
+        ];
+
+        Mail::to($forgot_email)->send(new ResetPasswordMail($mailData));
+
+        return new UserLoginResource( (object) ['token' => $user->createToken('MyApp')->accessToken]);
     }
 
 }

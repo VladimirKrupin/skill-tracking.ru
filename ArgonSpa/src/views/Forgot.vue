@@ -38,8 +38,12 @@
                                 <div class="alert alert-success alert-dismissable mt-3 mb-0" v-if="success">
                                     {{$lang.forgot.success}}
                                 </div>
+                                <div class="alert alert-success alert-dismissable mt-3 mb-0" v-if="successReset">
+                                    {{$lang.forgot.successReset}}
+                                </div>
+                                <div v-if="loaderMessage" class="loader loader-msg m-auto"></div>
                                 <div class="text-center">
-                                    <base-button  v-on:click="forgot" type="primary" v-bind:class="validValues()?'':'btn-disabled'" class="my-4">
+                                    <base-button  v-on:click="forgot" v-on:keyup.enter="forgot" type="primary" v-bind:class="validValues()?'':'btn-disabled'" class="my-4">
                                         {{$lang.forgot.restore}}
                                         <div v-if="loader" class="loader loader-btn"></div>
                                     </base-button>
@@ -73,7 +77,9 @@ export default {
             mailError: false,
             errors: '',
             success: false,
+            successReset: false,
             loader: false,
+            loaderMessage: false,
         };
     },
     methods: {
@@ -82,6 +88,7 @@ export default {
             if (this.validValues()){
                 this.errors = '';
                 this.success = false;
+                this.successReset = false;
                 this.loader = true;
                 const options = {
                     method: 'POST',
@@ -122,6 +129,33 @@ export default {
         mailErrorClass(){
             return this.mailError?'border-red ':'';
         },
+    },
+    mounted() {
+        if (this.$route.hash !== ''){
+            this.loaderMessage = true;
+            const options = {
+                method: 'POST',
+                headers: this.defaultHeaders,
+                data: {
+                    hash: this.$route.hash.substr(1),
+                },
+                url: this.apiHost+'/api/resetPassword/',
+            };
+            axios(options)
+                .then(response => {
+                    this.successReset = true;
+                    this.loaderMessage = false;
+                    localStorage.setItem('access_token', response.data.data.token);
+                    this.$store.dispatch('profile/setUserData');
+                    this.$route.hash = '';
+                })
+                .catch(error => {
+                    if (error.response !== undefined){
+                        this.errors = [error.response.data.error];
+                    }
+                    this.loaderMessage = false;
+                });
+        }
     }
 };
 </script>

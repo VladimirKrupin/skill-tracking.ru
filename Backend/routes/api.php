@@ -18,6 +18,7 @@ Route::group(['middleware' => ['lang']], function () {
     Route::post('/register/', 'User\UserController@register');
     Route::post('/login/',      'User\UserController@login');
     Route::post('/forgot/',    'User\UserController@forgotPassword');
+    Route::post('/resetPassword/',    'User\UserController@resetPassword');
     Route::get('/getUserData/', 'User\UserController@getUserData')->middleware('auth:api');
     Route::post('/putLang/',    'User\UserController@putLang')->middleware('auth:api');
 });
