@@ -12,7 +12,8 @@
         class="text-center">
         <strong>Settings</strong>
       </b-dropdown-header>
-      <!--<b-dropdown-item :to="{name:'ChangePassword'}"><i class="fa fa-wrench" /> Изменить пароль</b-dropdown-item>-->
+      <b-dropdown-item :to="{name:'profile'}"><i class="fa fa-user" /> Профиль</b-dropdown-item>
+      <b-dropdown-item :to="{name:'changePassword'}"><i class="fa fa-wrench" /> Изменить пароль</b-dropdown-item>
       <b-dropdown-item  v-on:click="logout"><i class="fa fa-lock" /> Выйти</b-dropdown-item>
     </template>
   </AppHeaderDropdown>

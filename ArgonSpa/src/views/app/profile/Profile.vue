@@ -1,18 +1,8 @@
 <template>
     <div class="profile-page">
-        <section class="section-profile-cover section-shaped my-0">
-            <div class="shape shape-style-1 shape-primary shape-skew alpha-4">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+        <section class="section-profile-cover">
         </section>
         <section class="section section-skew">
-            <div class="container">
                 <card shadow class="card-profile mt--300" no-body>
                     <div class="px-4">
                         <div class="row justify-content-center">
@@ -25,7 +15,7 @@
                             </div>
                             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                                 <div class="card-profile-actions py-4 mt-lg-0">
-                                    <base-button type="info" size="sm" class="mr-4">Connect</base-button>
+                                    <base-button type="info" size="sm" class="mr-md-4 mr-sm-1">Connect</base-button>
                                     <base-button type="default" size="sm" class="float-right">Message</base-button>
                                 </div>
                             </div>
@@ -64,12 +54,19 @@
                         </div>
                     </div>
                 </card>
-            </div>
         </section>
     </div>
 </template>
 <script>
 export default {};
 </script>
-<style>
+<style scoped>
+    .section-profile-cover {
+        height: 300px;
+    }
+    @media (max-width: 768px) {
+        .section-profile-cover {
+            height: 150px;
+        }
+    }
 </style>

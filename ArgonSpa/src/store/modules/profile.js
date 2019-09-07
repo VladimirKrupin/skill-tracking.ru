@@ -38,7 +38,6 @@ const actions = {
           };
           axios(options)
               .then(response => {
-                  console.log(response);
                   context.commit('setEmail', { email: response.data.data.email });
                   context.commit('setName', { name: response.data.data.name });
                   context.commit('setLang', { lang: response.data.data.lang });

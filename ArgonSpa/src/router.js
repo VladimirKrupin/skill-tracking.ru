@@ -6,12 +6,13 @@ import Components from "./views/Components.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Forgot from "./views/Forgot.vue";
-import Profile from "./views/Profile.vue";
+import Profile from "./views/app/profile/Profile.vue";
+import ChangePassword from "./views/app/changePassword/ChangePassword.vue";
 import Policy from "./views/Policy.vue";
 
 // Containers
 const DefaultContainer = () => import('@/containers/DefaultContainer');
-const Statistic = () => import('./views/statistics/Statistics');
+const Statistic = () => import('./views/app/statistics/Statistics');
 
 Vue.use(Router);
 
@@ -27,6 +28,16 @@ export default new Router({
                 path: '/statistic',
                 name: 'Statistic',
                 component: Statistic,
+            },
+            {
+                path: "/profile",
+                name: "profile",
+                component: Profile,
+            },
+            {
+                path: "/changePassword",
+                name: "changePassword",
+                component: ChangePassword
             },
         ],
         meta: {
@@ -57,15 +68,6 @@ export default new Router({
       components: {
         header: AppHeader,
         default: Register,
-        footer: AppFooter
-      }
-    },
-    {
-      path: "/profile",
-      name: "profile",
-      components: {
-        header: AppHeader,
-        default: Profile,
         footer: AppFooter
       }
     },
