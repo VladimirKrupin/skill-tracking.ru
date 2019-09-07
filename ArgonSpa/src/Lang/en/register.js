@@ -12,5 +12,6 @@ module.exports = {
     email : 'Email',
     name : 'Name',
     password : 'Password',
-    success : 'Registration completed successfully',
+    success : 'Success! Follow the link from the letter to confirm the registration.',
+    confirmation_success : 'Registration confirmation was successful! Account details for the account were sent to you by mail.',
 }

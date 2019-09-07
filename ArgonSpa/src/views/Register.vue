@@ -81,6 +81,10 @@
                                 <div class="alert alert-success alert-dismissable mt-3 mb-0" v-if="success">
                                     {{$lang.register.success}}
                                 </div>
+                                <div class="alert alert-success alert-dismissable mt-3 mb-0" v-if="confirmationSuccess">
+                                    {{$lang.register.confirmation_success}}
+                                </div>
+                                <div v-if="loaderMessage" class="loader loader-msg m-auto"></div>
                                 <div class="text-center">
                                     <router-link v-if="logged()" to="/app">
                                         <span class="btn btn-neutral btn-icon my-4">
@@ -132,6 +136,8 @@ export default {
             errors: '',
             success: false,
             loader: false,
+            loaderMessage: false,
+            confirmationSuccess: false,
         };
     },
     methods: {
@@ -145,11 +151,14 @@ export default {
                     }
                 }else {
                     formData = {
-                        email: this.email
+                        email: this.email,
+                        host: window.document.location.origin
                     }
                 }
                 this.errors = '';
                 this.loader = true;
+                this.confirmationSuccess = false;
+                this.success = false;
                 const options = {
                     method: 'POST',
                     headers: this.defaultHeaders,
@@ -158,9 +167,6 @@ export default {
                 };
                 axios(options)
                     .then(response => {
-                        console.log(response.data);
-                        localStorage.setItem('access_token', response.data.data.token);
-                        this.$store.dispatch('profile/setUserData');
                         this.success = true;
                         this.loader = false;
                     })
@@ -205,6 +211,33 @@ export default {
         },
     },
     mounted() {
+        if (this.$route.hash !== ''){
+            this.loaderMessage = true;
+            this.confirmationSuccess = false;
+            this.success = false;
+            const options = {
+                method: 'POST',
+                headers: this.defaultHeaders,
+                data: {
+                    hash: this.$route.hash.substr(1),
+                },
+                url: this.apiHost+'/api/registerConfirmation/',
+            };
+            axios(options)
+                .then(response => {
+                    this.confirmationSuccess = true;
+                    this.loaderMessage = false;
+                    localStorage.setItem('access_token', response.data.data.token);
+                    this.$store.dispatch('profile/setUserData');
+                    this.$route.hash = '';
+                })
+                .catch(error => {
+                    if (error.response !== undefined){
+                        this.errors = [error.response.data.error];
+                    }
+                    this.loaderMessage = false;
+                });
+        }
     }
 };
 </script>

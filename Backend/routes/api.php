@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 //USER CONTROLLER REQUESTS
 Route::group(['middleware' => ['lang']], function () {
     Route::post('/register/', 'User\UserController@register');
+    Route::post('/registerConfirmation/', 'User\UserController@registerConfirmation');
     Route::post('/login/',      'User\UserController@login');
     Route::post('/forgot/',    'User\UserController@forgotPassword');
     Route::post('/resetPassword/',    'User\UserController@resetPassword');

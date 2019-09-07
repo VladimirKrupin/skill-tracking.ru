@@ -3,11 +3,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Mail\User\ForgotPasswordMail;
+use App\Http\Mail\User\RegisterConfirmationMail;
 use App\Http\Mail\User\RegistrationSuccess;
 use App\Http\Mail\User\ResetPasswordMail;
 use App\Http\Models\User\ForgotPassword;
+use App\Http\Models\User\RegisterConfirmation;
 use App\Http\Models\User\User;
-use App\Http\Resources\Common\SuccessResource;
 use App\Http\Resources\User\UserDataResource;
 use App\Http\Resources\User\UserLoginResource;
 use App\Http\Response\SuccessResponse;
@@ -15,13 +16,10 @@ use App\Http\Response\UnauthorizedResponse;
 use App\Http\Response\ValidatorResponse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
@@ -30,9 +28,11 @@ class UserController extends Controller
 //        var_dump(App::getLocale());
         $input = [
             'email' => $request->input('email'),
+            'host' => $request->input('host'),
         ];
         $validator = Validator::make($input, [
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users|unique:register_confirmation',
+            'host' => 'required|string|max:25',
         ]);
         if ($validator->fails()) {
             $error_str = '';
@@ -41,39 +41,53 @@ class UserController extends Controller
             }
             return ValidatorResponse::get(['error' => "$error_str"]);
         }
+
+        $hash = str_random(50);
+        $mailData['hash'] = $hash;
+        $mailData['host'] = $request->input('host');
+
+        RegisterConfirmation::create([
+            'email' => $request->input('email'),
+            'hash' => $hash,
+        ]);
+        Mail::to($input['email'])->send(new RegisterConfirmationMail($mailData));
+    }
+
+    public function registerConfirmation(Request $request)
+    {
+        //валидация запроса
+        $validator = Validator::make($request->all(), [
+            'hash' => 'required|string|max:50',
+        ]);
+
+        if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
+
+        $hash =  $request->input('hash');
+
+        $register_confirmation = RegisterConfirmation::where('hash', $hash)->first();
+
+        if (!$register_confirmation){
+            return ValidatorResponse::get(['error'=>__('register.bad_link')]);
+        }
+
+        $register_confirmation->hash = 0;
+        $register_confirmation->save();
+
         $pass = str_random(8);
+        $input['email'] = $register_confirmation->email;
         $input['password'] = bcrypt($pass);
         $input['lang'] = $request->header('lang');
+
         if (User::create($input)){
             $user = User::where('email',$input['email'])->first();
             Mail::to($input['email'])->send(new RegistrationSuccess($input['email'],$pass));
-            return new UserLoginResource( (object) ['token' => $user->createToken('MyApp')->accessToken]);
         }
+
+        return new UserLoginResource( (object) ['token' => $user->createToken('MyApp')->accessToken]);
     }
 
-    public function create(Request $request)
-    {
-        $input = [
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'password_confirmation' => $request->input('password_confirmation'),
-            'name' => $request->input('name'),
-        ];
-        $validator = Validator::make($input, [
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'password_confirmation' => 'required|same:password',
-            'name' => 'required|string|max:255',
-        ]);
-        if ($validator->fails()) {
-            $error_str = '';
-            foreach ($validator->errors()->all() as $error){
-                $error_str .= ' '.$error;
-            }
-            return ['error' => "Ошибка при валидации данных для создания учетной записи. $error_str"];
-        }
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
+    public function userCreate(Request $request){
+
     }
 
     public function login(Request $request){

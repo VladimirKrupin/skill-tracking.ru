@@ -39,7 +39,7 @@
                                     {{$lang.forgot.success}}
                                 </div>
                                 <div class="alert alert-success alert-dismissable mt-3 mb-0" v-if="successReset">
-                                    {{$lang.forgot.successReset}}
+                                    {{$lang.forgot.success_reset}}
                                 </div>
                                 <div v-if="loaderMessage" class="loader loader-msg m-auto"></div>
                                 <div class="text-center">
@@ -139,7 +139,7 @@ export default {
                 data: {
                     hash: this.$route.hash.substr(1),
                 },
-                url: this.apiHost+'/api/resetPassword/',
+                url: this.apiHost+'/api/registerConfirmation/',
             };
             axios(options)
                 .then(response => {
