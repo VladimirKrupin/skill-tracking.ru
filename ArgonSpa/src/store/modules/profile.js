@@ -68,7 +68,7 @@ const actions = {
           };
           axios(options)
               .then(response => {
-                  console.log('Switch on '+payload.lang);
+                  console.log('Switch on '+ payload.lang);
               })
               .catch(e => {
                   console.log(e);

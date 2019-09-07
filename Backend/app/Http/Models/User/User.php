@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function forgotPassword(){
         return $this->hasOne('App\Http\Models\User\ForgotPassword','email','email');
     }
+
+    public function settings(){
+        return $this->hasMany('App\Http\Models\User\UserSetting');
+    }
 }

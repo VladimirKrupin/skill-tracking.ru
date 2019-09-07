@@ -9,6 +9,7 @@ use App\Http\Mail\User\ResetPasswordMail;
 use App\Http\Models\User\ForgotPassword;
 use App\Http\Models\User\RegisterConfirmation;
 use App\Http\Models\User\User;
+use App\Http\Models\User\UserSetting;
 use App\Http\Resources\User\UserDataResource;
 use App\Http\Resources\User\UserLoginResource;
 use App\Http\Response\SuccessResponse;
@@ -120,8 +121,20 @@ class UserController extends Controller
 
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
 
+        $user = User::where('id',Auth::user()['id'])->with('settings')->first();
         User::where('id',Auth::user()['id'])->update(['lang'=>$request->input('lang')]);
 
+        $user_settings = UserSetting::where('user_id',Auth::user()['id'])->where('key','lang')->first();
+        if ($user_settings){
+            $user_settings->value = $request->input('lang');
+            $user_settings->save();
+        }else{
+            UserSetting::create([
+                'user_id'=>Auth::user()['id'],
+                'key'=>'lang',
+                'value'=>$request->input('lang')
+            ]);
+        }
         return new SuccessResponse();
 
     }
