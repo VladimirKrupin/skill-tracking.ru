@@ -1,8 +1,65 @@
 // Here you can add other styles
+.app-header .navbar-toggler-icon, .sidebar .sidebar-minimizer::before {
+  filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+}
 
 .bg-theme {
-  background-color: #f6f7f7;
+   background-color: rgb(255, 243, 230);
 }
+
+.sidebar .nav {
+  background: #222;
+  border-bottom: 1px solid #f38647;
+}
+
+.sidebar .sidebar-minimizer {
+  background: #222;
+}
+
+header.app-header.navbar {
+  background: #222;
+  border-bottom: 1px solid #f38647;
+}
+
+.sidebar .nav-link.active .nav-icon {
+  color: #f38647;
+}
+@media (max-width: 667px) {
+  .user-info {
+    display: none;
+  }
+}
+.logo-text {
+  font-size: 14px;
+}
+.custom-footer {
+  background: #222;
+  border-top: 1px solid #f38647;
+}
+.text-orange {
+  color: #fff3e6;
+}
+.app-footer {
+  flex: 0 0 46px;
+}
+.app a, span{
+  color: #fff3e6;
+}
+.app .form__btn {
+  background-color: #f38647;
+  border: 1px solid #df7942;
+  color: #222;
+}
+.app .alert-info {
+    background-color: #FF8F49;
+    border-color: #df7942;
+    color: #222;
+}
+.app .form-control:focus {
+  border-color: rgba(255,173,77,.5);
+  box-shadow: 0 0 0 0.2rem rgba(255,173,77,.25);
+}
+//------------------------------
 
 .text {
   &--weight-b {

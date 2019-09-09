@@ -109,7 +109,4 @@
     color: #007bff;
   }
 
-  .bg-theme {
-    background-color: #f6f7f7;
-  }
 </style>

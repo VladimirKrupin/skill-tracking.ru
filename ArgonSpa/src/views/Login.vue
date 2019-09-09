@@ -134,7 +134,6 @@ export default {
             };
             axios(options)
                 .then(response => {
-                    console.log(response.data);
                     localStorage.setItem('access_token', response.data.data.token);
                     this.$store.dispatch('profile/setUserData');
                     this.success = true;

@@ -14,5 +14,12 @@ export default {
       icon: 'icon-chart',
       description: 'Ваша статистика',
     },
+    {
+      name: 'Report',
+      url: '/Report',
+      url_name: 'Report',
+      icon: 'icon-chart',
+      description: 'Ваша статистика',
+    },
   ]
 }

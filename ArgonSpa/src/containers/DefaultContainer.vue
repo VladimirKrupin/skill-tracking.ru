@@ -6,8 +6,8 @@
       <SidebarToggler class="d-lg-none" display="md" mobile />
 
       <b-link class="navbar-brand" to="/app">
-        <span class="navbar-brand-minimized logo-text-min">ST</span>
-        <span class="navbar-brand-full logo-text-max logo-text">Skill Tracking</span>
+        <span class="navbar-brand-minimized text-orange logo-text-min">ST</span>
+        <span class="navbar-brand-full logo-text-max text-orange logo-text">Skill Tracking</span>
       </b-link>
 
       <SidebarToggler class="d-md-down-none" display="lg" />
@@ -15,7 +15,7 @@
         <div class="d-flex align-items-center col-sm-12 col-12 col-md-5 col-lg-5">
           <div class="d-flex flex-column mr-1">
 <!--            <h5 class="mb-1"><span class="badge badge-pill badge-primary font-weight-light">Андминистратор</span></h5>-->
-            <span class="text-md-left text-nowrap text-dark user-info">{{(userName)?userName:email}}</span>
+            <span class="text-md-left text-nowrap text-orange user-info">{{(userName)?userName:email}}</span>
           </div>
           <b-navbar-nav>
             <DefaultHeaderDropdownAccnt/>
@@ -46,7 +46,7 @@
       </AppAside>
     </div>
 
-    <TheFooter class="p-3 custom-footer">
+    <TheFooter class="p-2 custom-footer">
       <!--footer-->
         <a href="http://localhost:8080/">Перейти на сайт</a>
       <div class="ml-auto">
@@ -123,17 +123,7 @@ export default {
     @import '~bootstrap-vue/dist/bootstrap-vue.css';
     // Import Main styles for this application
     @import '@/assets/scss/style';
-
-    @media (max-width: 667px) {
-        .user-info {
-            display: none;
-        }
-    }
-    .logo-text {
-        font-size: 14px;
-    }
-    .custom-footer {
-        background: #ffffff;
-        border-top: 1px solid #dcd8d8;
+    .form__btn {
+        background-color: #007bff;
     }
 </style>

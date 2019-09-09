@@ -47,6 +47,7 @@ const actions = {
               })
               .catch(e => {
                   console.log(e);
+                  localStorage.removeItem('access_token');
               });
       }
   },
