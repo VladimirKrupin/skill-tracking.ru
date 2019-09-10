@@ -8,7 +8,7 @@
     </b-row>
     <b-row>
       <b-col class="col-12 col-sm-12  col-md-5 col-lg-5">
-        <div role="alert" aria-live="polite" aria-atomic="true" class="text-left mb-4 alert alert-info">
+        <div role="alert" aria-live="polite" aria-atomic="true" class="text-left mb-4 alert alert-info text-dark">
           Что бы поменять пароль воспользуйтесь формой ниже. <br>
           Если вы не помните свой старый пароль, <br> то воспользуйтесь
           <router-link :to="{ name: 'forgot' }">средствами восстановления пароля</router-link>
@@ -17,40 +17,18 @@
     </b-row>
     <b-row>
       <b-col class="col-12 col-sm-12  col-md-5 col-lg-5">
-        <div class="alert alert-danger alert-dismissable" v-if="errors">
-          <div v-for="item in errors">
-            {{item}}
-          </div>
+        <div class="alert alert-danger alert-dismissable text-dark" v-if="errors">
+            {{errors}}
         </div>
       </b-col>
     </b-row>
     <b-row>
-      <b-col class="col-12 col-sm-12  col-md-5 col-lg-5">
-        <div class="alert alert-warning alert-dismissable" v-if="message">
-          <div v-for="item in message">
-            <span v-html="item"></span>
-          </div>
+      <b-col class="col-12 col-sm-12  col-md-5 col-lg-5 text-dark">
+        <div class="alert alert-success alert-dismissable text-dark" v-if="success">
+          {{$lang.change.success}}
         </div>
       </b-col>
     </b-row>
-    <b-row>
-      <b-col class="col-12 col-sm-12  col-md-5 col-lg-5">
-        <div class="alert alert-success alert-dismissable" v-if="success">
-          <div v-for="item in success">
-            <span v-html="item"></span>
-          </div>
-        </div>
-      </b-col>
-    </b-row>
-
-    <b-row>
-      <b-col class="col-12 col-sm-12  col-md-5 col-lg-5 d-flex">
-        <b-button variant="primary" class="form__btn btn btn-lg btn-primary mb-4 mr-3" v-if="message" v-on:click="returnSendMail">Отправить снова</b-button>
-        <div v-if="loader2" class="loader mb-4"></div>
-      </b-col>
-    </b-row>
-    <a style='cursor:pointer;text-decoration: underline' v-on:click='changePassword'></a>
-
     <b-row>
       <b-col class="col-12 col-sm-12  col-md-5 col-lg-5">
         <h3 class="h5">Старый пароль <span style="color: #FF0000;">*</span></h3>
@@ -98,8 +76,7 @@
     </b-row>
     <b-row>
       <b-col class="col-12 col-sm-12  col-md-5 col-lg-5 d-flex">
-        <b-button variant="primary" class="form__btn btn btn-lg btn-primary mb-4 mr-3" v-on:click="changePassword" :disabled="disabled">Сохранить изменения</b-button>
-        <div v-if="loader" class="loader"></div>
+        <b-button variant="primary" class="form__btn btn btn-lg btn-primary mb-4 mr-3" v-on:click="changePassword" :disabled="disabled">Сохранить изменения<div v-if="loader" class="loader loader-btn"></div></b-button>
       </b-col>
     </b-row>
   </card>
@@ -115,8 +92,7 @@
     data() {
       return {
         errors: '',
-        message: '',
-        success: '',
+        success: false,
         loader: false,
         loader2: false,
         disabled: false,
@@ -130,51 +106,6 @@
     computed: {
     },
     mounted: function () {
-      var queryString = window.location.search;
-      var query = {};
-      var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
-
-      for (var i = 0; i < pairs.length; i++) {
-        var pair = pairs[i].split('=');
-        query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
-      }
-
-      for (var item in query) {
-        if (item !== 'hash' && item !== 'email'){
-          return false;
-        }
-      }
-
-      this.loader2 = true;
-
-      const options = {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-        },
-        data: {
-          hash: query.hash,
-          email: query.email,
-        },
-        url: window.apiHostname + 'changePasswordConfirm',
-      };
-      axios(options)
-        .then(response => {
-          if (response.data.status === 'error'){
-            this.errors = response.data.data.errors;
-
-          }else if(response.data.status === 'ok'){
-            this.success = response.data.data.message;
-          }
-
-          this.loader2 = false;
-        })
-        .catch(e => {
-          console.log(e);
-
-          this.loader2 = false;
-        });
-
     },
     methods: {
       changePassword: function (event) {
@@ -183,35 +114,26 @@
           return false;
         }
         this.errors = '';
-        this.message = '';
-        this.success = '';
+        this.success = false;
         this.disabled = true;
         this.loader = true;
         const options = {
           method: 'POST',
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-          },
+          headers: this.defaultHeaders,
           data: {
             password: this.password,
+            host: window.document.location.origin
           },
-          url: window.apiHostname + 'changePassword',
+          url: this.apiHost + '/api/changePassword/',
         };
         axios(options)
           .then(response => {
-            if (response.data.status === 'error'){
-              this.errors = response.data.data.errors;
-            }else if(response.data.status === 'message'){
-              this.message = response.data.data.message;
-              // this.inputsReset();
-            }
-
+            this.success = true;
             this.disabled = false;
             this.loader = false;
           })
-          .catch(e => {
-            console.log(e);
-
+          .catch(error => {
+            this.errors = error.response.data;
             this.disabled = false;
             this.loader = false;
           });
@@ -262,31 +184,6 @@
       inputsReset: function () {
         this.password.newPassword = this.password.oldPassword = this.password.newPasswordConfirm = '';
       },
-      returnSendMail(){
-        this.loader2 = true;
-        this.message = '';
-        const options = {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-          },
-          data: {},
-          url: window.apiHostname + 'returnSendMail',
-        };
-        axios(options)
-          .then(response => {
-            if (response.data.status === 'error'){
-            }else if(response.data.status === 'ok'){
-              this.success = response.data.data.message;
-            }
-
-            this.loader2 = false;
-
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      }
     }
   }
 </script>

@@ -9,8 +9,9 @@
     <!-- Fonts -->
 </head>
 <body>
-<p>{{__('forgot.text')}} <a href="{{$mailData['host']}}/#/forgot?hash={{$mailData['hash']}}">{{__('forgot.link')}}</a></p>
-
-
+<p>{{__('change.text')}}</p>
+<br>
+<hr>
+<p>{{__('change.warning')}} <a href="{{$mailData['host']}}/#/forgot?hash={{$mailData['hash']}}">{{__('change.warning_link')}}</a></p>
 </body>
 </html>

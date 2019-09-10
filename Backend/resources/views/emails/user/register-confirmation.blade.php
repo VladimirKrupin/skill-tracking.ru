@@ -9,6 +9,6 @@
     <!-- Fonts -->
 </head>
 <body>
-<p>{{__('register.confirmation_text')}} <a href="{{$mailData['host']}}/#/register#{{$mailData['hash']}}">{{__('register.confirmation_link')}}</a></p>
+<p>{{__('register.confirmation_text')}} <a href="{{$mailData['host']}}/#/register?hash={{$mailData['hash']}}">{{__('register.confirmation_link')}}</a></p>
 </body>
 </html>

@@ -22,6 +22,7 @@ Route::group(['middleware' => ['lang']], function () {
     Route::post('/resetPassword/',    'User\UserController@resetPassword');
     Route::get('/getUserData/', 'User\UserController@getUserData')->middleware('auth:api');
     Route::post('/putLang/',    'User\UserController@putLang')->middleware('auth:api');
+    Route::post('/changePassword/',    'User\UserController@changePassword')->middleware('auth:api')->middleware('lang');
 });
 
 Route::any('/', function () {

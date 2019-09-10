@@ -211,7 +211,7 @@ export default {
         },
     },
     mounted() {
-        if (this.$route.hash !== ''){
+        if (this.$route.query.hash !== ''){
             this.loaderMessage = true;
             this.confirmationSuccess = false;
             this.success = false;
@@ -219,7 +219,7 @@ export default {
                 method: 'POST',
                 headers: this.defaultHeaders,
                 data: {
-                    hash: this.$route.hash.substr(1),
+                    hash: this.$route.query.hash,
                 },
                 url: this.apiHost+'/api/registerConfirmation/',
             };

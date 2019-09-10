@@ -131,15 +131,15 @@ export default {
         },
     },
     mounted() {
-        if (this.$route.hash !== ''){
+        if (this.$route.query.hash !== ''){
             this.loaderMessage = true;
             const options = {
                 method: 'POST',
                 headers: this.defaultHeaders,
                 data: {
-                    hash: this.$route.hash.substr(1),
+                    hash: this.$route.query.hash,
                 },
-                url: this.apiHost+'/api/registerConfirmation/',
+                url: this.apiHost+'/api/resetPassword/',
             };
             axios(options)
                 .then(response => {

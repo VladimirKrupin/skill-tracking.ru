@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Mail\User\ChangePasswordMail;
 use App\Http\Mail\User\ForgotPasswordMail;
 use App\Http\Mail\User\RegisterConfirmationMail;
 use App\Http\Mail\User\RegistrationSuccess;
@@ -10,14 +11,17 @@ use App\Http\Models\User\ForgotPassword;
 use App\Http\Models\User\RegisterConfirmation;
 use App\Http\Models\User\User;
 use App\Http\Models\User\UserSetting;
+use App\Http\Models\User\UsersPasswordChange;
 use App\Http\Resources\User\UserDataResource;
 use App\Http\Resources\User\UserLoginResource;
 use App\Http\Response\SuccessResponse;
 use App\Http\Response\UnauthorizedResponse;
 use App\Http\Response\ValidatorResponse;
+use App\Mail\User\ChangePassword;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -136,7 +140,6 @@ class UserController extends Controller
             ]);
         }
         return new SuccessResponse();
-
     }
 
     public function forgotPassword(Request $request)
@@ -225,6 +228,12 @@ class UserController extends Controller
         $user->password = bcrypt($pass);
         $user->save();
 
+        DB::table('oauth_access_tokens')
+            ->where('user_id', $user->id)
+            ->update([
+                'revoked' => 1
+            ]);
+
         $mailData = [
             'pass' => $pass
         ];
@@ -232,6 +241,56 @@ class UserController extends Controller
         Mail::to($forgot_email)->send(new ResetPasswordMail($mailData));
 
         return new UserLoginResource( (object) ['token' => $user->createToken('MyApp')->accessToken]);
+    }
+
+    public function changePassword(Request $request){
+        //валидация запроса
+        $user = Auth::user();
+        $validator = Validator::make($request->all(), [
+            'password.oldPassword' => 'required|max:50',
+            'password.newPasswordConfirm' => 'required|max:50',
+            'password.newPassword' => 'required|max:50',
+            'host' => 'required|string|max:25',
+        ]);
+        if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
+
+        $validOldPassword = Hash::check($request->input('password.oldPassword'), $user->getAuthPassword());
+
+        if (!$validOldPassword){return ValidatorResponse::get(__('change.bad_old'));}
+
+        if ($request->input('password.newPassword') !== $request->input('password.newPasswordConfirm')){
+            return ValidatorResponse::get(__('change.not_match'));
+        }
+
+        $newPassword = bcrypt($request->input('password.newPassword'));
+
+        User::where('id',$user['id'])->update([
+           'password'=>$newPassword
+        ]);
+
+        $hash = str_random(50);
+
+        $forgot = ForgotPassword::where('email',$user['email'])->first();
+
+        if ($forgot){
+            $forgot->hash = $hash;
+            $forgot->attempts = 1;
+            $forgot->save();
+        }else{
+            ForgotPassword::create([
+                'email'=>$user['email'],
+                'hash'=>$hash,
+                'attempts'=>1,
+            ]);
+        }
+
+        $mailData = [
+          'hash' => $hash,
+          'host' => $request->input('host'),
+        ];
+        Mail::to($user['email'])->send(new ChangePasswordMail($mailData));
+
+        return new SuccessResponse();
     }
 
 }
