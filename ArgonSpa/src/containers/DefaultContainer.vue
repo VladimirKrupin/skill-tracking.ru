@@ -35,8 +35,8 @@
         <SidebarFooter/>
         <SidebarMinimizer/>
       </AppSidebar>
-      <main class="main mt-4">
-        <div class="container-fluid">
+      <main class="main mt-xl-4 mt-lg-4 mt-md-4 mt-0">
+        <div class="container-fluid p-xl-4 p-lg-4 p-md-4 p-0">
           <router-view></router-view>
         </div>
       </main>
