@@ -44,4 +44,7 @@ class User extends Authenticatable
     public function settings(){
         return $this->hasMany('App\Http\Models\User\UserSetting');
     }
+    public function changePassword(){
+        return $this->hasOne('App\Http\Models\User\ChangePassword');
+    }
 }

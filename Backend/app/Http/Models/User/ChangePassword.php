@@ -4,13 +4,13 @@ namespace App\Http\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ForgotPassword extends Model
+class ChangePassword extends Model
 {
 
-    protected $table = 'forgot_password';
+    protected $table = 'change_password';
 
     protected $fillable = [
-        'email', 'hash', 'attempts'
+        'user_id'
     ];
 
 }

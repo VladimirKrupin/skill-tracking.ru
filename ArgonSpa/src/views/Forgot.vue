@@ -131,7 +131,7 @@ export default {
         },
     },
     mounted() {
-        if (this.$route.query.hash !== ''){
+        if (this.$route.query.hash){
             this.loaderMessage = true;
             const options = {
                 method: 'POST',

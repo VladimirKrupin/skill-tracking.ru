@@ -211,7 +211,8 @@ export default {
         },
     },
     mounted() {
-        if (this.$route.query.hash !== ''){
+        console.log(this.$route.query.hash);
+        if (this.$route.query.hash){
             this.loaderMessage = true;
             this.confirmationSuccess = false;
             this.success = false;

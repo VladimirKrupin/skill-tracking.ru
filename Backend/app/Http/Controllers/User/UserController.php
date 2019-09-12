@@ -2,22 +2,23 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\AppHelper;
 use App\Http\Mail\User\ChangePasswordMail;
 use App\Http\Mail\User\ForgotPasswordMail;
 use App\Http\Mail\User\RegisterConfirmationMail;
 use App\Http\Mail\User\RegistrationSuccess;
 use App\Http\Mail\User\ResetPasswordMail;
+use App\Http\Models\User\ChangePassword;
 use App\Http\Models\User\ForgotPassword;
 use App\Http\Models\User\RegisterConfirmation;
 use App\Http\Models\User\User;
 use App\Http\Models\User\UserSetting;
-use App\Http\Models\User\UsersPasswordChange;
+use App\Http\Registry\AppRegistry;
 use App\Http\Resources\User\UserDataResource;
 use App\Http\Resources\User\UserLoginResource;
 use App\Http\Response\SuccessResponse;
 use App\Http\Response\UnauthorizedResponse;
 use App\Http\Response\ValidatorResponse;
-use App\Mail\User\ChangePassword;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,14 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
+    private $today;
+
+    public function __construct()
+    {
+        $this->today = Carbon::today();
+    }
+
     public function register(Request $request)
     {
 //        var_dump(App::getLocale());
@@ -81,10 +90,15 @@ class UserController extends Controller
         $pass = str_random(8);
         $input['email'] = $register_confirmation->email;
         $input['password'] = bcrypt($pass);
-        $input['lang'] = $request->header('lang');
 
         if (User::create($input)){
             $user = User::where('email',$input['email'])->first();
+            UserSetting::create([
+                'user_id'=>$user->id,
+                'key'=>'lang',
+                'value' => AppHelper::checkLang($request->header('lang'))
+
+            ]);
             Mail::to($input['email'])->send(new RegistrationSuccess($input['email'],$pass));
         }
 
@@ -115,7 +129,7 @@ class UserController extends Controller
     }
 
     public function getUserData(Request $request){
-        return new UserDataResource(Auth::user());
+        return new UserDataResource(User::where('id',Auth::user()['id'])->with('settings')->first());
     }
 
     public function putLang(Request $request){
@@ -124,9 +138,6 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
-
-        $user = User::where('id',Auth::user()['id'])->with('settings')->first();
-        User::where('id',Auth::user()['id'])->update(['lang'=>$request->input('lang')]);
 
         $user_settings = UserSetting::where('user_id',Auth::user()['id'])->where('key','lang')->first();
         if ($user_settings){
@@ -173,8 +184,7 @@ class UserController extends Controller
             Mail::to($email)->send(new ForgotPasswordMail($mailData));
         }else{
             $user_forgot = $user['forgotPassword']->toArray();
-            $today = Carbon::today();
-            $diff_in_hours = $today->diffInHours($user_forgot['updated_at'], true);
+            $diff_in_hours = $this->today->diffInHours($user_forgot['updated_at'], true);
             if ($user_forgot['attempts'] === 2 && $diff_in_hours < 24){
                 return ValidatorResponse::get(['error' => __('errors.attempts')]);
             }elseif($user_forgot['attempts'] === 2 && $diff_in_hours > 24){
@@ -244,8 +254,8 @@ class UserController extends Controller
     }
 
     public function changePassword(Request $request){
-        //валидация запроса
         $user = Auth::user();
+
         $validator = Validator::make($request->all(), [
             'password.oldPassword' => 'required|max:50',
             'password.newPasswordConfirm' => 'required|max:50',
@@ -262,6 +272,18 @@ class UserController extends Controller
             return ValidatorResponse::get(__('change.not_match'));
         }
 
+        $user_current = User::where('id',$user['id'])->with('changePassword')->first();
+
+        if (is_null($user_current->changePassword)){
+            ChangePassword::create([
+                'user_id' => $user['id']
+            ]);
+        }else{
+            if ($this->today->diffInHours($user_current->changePassword->updated_at, true) < 24){
+                return ValidatorResponse::get(__('change.wait'));
+            }
+        }
+
         $newPassword = bcrypt($request->input('password.newPassword'));
 
         User::where('id',$user['id'])->update([
@@ -274,7 +296,7 @@ class UserController extends Controller
 
         if ($forgot){
             $forgot->hash = $hash;
-            $forgot->attempts = 1;
+            $forgot->attempts = 2;
             $forgot->save();
         }else{
             ForgotPassword::create([
