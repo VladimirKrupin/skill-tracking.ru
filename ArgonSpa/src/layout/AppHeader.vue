@@ -4,7 +4,27 @@
             <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
                 <img src="/img/brand/white.png" alt="logo">
             </router-link>
-
+            <router-link slot="brand" class="navbar-brand mr-lg-5 hidden" to="/">
+                    <div class="small-dropdown">
+                        <base-dropdown tag="li" class="nav-item">
+                            <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
+                                <!--                            <i class="ni ni-collection d-lg-none"></i>-->
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link nav-link-icon text-white"
+                                       data-toggle="tooltip">
+                                        {{lang}}
+                                        <i class="fa fa-cogs"></i>
+                                    </a>
+                                </li>
+                            </a>
+                            <li v-on:click="langHandler(l)" v-for="(l,key) in langs" :key="key"
+                                class="dropdown-item"
+                                v-bind:class="localStorageLang(l)">
+                                {{l}}
+                            </li>
+                        </base-dropdown>
+                    </div>
+            </router-link>
             <div class="row" slot="content-header" slot-scope="{closeMenu}">
                 <div class="col-6 collapse-brand">
                     <a href="/">
@@ -116,27 +136,6 @@
                         </span>
                     </router-link>
                 </li>
-            </ul>
-            <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-                <div class="small-dropdown">
-                    <base-dropdown tag="li" class="nav-item">
-                        <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
-                            <i class="ni ni-collection d-lg-none"></i>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link nav-link-icon"
-                                       data-toggle="tooltip">
-                                        {{lang}}
-                                        <i class="fa fa-cogs"></i>
-                                    </a>
-                                </li>
-                        </a>
-                        <li v-on:click="langHandler(l)" v-for="(l,key) in langs" :key="key"
-                            class="dropdown-item"
-                            v-bind:class="localStorageLang(l)">
-                            {{l}}
-                        </li>
-                    </base-dropdown>
-                </div>
             </ul>
         </base-nav>
     </header>

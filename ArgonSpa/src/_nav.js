@@ -1,3 +1,8 @@
+let Lang = require('vuejs-localization');
+Lang.requireAll(require.context('./Lang', true, /\.js$/));
+
+console.log(Lang);
+
 export default {
   items: [
     {

@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <ul class="nav nav-footer justify-content-end">
+                    <ul class="nav nav-footer justify-content-end footer-mobile">
                         <li class="nav-item">
                             <a :href="this.socials.coders_link" class="nav-link" target="_blank" rel="noopener">{{$lang.landing.coders_label}}</a>
                         </li>
@@ -73,5 +73,19 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
+    @media (max-width: 768px) {
+        .footer-mobile {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            .nav-item {
+                width: 100%;
+                display: block;
+                .nav-link {
+                    padding-left: 0;
+                }
+            }
+        }
+    }
 </style>

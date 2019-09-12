@@ -44,7 +44,7 @@
                             <img src="img/brand/github-white-slim.png" style="height: 22px; margin-top: -3px">
                         </a>
                     </div>
-                    <div class="col-sm-4 mt-4 mt-sm-0 text-right">
+                    <div class="col-sm-4 mt-4 mt-sm-0 coders text-right">
                         <span class="text-white alpha-7">Coded by </span>
                         <a :href="this.socials.coders_link" target="_blank" class="coders_link">{{$lang.landing.coders_label}}</a>
                     </div>
@@ -75,5 +75,13 @@ export default {
     .coders_link:hover {
         color: white;
         text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+        .coders.text-right {
+            text-align: left !important;
+            margin-left: 1rem;
+            margin-bottom: 1rem;
+        }
     }
 </style>
