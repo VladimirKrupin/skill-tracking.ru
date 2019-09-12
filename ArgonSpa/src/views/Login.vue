@@ -116,7 +116,6 @@ export default {
     },
     name: 'Login',
     mounted: function () {
-
     },
     methods: {
         autorization: function (event) {

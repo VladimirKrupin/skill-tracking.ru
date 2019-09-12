@@ -3,7 +3,7 @@
   <card shadow class="card-profile" body>
       <b-row>
         <b-col class="col-md-5 col-lg-5">
-          <h1 class="h3 my-4">Изменить пароль</h1>
+          <h1 class="h3 my-4">{{$lang.change.name}}</h1>
         </b-col>
       </b-row>
       <b-row class="col-xl-2 col-lg-4 col-md-6 col-sm-12 p-0 m-0">
@@ -21,45 +21,45 @@
         </b-col>
       </b-row>
       <b-row class="col-xl-2 col-lg-4 col-md-6 col-sm-12 p-0 m-0">
-        <b-col class="">
-          <h3 class="h5  font-sm">Старый пароль <span style="color: #FF0000;">*</span></h3>
+        <b-col class="pl-1">
+          <h3 class="h5 font-sm">{{$lang.change.old_pass}} <span style="color: #FF0000;">*</span></h3>
         </b-col>
       </b-row>
       <b-row class="col-xl-2 col-lg-4 col-md-6 col-sm-12 p-0 m-0">
         <b-col class="mb-4 p-0">
           <b-form-group class="mb-0">
             <b-form-input type="password" id="old-password"
-                          placeholder="Введите старый пароль"
+                          :placeholder=$lang.change.write_old_pass
                           class="form-control form-control-lg"
                           v-model="password.oldPassword"></b-form-input>
           </b-form-group>
         </b-col>
       </b-row>
       <b-row class="col-xl-2 col-lg-4 col-md-6 col-sm-12 p-0 m-0">
-        <b-col>
-          <h3 class="h5 font-sm">Новый пароль <span style="color: #FF0000;">*</span></h3>
+        <b-col class="pl-1">
+          <h3 class="h5 font-sm">{{$lang.change.new_pass}} <span style="color: #FF0000;">*</span></h3>
         </b-col>
       </b-row>
       <b-row class="col-xl-2 col-lg-4 col-md-6 col-sm-12 p-0 m-0">
         <b-col class="mb-4 p-0">
           <b-form-group class="mb-0">
             <b-form-input type="password" id="new-password"
-                          placeholder="Введите новый пароль"
+                          :placeholder=$lang.change.write_new_pass
                           class="form-control form-control-lg"
                           v-model="password.newPassword"></b-form-input>
           </b-form-group>
         </b-col>
       </b-row>
       <b-row class="col-xl-2 col-lg-4 col-md-6 col-sm-12 p-0 m-0">
-        <b-col class="">
-          <h3 class="h5 font-sm">Подтвердите новый пароль <span style="color: #FF0000;">*</span></h3>
+        <b-col class="pl-1">
+          <h3 class="h5 font-sm">{{$lang.change.confirm_pass}} <span style="color: #FF0000;">*</span></h3>
         </b-col>
       </b-row>
       <b-row class="col-xl-2 col-lg-4 col-md-6 col-sm-12 p-0 m-0">
         <b-col class="mb-4 p-0">
           <b-form-group class="mb-0">
             <b-form-input type="password" id="confirm-password"
-                          placeholder="Подтвердите новый пароль"
+                          :placeholder=$lang.change.confirm_pass
                           class="form-control form-control-lg"
                           v-model="password.newPasswordConfirm"></b-form-input>
           </b-form-group>
@@ -67,16 +67,16 @@
       </b-row>
       <b-row>
         <b-col class="col-12 col-sm-12  col-md-5 col-lg-5 d-flex">
-          <b-button variant="outline-primary" class="mb-4 mr-3" v-on:click="changePassword" :disabled="disabled">Сохранить изменения<div v-if="loader" class="loader loader-btn"></div></b-button>
+          <b-button variant="outline-primary" class="mb-4 mr-3" v-on:click="changePassword" :disabled="disabled">{{$lang.change.save_changes}}<div v-if="loader" class="loader loader-btn"></div></b-button>
         </b-col>
       </b-row>
 
       <b-row>
         <b-col class="col-12">
           <div role="alert" aria-live="polite" aria-atomic="true" class="text-left mb-4 text-dark">
-            Что бы поменять пароль воспользуйтесь формой ниже. <br>
-            Если вы не помните свой старый пароль, то воспользуйтесь
-            <router-link :to="{ name: 'forgot' }">средствами восстановления пароля</router-link>
+              {{$lang.change.text1}} <br>
+              {{$lang.change.text2}}
+            <router-link :to="{ name: 'forgot' }">{{$lang.change.link}}</router-link>
           </div>
         </b-col>
       </b-row>
@@ -141,49 +141,46 @@
       },
       checkPassword(){
         if (!this.password.oldPassword){
-          this.errors = "Поле старый пароль обязательное.";
+          this.errors = this.$lang.change.error1;
           return true;
         }
         if (!this.password.newPassword){
-          this.errors = "Поле новый пароль обязательное.";
+          this.errors = this.$lang.change.error2;
           return true;
         }
         if (!this.password.newPasswordConfirm){
-          this.errors = "Подтвердите новый пароль.";
+          this.errors = this.$lang.change.error3;
           return true;
         }
         if (this.password.newPassword !== this.password.newPasswordConfirm){
-          this.errors = "Пароли не совпадают.";
+          this.errors = this.$lang.change.error4;
           return true;
         }
         if (this.password.newPassword === this.password.oldPassword){
-          this.errors = "Новый пароль не отличается от старого, измените новый пароль.";
+          this.errors = this.$lang.change.error5;
           return true;
         }
         if(this.password.newPassword.length < 5){
-          this.errors = "Пароль должен быть больше 6 символов.";
+          this.errors = this.$lang.change.error6;
           return true;
         }
 
         if(/^[a-zA-Z0-9- ]*$/.test(this.password.newPassword) == false){
           if(/^[а-яА-Я0-9- ]*$/.test(this.password.newPassword) == false){
-            this.errors = "Пароль не должен содержать специальные символы.";
+            this.errors = this.$lang.change.error7;
           } else {
-            this.errors = "Пароль должен содержать только латинские символы.";
+            this.errors = this.$lang.change.error8;
           }
 
           return true;
         }
 
         if(/^[\S]*$/.test(this.password.newPassword) == false){
-          this.errors = "Пароль не должен содержать пробелы.";
+          this.errors = this.$lang.change.error9;
           return true;
         }
 
         return false;
-      },
-      inputsReset: function () {
-        this.password.newPassword = this.password.oldPassword = this.password.newPasswordConfirm = '';
       },
     }
   }

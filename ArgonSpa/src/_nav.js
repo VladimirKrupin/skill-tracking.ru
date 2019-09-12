@@ -1,23 +1,25 @@
 let Lang = require('vuejs-localization');
 Lang.requireAll(require.context('./Lang', true, /\.js$/));
 
-console.log(Lang);
-
 export default {
-  items: [
-    {
-      title: true,
-      wrapper: {
-        element: '',
-        attributes: {}
-      }
-    },
-    {
-      name: 'Статистика',
-      url: '/statistic',
-      url_name: 'Statistic',
-      icon: 'icon-chart',
-      description: 'Ваша статистика',
-    },
-  ]
+  get: function ($lang){
+    console.log($lang);
+      return [
+          {
+              title: true,
+              wrapper: {
+                  element: '',
+                  attributes: {}
+              }
+          },
+          {
+              name: $lang.nav.statistic_name,
+              url: '/statistic',
+              url_name: 'Statistic',
+              icon: 'icon-chart',
+              description: $lang.nav.statistic_description,
+          },
+      ];
+  },
+
 }

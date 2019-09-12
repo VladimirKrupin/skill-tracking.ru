@@ -1,4 +1,23 @@
 //en/change.js
 module.exports = {
     success : 'Success! Password changed.',
+    name: 'Change Password',
+    old_pass: 'Old password',
+    write_old_pass: 'Enter old password',
+    new_pass: 'New password',
+    write_new_pass: 'Enter a new password',
+    confirm_pass: 'Confirm New Password',
+    save_changes: 'Save changes',
+    text1: 'To change the password, use the form below.',
+    text2: 'If you do not remember your old password, then use',
+    link: 'password recovery tools',
+    error1: 'The old password field is required.',
+    error2: 'The new password field is required.',
+    error3: 'Confirm the new password.',
+    error4: 'Passwords do not match.',
+    error5: 'The new password is no different from the old one, change the new password.',
+    error6: 'Password must be more than 6 characters.',
+    error7: 'Password must not contain special characters.',
+    error8: 'Password must contain only latin characters.',
+    error9: 'Password must not contain spaces.',
 }

@@ -48,9 +48,9 @@
 
     <TheFooter class="p-3 custom-footer">
       <!--footer-->
-        <a href="http://localhost:8080/">Перейти на сайт</a>
+        <a href="/">{{$lang.defaultContainer.go_to_site}}</a>
       <div class="ml-auto">
-        <span class="mr-1">© 2019 Skill Tracking официальный сайт. Все права защищены.</span>
+        <span class="mr-1">© 2019 Skill Tracking {{$lang.defaultContainer.site}}.</span>
       </div>
     </TheFooter>
   </div>
@@ -83,7 +83,7 @@ export default {
   },
   data () {
     return {
-      nav: nav.items
+      nav: nav.get(this.$lang)
     }
   },
   computed: {

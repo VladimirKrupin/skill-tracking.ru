@@ -5,7 +5,7 @@
         <i class='icon-settings'></i>
       </template>
       <div class="p-3">
-        <h6>Настройки</h6>
+        <h6>{{$lang.defaultAside.settings}}</h6>
         <div class="aside-options">
           <div class="clearfix mt-4">
             <small><b>Option 1</b></small>
