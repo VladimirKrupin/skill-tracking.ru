@@ -142,6 +142,7 @@ export default {
     },
     methods: {
         register: function (){
+            console.log(this.agree);
             this.valid();
             if (this.validValues()){
                 let formData;
@@ -152,7 +153,8 @@ export default {
                 }else {
                     formData = {
                         email: this.email,
-                        host: window.document.location.origin
+                        host: window.document.location.origin,
+                        agree: this.agree?'yes':'no',
                     }
                 }
                 this.errors = '';

@@ -13,7 +13,7 @@
           </div>
         </b-col>
       </b-row>
-      <b-row class="col-xl-2 col-lg-4 col-md-6 col-sm-12 p-0 m-0">
+      <b-row class="col-lg-4 col-md-6 col-sm-12 p-0 m-0">
         <b-col class="p-0">
           <div class="alert alert-success alert-dismissable text-dark" v-if="success">
             {{$lang.change.success}}

@@ -40,6 +40,9 @@ class UserController extends Controller
     public function register(Request $request)
     {
 //        var_dump(App::getLocale());
+        if ($request->input('agree') !== 'yes'){
+            return ValidatorResponse::get(['error' => __('errors.agree')]);
+        }
         $input = [
             'email' => $request->input('email'),
             'host' => $request->input('host'),
