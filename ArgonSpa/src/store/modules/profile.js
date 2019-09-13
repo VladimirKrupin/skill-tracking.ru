@@ -3,27 +3,47 @@ import settings from "../../config/settings";
 import env from "../../config/env";
 let appSettings = settings.get(env.get());
 const state = {
+  lang: '',
   email: '',
   name: '',
-  lang: '',
+  surname: '',
+  age: '',
+  address: '',
+  work: '',
+  position: '',
+  about: '',
+  data: '',
 };
 
 const getters = {
+    lang: state => state.lang,
     email: state => state.email,
     name: state => state.name,
-    lang: state => state.lang,
+    surname: state => state.surname,
+    age: state => state.age,
+    address: state => state.address,
+    work: state => state.work,
+    position: state => state.position,
+    about: state => state.about,
+    data: state => state.data,
 };
 
 const mutations = {
-    setEmail(state, payload) {
-        state.email = payload.email;
-    },
-    setName(state, payload) {
-        state.name = payload.name;
+    setUserData(state, payload){
+        state.lang = payload.userData.lang;
+        state.email = payload.userData.email;
+        state.name = payload.userData.name;
+        state.surname = payload.userData.surname;
+        state.age = payload.userData.age;
+        state.address = payload.userData.address;
+        state.work = payload.userData.work;
+        state.position = payload.userData.position;
+        state.about = payload.userData.about;
+        state.data = payload.userData;
     },
     setLang(state, payload) {
-            state.lang = payload.lang;
-    },
+        state.lang = payload.lang;
+    }
 };
 
 const actions = {
@@ -38,9 +58,7 @@ const actions = {
           };
           axios(options)
               .then(response => {
-                  context.commit('setEmail', { email: response.data.data.email });
-                  context.commit('setName', { name: response.data.data.name });
-                  context.commit('setLang', { lang: response.data.data.lang });
+                  context.commit('setUserData', { userData: response.data.data });
                   if (localStorage.getItem('lang') !== response.data.data.lang){
                       context.dispatch('changeLang', { lang: response.data.data.lang });
                   }

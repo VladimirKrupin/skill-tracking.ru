@@ -3,7 +3,6 @@ Lang.requireAll(require.context('./Lang', true, /\.js$/));
 
 export default {
   get: function ($lang){
-    console.log($lang);
       return [
           {
               title: true,

@@ -15,15 +15,34 @@ class UserDataResource extends Resource
      */
     public function toArray($request)
     {
-        foreach ($this->settings as $setting){
-            if ($setting->key === 'lang'){
-                $lang = $setting->value;
+        $lang = '';
+        $name = '';
+        $surname = '';
+        $age = '';
+        $address = '';
+        $work = '';
+        $position = '';
+        $about = '';
+        if (!is_null($this['settings'])) {
+            foreach ($this['settings'] as $setting) {
+                if ($setting['key'] === 'lang') {
+                    $lang = $setting['value'];
+                }
             }
         }
-        return [
+        $userData = [
+            'email' => $this['email'],
             'lang' => $lang,
-            'name' => $this->name,
-            'email' => $this->email,
+            'name' => $name,
+            'surname' => $surname,
+            'age' => $age,
+            'address' => $address,
+            'work' => $work,
+            'position' => $position,
+            'about' => $about,
+        ];
+        return [
+            'data' => $userData,
         ];
     }
 }

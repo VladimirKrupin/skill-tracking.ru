@@ -132,7 +132,7 @@ class UserController extends Controller
     }
 
     public function getUserData(Request $request){
-        return new UserDataResource(User::where('id',Auth::user()['id'])->with('settings')->first());
+        return new UserDataResource(User::where('id',Auth::user()['id'])->with('settings')->first()->toArray());
     }
 
     public function putLang(Request $request){
