@@ -60,7 +60,7 @@
                             <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="password" id="old-password"
+                                        <b-form-input type="text" id="name"
                                                       :placeholder=$lang.profile.name
                                                       class="form-control form-control-lg"
                                                       v-model="userData.name"></b-form-input>
@@ -75,7 +75,7 @@
                             <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="password" id="new-password"
+                                        <b-form-input type="text" id="surname"
                                                       :placeholder=$lang.profile.surname
                                                       class="form-control form-control-lg"
                                                       v-model="userData.surname"></b-form-input>
@@ -90,7 +90,7 @@
                             <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="password" id="confirm-password"
+                                        <b-form-input type="text" id="age"
                                                       :placeholder=$lang.profile.age
                                                       class="form-control form-control-lg"
                                                       v-model="userData.age"></b-form-input>
@@ -105,7 +105,7 @@
                             <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="password" id="confirm-password"
+                                        <b-form-input type="text" id="address"
                                                       :placeholder=$lang.profile.address
                                                       class="form-control form-control-lg"
                                                       v-model="userData.address"></b-form-input>
@@ -120,7 +120,7 @@
                             <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="password" id="confirm-password"
+                                        <b-form-input type="text" id="work"
                                                       :placeholder=$lang.profile.work
                                                       class="form-control form-control-lg"
                                                       v-model="userData.work"></b-form-input>
@@ -135,7 +135,7 @@
                             <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="password" id="confirm-password"
+                                        <b-form-input type="text" id="position"
                                                       :placeholder=$lang.profile.position
                                                       class="form-control form-control-lg"
                                                       v-model="userData.position"></b-form-input>
@@ -150,7 +150,7 @@
                             <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="password" id="confirm-password"
+                                        <b-form-input type="text" id="lang"
                                                       :placeholder=$lang.profile.lang
                                                       class="form-control form-control-lg"
                                                       v-model="userData.lang"></b-form-input>
@@ -217,10 +217,11 @@ export default {
         },
         sendSettings: function () {
             console.log('sendSettings');
+            console.log(this.userData);
         }
     },
     mounted: function () {
-        this.userData = this.data;
+        this.userData = JSON.parse(JSON.stringify(this.data));
     }
 };
 </script>
