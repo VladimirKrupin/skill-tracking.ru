@@ -20,6 +20,11 @@
             <img v-lazy="'img/theme/team-4-800x800.jpg'" alt="Raised circle image"
                  class="img-fluid rounded-circle shadow-lg" style="width: 150px;">
         </div>
+        <div class="col-sm-3 col-6 mt-5 mt-sm-0">
+            <small class="d-block text-uppercase font-weight-bold mb-4">Circle Raised</small>
+            <img v-lazy="'img/theme/team-4-800x800.jpg'" alt="Raised circle image"
+                 class="img-fluid rounded-circle shadow-lg" style="width: 150px;">
+        </div>
     </div>
 </template>
 <script>

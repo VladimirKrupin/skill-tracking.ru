@@ -37,6 +37,9 @@ export default {
                         localStorage.getItem('access_token') !== undefined &&
                         localStorage.getItem('access_token') !== 'undefined'
                     );
+                },
+                flagImage: function ($lang) {
+                    return 'img/flags/'+localStorage.getItem('lang')+'.png';
                 }
             }
         }
