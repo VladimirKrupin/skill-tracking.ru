@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 pt-5 m-auto" v-if="setting">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 pt-5 m-auto" v-if="setting || (!name && !surname && !age && !work && !position && !about)">
                             <b-row>
                                 <b-col class="p-0">
                                     <div class="alert alert-danger alert-dismissable text-dark" v-if="errors">
@@ -90,7 +90,8 @@
                             <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="text" id="age"
+                                        <b-form-input type="date"
+                                                      id="age"
                                                       :placeholder=$lang.profile.age
                                                       class="form-control form-control-lg"
                                                       v-model="userData.age"></b-form-input>
@@ -148,12 +149,29 @@
                                 </b-col>
                             </b-row>
                             <b-row>
+                                <b-col class="mb-4 p-0 col-3">
+                                    <b-form-group class="mb-0">
+                                        <b-form-select id="basicSelect"
+                                                       :plain="true"
+                                                       :options="allowedLangs"
+                                                       :value=lang>
+                                        </b-form-select>
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
+                            <b-row>
+                                <b-col class="pl-1">
+                                    <h3 class="h5 font-sm">{{$lang.profile.about}}</h3>
+                                </b-col>
+                            </b-row>
+                            <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="text" id="lang"
-                                                      :placeholder=$lang.profile.lang
+                                        <b-form-textarea type="text" id="lang"
+                                                      :rows="9"
+                                                      :placeholder=$lang.profile.about
                                                       class="form-control form-control-lg"
-                                                      v-model="userData.lang"></b-form-input>
+                                                      v-model="userData.about"></b-form-textarea>
                                     </b-form-group>
                                 </b-col>
                             </b-row>
@@ -198,6 +216,7 @@ export default {
             position: 'position',
             about: 'about',
             data: 'data',
+            allowedLangs: 'allowedLangs',
         }),
     },
     data() {

@@ -13,6 +13,7 @@ const state = {
   position: '',
   about: '',
   data: '',
+  allowedLangs: '',
 };
 
 const getters = {
@@ -26,6 +27,7 @@ const getters = {
     position: state => state.position,
     about: state => state.about,
     data: state => state.data,
+    allowedLangs: state => state.allowedLangs,
 };
 
 const mutations = {
@@ -43,6 +45,10 @@ const mutations = {
     },
     setLang(state, payload) {
         state.lang = payload.lang;
+    },
+    setAllowedLangs(state, payload) {
+        console.log(payload.allowedLangs);
+        state.allowedLangs = payload.allowedLangs;
     }
 };
 
@@ -93,6 +99,19 @@ const actions = {
                   console.log(e);
               });
       }
+  },
+  getAllowedLangs(context,payload) {
+      const options = {
+          method: 'GET',
+          url: appSettings.apiHost + '/api/allowedLangs/',
+      };
+      axios(options)
+          .then(response => {
+              context.commit('setAllowedLangs', { allowedLangs: response.data.data.langs});
+          })
+          .catch(e => {
+              console.log(e);
+          });
   },
 };
 
