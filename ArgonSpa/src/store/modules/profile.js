@@ -8,7 +8,8 @@ const state = {
   name: '',
   surname: '',
   age: '',
-  address: '',
+  country: '',
+  city: '',
   work: '',
   position: '',
   about: '',
@@ -22,7 +23,8 @@ const getters = {
     name: state => state.name,
     surname: state => state.surname,
     age: state => state.age,
-    address: state => state.address,
+    country: state => state.country,
+    city: state => state.city,
     work: state => state.work,
     position: state => state.position,
     about: state => state.about,
@@ -37,7 +39,8 @@ const mutations = {
         state.name = payload.userData.name;
         state.surname = payload.userData.surname;
         state.age = payload.userData.age;
-        state.address = payload.userData.address;
+        state.country = payload.userData.country;
+        state.city = payload.userData.city;
         state.work = payload.userData.work;
         state.position = payload.userData.position;
         state.about = payload.userData.about;

@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 pt-5 m-auto" v-if="setting || (!name && !surname && !age && !work && !position && !about)">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 pt-5 m-auto" v-if="setting">
                             <b-row>
                                 <b-col class="p-0">
                                     <div class="alert alert-danger alert-dismissable text-dark" v-if="errors">
@@ -100,16 +100,31 @@
                             </b-row>
                             <b-row>
                                 <b-col class="pl-1">
-                                    <h3 class="h5 font-sm">{{$lang.profile.address}}</h3>
+                                    <h3 class="h5 font-sm">{{$lang.profile.country}}</h3>
                                 </b-col>
                             </b-row>
                             <b-row>
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="address"
-                                                      :placeholder=$lang.profile.address
+                                                      :placeholder=$lang.profile.country
                                                       class="form-control form-control-lg"
-                                                      v-model="userData.address"></b-form-input>
+                                                      v-model="userData.country"></b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
+                            <b-row>
+                                <b-col class="pl-1">
+                                    <h3 class="h5 font-sm">{{$lang.profile.city}}</h3>
+                                </b-col>
+                            </b-row>
+                            <b-row>
+                                <b-col class="mb-4 p-0">
+                                    <b-form-group class="mb-0">
+                                        <b-form-input type="text" id="address"
+                                                      :placeholder=$lang.profile.city
+                                                      class="form-control form-control-lg"
+                                                      v-model="userData.city"></b-form-input>
                                     </b-form-group>
                                 </b-col>
                             </b-row>
@@ -183,9 +198,10 @@
                         </div>
                         <div v-if="!setting">
                             <div class="text-center mt-5" v-bind:class="about?'':'pb-3'">
-                                <h3 v-if="name || surname">{{name}} {{surname}}, {{age}}<</h3>
+                                <h3 v-if="name || surname">{{name}} {{surname}}, {{age}}</h3>
                                 <div><i class="ni business_briefcase-24 mr-2"></i>Язык: {{lang}} <img v-lazy="flagImage()" class="rounded-circle flag-icon flag-image"></div>
-                                <div class="h6 mt-2 font-weight-300" v-if="address"><i class="ni location_pin mr-2"></i>{{address}}</div>
+                                <div class="h6 mt-2 font-weight-300" v-if="country"><i class="ni location_pin mr-2"></i>{{country}}</div>
+                                <div class="h6 mt-2 font-weight-300" v-if="city"><i class="ni location_pin mr-2"></i>{{city}}</div>
                                 <div class="h6 mt-4" v-if="work"><i class="ni business_briefcase-24 mr-2"></i>{{work}}</div>
                                 <div><i class="ni education_hat mr-2" v-if="position"></i>{{position}}</div>
                             </div>
@@ -211,7 +227,8 @@ export default {
             name: 'name',
             surname: 'surname',
             age: 'age',
-            address: 'address',
+            country: 'country',
+            city: 'city',
             work: 'work',
             position: 'position',
             about: 'about',
@@ -240,6 +257,7 @@ export default {
         }
     },
     mounted: function () {
+        this.setting=!(this.name && this.surname && this.age && this.work && this.position && this.about);
         this.userData = JSON.parse(JSON.stringify(this.data));
     }
 };

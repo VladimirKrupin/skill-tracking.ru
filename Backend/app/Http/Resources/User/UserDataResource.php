@@ -19,7 +19,8 @@ class UserDataResource extends Resource
         $name = '';
         $surname = '';
         $age = '';
-        $address = '';
+        $country = '';
+        $city = '';
         $work = '';
         $position = '';
         $about = '';
@@ -36,7 +37,8 @@ class UserDataResource extends Resource
             'name' => $name,
             'surname' => $surname,
             'age' => $age,
-            'address' => $address,
+            'country' => $country,
+            'city' => $city,
             'work' => $work,
             'position' => $position,
             'about' => $about,
