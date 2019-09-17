@@ -14,4 +14,8 @@ module.exports = {
     position : 'Position',
     about : 'About myself',
     save_changes : 'Save',
+    gender : 'Gender',
+    gender_not : 'Not specified',
+    gender_male : 'Male',
+    gender_female : 'Female',
 }

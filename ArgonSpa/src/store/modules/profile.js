@@ -7,6 +7,7 @@ const state = {
   email: '',
   name: '',
   surname: '',
+  gender: '',
   age: '',
   country: '',
   city: '',
@@ -22,6 +23,7 @@ const getters = {
     email: state => state.email,
     name: state => state.name,
     surname: state => state.surname,
+    gender: state => state.gender,
     age: state => state.age,
     country: state => state.country,
     city: state => state.city,
@@ -38,6 +40,7 @@ const mutations = {
         state.email = payload.userData.email;
         state.name = payload.userData.name;
         state.surname = payload.userData.surname;
+        state.gender = payload.userData.gender;
         state.age = payload.userData.age;
         state.country = payload.userData.country;
         state.city = payload.userData.city;

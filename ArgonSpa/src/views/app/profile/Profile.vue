@@ -61,6 +61,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="name"
+                                                      v-bind:class="validInput(name)"
                                                       :placeholder=$lang.profile.name
                                                       class="form-control form-control-lg"
                                                       v-model="userData.name"></b-form-input>
@@ -76,9 +77,29 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="surname"
+                                                      v-bind:class="validInput(surname)"
                                                       :placeholder=$lang.profile.surname
                                                       class="form-control form-control-lg"
                                                       v-model="userData.surname"></b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
+
+                            <b-row>
+                                <b-col class="pl-1">
+                                    <h3 class="h5 font-sm">{{$lang.profile.gender}}</h3>
+                                </b-col>
+                            </b-row>
+
+                            <b-row>
+                                <b-col class="mb-4 p-0 col-4">
+                                    <b-form-group class="mb-0">
+                                        <b-form-select id="genderSelect"
+                                                       :plain="true"
+                                                       :options="genderSelect"
+                                                       :value=userData.gender
+                                                       v-model="userData.gender">
+                                        </b-form-select>
                                     </b-form-group>
                                 </b-col>
                             </b-row>
@@ -92,6 +113,7 @@
                                     <b-form-group class="mb-0">
                                         <b-form-input type="date"
                                                       id="age"
+                                                      v-bind:class="validInput(age)"
                                                       :placeholder=$lang.profile.age
                                                       class="form-control form-control-lg"
                                                       v-model="userData.age"></b-form-input>
@@ -107,6 +129,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="address"
+                                                      v-bind:class="validInput(name)"
                                                       :placeholder=$lang.profile.country
                                                       class="form-control form-control-lg"
                                                       v-model="userData.country"></b-form-input>
@@ -122,6 +145,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="address"
+                                                      v-bind:class="validInput(city)"
                                                       :placeholder=$lang.profile.city
                                                       class="form-control form-control-lg"
                                                       v-model="userData.city"></b-form-input>
@@ -137,6 +161,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="work"
+                                                      v-bind:class="validInput(work)"
                                                       :placeholder=$lang.profile.work
                                                       class="form-control form-control-lg"
                                                       v-model="userData.work"></b-form-input>
@@ -152,6 +177,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="position"
+                                                      v-bind:class="validInput(position)"
                                                       :placeholder=$lang.profile.position
                                                       class="form-control form-control-lg"
                                                       v-model="userData.position"></b-form-input>
@@ -169,7 +195,8 @@
                                         <b-form-select id="basicSelect"
                                                        :plain="true"
                                                        :options="allowedLangs"
-                                                       :value=lang>
+                                                       :value=lang
+                                                       v-model="userData.lang">
                                         </b-form-select>
                                     </b-form-group>
                                 </b-col>
@@ -184,6 +211,7 @@
                                     <b-form-group class="mb-0">
                                         <b-form-textarea type="text" id="lang"
                                                       :rows="9"
+                                                      v-bind:class="validInput(about)"
                                                       :placeholder=$lang.profile.about
                                                       class="form-control form-control-lg"
                                                       v-model="userData.about"></b-form-textarea>
@@ -226,6 +254,7 @@ export default {
             email: 'email',
             name: 'name',
             surname: 'surname',
+            gender: 'gender',
             age: 'age',
             country: 'country',
             city: 'city',
@@ -245,6 +274,17 @@ export default {
             userData: [],
             disabled: false,
             loader: false,
+            genderSelect: [this.$lang.profile.gender_not,this.$lang.profile.gender_male,this.$lang.profile.gender_female],
+            err: {
+                name:false,
+                surname:false,
+                age:false,
+                country:false,
+                city:false,
+                work:false,
+                position:false,
+                about:false,
+            }
         };
     },
     methods: {
@@ -254,6 +294,9 @@ export default {
         sendSettings: function () {
             console.log('sendSettings');
             console.log(this.userData);
+        },
+        validInput: function(name){
+            if (this.err.name){return 'border-red';}
         }
     },
     mounted: function () {

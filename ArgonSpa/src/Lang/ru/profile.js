@@ -14,4 +14,8 @@ module.exports = {
     position : 'Должность',
     about : 'О себе',
     save_changes : 'Сохранить',
+    gender : 'Пол',
+    gender_not : 'Не указан',
+    gender_male : 'Мужской',
+    gender_female : 'Женский',
 }
