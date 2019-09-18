@@ -61,7 +61,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="name"
-                                                      v-bind:class="validInput(name)"
+                                                      v-bind:class="validInput(err.name)"
                                                       :placeholder=$lang.profile.name
                                                       class="form-control form-control-lg"
                                                       v-model="userData.name"></b-form-input>
@@ -77,7 +77,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="surname"
-                                                      v-bind:class="validInput(surname)"
+                                                      v-bind:class="validInput(err.surname)"
                                                       :placeholder=$lang.profile.surname
                                                       class="form-control form-control-lg"
                                                       v-model="userData.surname"></b-form-input>
@@ -113,7 +113,7 @@
                                     <b-form-group class="mb-0">
                                         <b-form-input type="date"
                                                       id="age"
-                                                      v-bind:class="validInput(age)"
+                                                      v-bind:class="err.age?'':''"
                                                       :placeholder=$lang.profile.age
                                                       class="form-control form-control-lg"
                                                       v-model="userData.age"></b-form-input>
@@ -129,7 +129,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="address"
-                                                      v-bind:class="validInput(name)"
+                                                      v-bind:class="validInput(err.country)"
                                                       :placeholder=$lang.profile.country
                                                       class="form-control form-control-lg"
                                                       v-model="userData.country"></b-form-input>
@@ -145,7 +145,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="address"
-                                                      v-bind:class="validInput(city)"
+                                                      v-bind:class="validInput(err.city)"
                                                       :placeholder=$lang.profile.city
                                                       class="form-control form-control-lg"
                                                       v-model="userData.city"></b-form-input>
@@ -161,7 +161,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="work"
-                                                      v-bind:class="validInput(work)"
+                                                      v-bind:class="validInput(err.work)"
                                                       :placeholder=$lang.profile.work
                                                       class="form-control form-control-lg"
                                                       v-model="userData.work"></b-form-input>
@@ -177,7 +177,7 @@
                                 <b-col class="mb-4 p-0">
                                     <b-form-group class="mb-0">
                                         <b-form-input type="text" id="position"
-                                                      v-bind:class="validInput(position)"
+                                                      v-bind:class="validInput(err.position)"
                                                       :placeholder=$lang.profile.position
                                                       class="form-control form-control-lg"
                                                       v-model="userData.position"></b-form-input>
@@ -211,7 +211,7 @@
                                     <b-form-group class="mb-0">
                                         <b-form-textarea type="text" id="lang"
                                                       :rows="9"
-                                                      v-bind:class="validInput(about)"
+                                                      v-bind:class="validInput(err.about)"
                                                       :placeholder=$lang.profile.about
                                                       class="form-control form-control-lg"
                                                       v-model="userData.about"></b-form-textarea>
@@ -292,11 +292,30 @@ export default {
             this.setting = !this.setting;
         },
         sendSettings: function () {
+            this.valid();
+            if (!this.validCheck()){return false;}
             console.log('sendSettings');
             console.log(this.userData);
         },
-        validInput: function(name){
-            if (this.err.name){return 'border-red';}
+        valid: function() {
+            this.err.name=(this.userData.name)?!(this.vStr(this.userData.name)):false;
+            this.err.surname=(this.userData.surname)?!(this.vStr(this.userData.surname)):false;
+            this.err.age=(this.userData.age)?!this.vDate(this.userData.age):false;
+            this.err.country=(this.userData.country)?!this.vStr(this.userData.country):false;
+            this.err.city=(this.userData.city)?!this.vStr(this.userData.city):false;
+            this.err.work=(this.userData.work)?!this.vStr(this.userData.work):false;
+            this.err.position=(this.userData.position)?!this.vStr(this.userData.position):false;
+            this.err.about=(this.userData.about)?!this.vStr(this.userData.about):false;
+        },
+        validCheck: function() {
+            let err = this.err;
+            let res = true;
+            Object.keys(err).map(function(objectKey, index) {
+                if (err[objectKey] === true){
+                    res = false;
+                }
+            });
+            return res;
         }
     },
     mounted: function () {

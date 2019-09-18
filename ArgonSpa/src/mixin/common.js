@@ -31,6 +31,15 @@ export default {
                     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return re.test(email);
                 },
+                vStr: function (name) {
+                    return name.length <= 255 && name.length >= 1;
+                },
+                vDate: function (name) {
+                    return name.length === 8;
+                },
+                validInput: function(expr){
+                    return (expr)?'border-red':'';
+                },
                 logged: function () {
                     return (
                         localStorage.getItem('access_token') !== null &&
