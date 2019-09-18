@@ -24,6 +24,7 @@ Route::group(['middleware' => ['lang']], function () {
     Route::post('/resetPassword/',    'User\UserController@resetPassword');
     Route::get('/getUserData/', 'User\UserController@getUserData')->middleware('auth:api');
     Route::post('/putLang/',    'User\UserController@putLang')->middleware('auth:api');
+    Route::post('/saveSettings/',    'User\UserController@saveSettings')->middleware('auth:api');
     Route::post('/changePassword/', 'User\UserController@changePassword')->middleware('auth:api');
     Route::get('/allowedLangs/', function (){return new AllowedLangsResource(['langs' => AppRegistry::get('lang')]);});
 });

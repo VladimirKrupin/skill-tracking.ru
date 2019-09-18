@@ -40,8 +40,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 pt-5 m-auto" v-if="setting">
                             <b-row>
                                 <b-col class="p-0">
-                                    <div class="alert alert-danger alert-dismissable text-dark" v-if="errors">
-                                        {{errors}}
+                                    <div v-html="errors" class="alert alert-danger alert-dismissable text-dark" v-if="errors">
                                     </div>
                                 </b-col>
                             </b-row>
@@ -248,6 +247,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import axios from 'axios';
 export default {
     computed: {
         ...mapGetters('profile', {
@@ -293,9 +293,32 @@ export default {
         },
         sendSettings: function () {
             this.valid();
-            if (!this.validCheck()){return false;}
-            console.log('sendSettings');
-            console.log(this.userData);
+            // if (!this.validCheck()){return false;}
+            this.errors = '';
+            this.loader = true;
+            const options = {
+                method: 'POST',
+                headers: this.defaultHeaders,
+                data: this.userData,
+                url: this.apiHost+'/api/saveSettings/',
+            };
+            axios(options)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    if (error.response !== undefined){
+                        let err = this.err;
+                        let errors = this.errors;
+                        Object.keys(error.response.data).map(function(objectKey, index) {
+                            err[objectKey] = true;
+                            errors += error.response.data[objectKey]+"<br>";
+                        });
+                        this.errors = errors;
+                    }
+                    this.loader = false;
+                });
         },
         valid: function() {
             this.err.name=(this.userData.name)?!(this.vStr(this.userData.name)):false;

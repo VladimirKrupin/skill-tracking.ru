@@ -317,5 +317,21 @@ class UserController extends Controller
 
         return new SuccessResponse();
     }
+    public function saveSettings(Request $request){
+        $user = Auth::user();
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|max:255',
+            'surname' => 'sometimes|max:255',
+            'gender' => 'sometimes|max:20',
+            'age' => 'sometimes|date',
+            'country' => 'sometimes|max:255',
+            'city' => 'sometimes|max:255',
+            'work' => 'sometimes|max:255',
+            'position' => 'sometimes|max:255',
+            'about' => 'sometimes|max:255',
+        ]);
+        if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
+        return new SuccessResponse();
+    }
 
 }
