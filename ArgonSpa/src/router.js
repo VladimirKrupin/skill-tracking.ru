@@ -16,80 +16,16 @@ const Statistic = () => import('./views/app/statistics/Statistics');
 
 Vue.use(Router);
 
+console.log(window.location);
+let location = window.location.host;
+let skillArray = ['localhost:8080','skill', 'skill-tracking.ru', 'skill-tracking.com'];
+let breezeArray = ['localhost:8080','breeze', 'breeze-team.ru', 'breeze-team.com'];
+console.log(skillArray.indexOf(location));
+console.log(typeof skillArray.indexOf(location));
+
 export default new Router({
   linkExactActiveClass: "active",
-  routes: [
-    {
-        path: '/app',
-        name: "DefaultContainer",
-        component: DefaultContainer,
-        children: [
-            {
-                path: '/statistic',
-                name: 'Statistic',
-                component: Statistic,
-            },
-            {
-                path: "/profile",
-                name: "profile",
-                component: Profile,
-            },
-            {
-                path: "/changePassword",
-                name: "changePassword",
-                component: ChangePassword
-            },
-        ],
-        meta: {
-            requiresAuth: true
-        }
-    },
-    {
-      path: "/",
-      name: "MainPage",
-      components: {
-        header: AppHeader,
-        default: Components,
-        footer: AppFooter
-      }
-    },
-    {
-      path: "/login",
-      name: "login",
-      components: {
-        header: AppHeader,
-        default: Login,
-        footer: AppFooter
-      },
-    },
-    {
-      path: "/register",
-      name: "register",
-      components: {
-        header: AppHeader,
-        default: Register,
-        footer: AppFooter
-      }
-    },
-    {
-      path: "/forgot",
-      name: "forgot",
-      components: {
-        header: AppHeader,
-        default: Forgot,
-        footer: AppFooter
-      }
-    },
-    {
-      path: "/policy",
-      name: "policy",
-      components: {
-        header: AppHeader,
-        default: Policy,
-        footer: AppFooter
-      }
-    }
-  ],
+  routes: getRoutes(location),
   scrollBehavior: to => {
     if (to.hash) {
       return { selector: to.hash };
@@ -98,3 +34,80 @@ export default new Router({
     }
   }
 });
+
+function getRoutes(location) {
+    if (skillArray.indexOf(location) == 0){
+        return [
+            {
+                path: '/app',
+                name: "DefaultContainer",
+                component: DefaultContainer,
+                children: [
+                    {
+                        path: '/statistic',
+                        name: 'Statistic',
+                        component: Statistic,
+                    },
+                    {
+                        path: "/profile",
+                        name: "profile",
+                        component: Profile,
+                    },
+                    {
+                        path: "/changePassword",
+                        name: "changePassword",
+                        component: ChangePassword
+                    },
+                ],
+                meta: {
+                    requiresAuth: true
+                }
+            },
+            {
+                path: "/",
+                name: "MainPage",
+                components: {
+                    header: AppHeader,
+                    default: Components,
+                    footer: AppFooter
+                }
+            },
+            {
+                path: "/login",
+                name: "login",
+                components: {
+                    header: AppHeader,
+                    default: Login,
+                    footer: AppFooter
+                },
+            },
+            {
+                path: "/register",
+                name: "register",
+                components: {
+                    header: AppHeader,
+                    default: Register,
+                    footer: AppFooter
+                }
+            },
+            {
+                path: "/forgot",
+                name: "forgot",
+                components: {
+                    header: AppHeader,
+                    default: Forgot,
+                    footer: AppFooter
+                }
+            },
+            {
+                path: "/policy",
+                name: "policy",
+                components: {
+                    header: AppHeader,
+                    default: Policy,
+                    footer: AppFooter
+                }
+            }
+        ]
+    }
+}
