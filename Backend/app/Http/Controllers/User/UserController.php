@@ -323,7 +323,7 @@ class UserController extends Controller
             'name' => 'sometimes|max:255',
             'surname' => 'sometimes|max:255',
             'gender' => 'sometimes|max:20',
-            'age' => 'sometimes|date',
+            'age' => 'sometimes|max:255',
             'country' => 'sometimes|max:255',
             'city' => 'sometimes|max:255',
             'work' => 'sometimes|max:255',
@@ -331,6 +331,30 @@ class UserController extends Controller
             'about' => 'sometimes|max:255',
         ]);
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
+
+        $user_data = $request->all();
+
+        unset($user_data['email']);
+        unset($user_data['lang']);
+
+        foreach ($user_data as $key => $value){
+            if (is_null($value)){
+                $value = '';
+            }
+            if ($setting = UserSetting::where('user_id',$user['id'])->where('key',$key)->first()){
+                if ($setting->value !== $value){
+                    $setting->value = $value;
+                    $setting->save();
+                }
+            }else{
+                UserSetting::create([
+                    'user_id' => $user['id'],
+                    'key' => $key,
+                    'value' => $value
+                ]);
+            }
+        }
+
         return new SuccessResponse();
     }
 

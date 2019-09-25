@@ -49,7 +49,11 @@ export default {
                 },
                 flagImage: function ($lang) {
                     return 'img/flags/'+localStorage.getItem('lang')+'.png';
-                }
+                },
+                langHandler: function (lang){
+                    this.$store.dispatch('profile/changeLang',{lang:lang});
+                    this.$store.dispatch('profile/setDbLang',{lang:lang});
+                },
             }
         }
     }

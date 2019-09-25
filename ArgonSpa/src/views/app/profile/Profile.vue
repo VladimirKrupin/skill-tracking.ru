@@ -39,19 +39,6 @@
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 pt-5 m-auto" v-if="setting">
                             <b-row>
-                                <b-col class="p-0">
-                                    <div v-html="errors" class="alert alert-danger alert-dismissable text-dark" v-if="errors">
-                                    </div>
-                                </b-col>
-                            </b-row>
-                            <b-row>
-                                <b-col class="p-0">
-                                    <div class="alert alert-success alert-dismissable text-dark" v-if="success">
-                                        {{$lang.profile.success}}
-                                    </div>
-                                </b-col>
-                            </b-row>
-                            <b-row>
                                 <b-col class="pl-1">
                                     <h3 class="h5 font-sm">{{$lang.profile.name}}</h3>
                                 </b-col>
@@ -91,7 +78,7 @@
                             </b-row>
 
                             <b-row>
-                                <b-col class="mb-4 p-0 col-4">
+                                <b-col class="mb-4 p-0 col-6">
                                     <b-form-group class="mb-0">
                                         <b-form-select id="genderSelect"
                                                        :plain="true"
@@ -195,7 +182,9 @@
                                                        :plain="true"
                                                        :options="allowedLangs"
                                                        :value=lang
-                                                       v-model="userData.lang">
+                                                       v-model="userData.lang"
+                                                       v-on:change="langHandler(userData.lang)"
+                                        >
                                         </b-form-select>
                                     </b-form-group>
                                 </b-col>
@@ -219,13 +208,26 @@
                             </b-row>
                             <b-row>
                                 <div class="d-flex">
-                                    <b-button variant="outline-primary" class="mb-4 mr-3" v-on:click="sendSettings()" :disabled="disabled">{{$lang.profile.save_changes}}<div v-if="loader" class="loader loader-btn"></div></b-button>
+                                    <b-button  variant="outline-primary" class="mb-4 mr-3" v-on:click="sendSettings()" :disabled="disabled">{{$lang.profile.save_changes}}<div v-if="loader" class="loader loader-btn"></div></b-button>
                                 </div>
+                            </b-row>
+                            <b-row>
+                                <b-col class="p-0">
+                                    <div v-html="errors" class="alert alert-danger alert-dismissable text-dark" v-if="errors">
+                                    </div>
+                                </b-col>
+                            </b-row>
+                            <b-row>
+                                <b-col class="p-0">
+                                    <div class="alert alert-success alert-dismissable text-dark" v-if="success">
+                                        {{$lang.profile.success}}
+                                    </div>
+                                </b-col>
                             </b-row>
                         </div>
                         <div v-if="!setting">
                             <div class="text-center mt-5" v-bind:class="about?'':'pb-3'">
-                                <h3 v-if="name || surname">{{name}} {{surname}}, {{age}}</h3>
+                                <h3 v-if="name || surname">{{name}} {{surname}}<span v-if="age">, {{age}}</span></h3>
                                 <div><i class="ni business_briefcase-24 mr-2"></i>Язык: {{lang}} <img v-lazy="flagImage()" class="rounded-circle flag-icon flag-image"></div>
                                 <div class="h6 mt-2 font-weight-300" v-if="country"><i class="ni location_pin mr-2"></i>{{country}}</div>
                                 <div class="h6 mt-2 font-weight-300" v-if="city"><i class="ni location_pin mr-2"></i>{{city}}</div>
@@ -296,6 +298,8 @@ export default {
             // if (!this.validCheck()){return false;}
             this.errors = '';
             this.loader = true;
+            this.disabled = true;
+            this.success = false;
             const options = {
                 method: 'POST',
                 headers: this.defaultHeaders,
@@ -305,9 +309,13 @@ export default {
             axios(options)
                 .then(response => {
                     console.log(response.data);
+                    this.loader = false;
+                    this.disabled = false;
+                    this.success = true;
+                    this.$store.dispatch('profile/setUserData');
+                    this.checkChangeSettings();
                 })
                 .catch(error => {
-                    console.log(error.response.data);
                     if (error.response !== undefined){
                         let err = this.err;
                         let errors = this.errors;
@@ -318,6 +326,7 @@ export default {
                         this.errors = errors;
                     }
                     this.loader = false;
+                    this.disabled = false;
                 });
         },
         valid: function() {
@@ -339,10 +348,13 @@ export default {
                 }
             });
             return res;
-        }
+        },
+        checkChangeSettings: function () {
+            this.setting = !(this.name || this.surname);
+        },
     },
     mounted: function () {
-        this.setting=!(this.name && this.surname && this.age && this.work && this.position && this.about);
+        this.checkChangeSettings();
         this.userData = JSON.parse(JSON.stringify(this.data));
     }
 };

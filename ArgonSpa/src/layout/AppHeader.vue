@@ -173,10 +173,6 @@ export default {
             }
             return '';
         },
-        langHandler: function (lang){
-            this.$store.dispatch('profile/changeLang',{lang:lang});
-            this.$store.dispatch('profile/setDbLang',{lang:lang});
-        },
     },
 };
 </script>
