@@ -1,10 +1,6 @@
 .DS_Store
 node_modules
-package-lock.json
-/coverage
-dist
-/tests/e2e/reports/
-selenium-debug.log
+/dist
 
 # local env files
 .env.local

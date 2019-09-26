@@ -1,195 +1,200 @@
-# CoreUI Vue - Free Bootstrap Admin Template [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=CoreUI%20-%20Free%20Vue%20Admin%20Template%20&url=http://coreui.io/vue/&hashtags=bootstrap,admin,template,dashboard,panel,free,angular,react,vue)
+<h1 id="argon-design-system"><a href="https://www.creative-tim.com/product/vue-argon-design-system">Vue Argon Design System</a></h1>
 
-### Check out our Vue Admin Templates and support CoreUI Development
+<p><img src="https://s3.amazonaws.com/creativetim_bucket/products/92/original/opt_argon_vue_thumbnail.jpg?1534236902" alt="Product Gif" /></p>
 
-[![Bootstrap Admin Templates Bundle](https://genesisui.com/img/bundle2.png)](https://genesisui.com/bundle.html?support=1)
+<p>Start your development with a Design System for Bootstrap 4. It is open source, free and it features many components that can help you create amazing websites.</p>
 
-[Check out Bootstrap Admin Templates Bundle](https://genesisui.com/bundle.html?support=1)
+<h4 id="fully-coded-components">Fully Coded Components</h4>
 
-This is Vue.js version of our Bootstrap 4 admin template [CoreUI](https://github.com/coreui/coreui-free-bootstrap-admin-template).
+<p>Vue Argon Design System is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in colour, that you can easily modify using SASS files.</p>
 
-Please help us on [Product Hunt](https://www.producthunt.com/posts/coreui-open-source-bootstrap-4-admin-template-with-angular-2-react-js-vue-js-support) & [Designer News](https://www.designernews.co/stories/81127). Thanks in advance!
+<p>You will save a lot of time going from prototyping to full-functional code, because all elements are implemented. This Design System is coming with prebuilt examples, so the development process is seamless, switching from our pages to the real website is very easy to be done.</p>
 
-Why I decided to create CoreUI? Please read this article: [Jack of all trades, master of none. Why Boostrap Admin Templates suck.](https://medium.com/@lukaszholeczek/jack-of-all-trades-master-of-none-5ea53ef8a1f#.7eqx1bcd8)
+<p>Every element has multiple states for colors, styles, hover, focus, that you can easily access and use.</p>
 
-CoreUI is an Open Source Vue & Bootstrap Admin Template. But CoreUI is not just another Admin Template. It goes way beyond hitherto admin templates thanks to transparent code and file structure. And if that's not enough, let’s just add that CoreUI consists bunch of unique features and over 1000 high quality icons.
+<h4 id="complex-documentation">Complex Documentation</h4>
 
-CoreUI is based on Bootstrap 4 and offers 6 versions: [HTML5 AJAX](https://github.com/coreui/coreui-free-bootstrap-admin-template-ajax), [HTML5 Static](https://github.com/coreui/coreui-free-bootstrap-admin-template), [AngularJS](https://github.com/mrholek/CoreUI-AngularJS), [Angular 2+](https://github.com/coreui/coreui-free-angular-admin-template), [React.js](https://github.com/coreui/coreui-free-react-admin-template) & [Vue.js](https://github.com/coreui/coreui-free-vue-admin-template).
+<p>Each element is well presented in a very complex documentation. You can read more about the idea behind this design system here. You can check the components here and the foundation here.</p>
 
-CoreUI is meant to be the UX game changer. Pure & transparent code is devoid of redundant components, so the app is light enough to offer ultimate user experience. This means mobile devices also, where the navigation is just as easy and intuitive as on a desktop or laptop. The CoreUI Layout API lets you customize your project for almost any device – be it Mobile, Web or WebApp – CoreUI covers them all!
+<h4 id="example-pages">Example Pages</h4>
 
-[![CoreUI Vue Free Bootstrap Admin Template](http://coreui.io/assets/img/coreui.png "CoreUI Vue Free Bootstrap Admin Template")](http://coreui.io)
+<p>If you want to get inspiration or just show something directly to your clients, you can jump start your development with our pre-built example pages. You will be able to quickly set up the basic structure for your web project.</p>
 
-**NOTE:** Please remember to **STAR** this project and **FOLLOW** [my Github](https://github.com/coreui) to keep you update with this template.
+<h2 id="table-of-contents">Table of Contents</h2>
 
-## Demo
+<ul>
+  <li><a href="#demo">Demo</a></li>
+  <li><a href="#quick-start">Quick Start</a></li>
+  <li><a href="#documentation">Documentation</a></li>
+  <li><a href="#file-structure">File Structure</a></li>
+  <li><a href="#browser-support">Browser Support</a></li>
+  <li><a href="#resources">Resources</a></li>
+  <li><a href="#reporting-issues">Reporting Issues</a></li>
+  <li><a href="#technical-support-or-questions">Technical Support or Questions</a></li>
+  <li><a href="#licensing">Licensing</a></li>
+  <li><a href="#useful-links">Useful Links</a></li>
+</ul>
 
-A fully functional demo is available at [CoreUI](http://coreui.io/)
+<h2 id="demo">Demo</h2>
 
-## Table of Contents
+<ul>
+  <li><a href="https://demos.creative-tim.com/vue-argon-design-system">Index Page</a></li>
+  <li><a href="https://demos.creative-tim.com/vue-argon-design-system/#/landing">Landing page</a></li>
+  <li><a href="https://demos.creative-tim.com/vue-argon-design-system/#/profile">Profile Page</a></li>
+  <li><a href="https://demos.creative-tim.com/vue-argon-design-system/#/login">Login Page</a></li>
+  <li><a href="https://demos.creative-tim.com/vue-argon-design-system/#/register">Register Page</a></li>
+</ul>
 
-* [Versions](#versions)
-* [CoreUI Pro](#coreui-pro)
-* [Admin Templates built on top of CoreUI Pro](#admin-templates-built-on-top-of-coreui-pro)
-* [Installation](#installation)
-* [Usage](#usage)
-* [What's included](#whats-included)
-* [Documentation](#documentation)
-* [Contributing](#contributing)
-* [Versioning](#versioning)
-* [Creators](#creators)
-* [Community](#community)
-* [Community Projects](#community-projects)
-* [License](#license)
-* [Support CoreUI Development](#support-coreui-development)
+<p><a href="https://demos.creative-tim.com/argon-design-system">View More</a></p>
 
-## Versions
+<h2 id="quick-start">Quick start</h2>
 
-CoreUI is built on top of Bootstrap 4 and supports popular frameworks.
+<ul>
+  <li><a href="https://github.com/creativetimofficial/vue-argon-design-system/archive/master.zip">Download from Github</a>.</li>
+  <li><a href="https://www.creative-tim.com/product/vue-argon-design-system">Download from Creative Tim</a>.</li>
+  <li>Clone the repo: <code class="highlighter-rouge">git clone https://github.com/creativetimofficial/vue-argon-design-system.git</code>.</li>
+</ul>
 
-* [CoreUI Free Bootstrap Admin Template](https://github.com/coreui/coreui-free-bootstrap-admin-template)
-* [CoreUI Free Bootstrap Admin Template (Ajax)](https://github.com/coreui/coreui-free-bootstrap-admin-template-ajax)
-* [CoreUI Free Angular 2+ Admin Template](https://github.com/coreui/coreui-free-angular-admin-template)
-* 🚧 [CoreUI Free .NET Core 2 Admin Template](https://github.com/mrholek/CoreUI-NET) (Available Soon)
-* [CoreUI Free React.js Admin Template](https://github.com/coreui/coreui-free-react-admin-template)
-* 🚧 [CoreUI Free Vue.js Admin Template](https://github.com/coreui/coreui-free-vue-admin-template)
+<h2 id="documentation">Documentation</h2>
 
-## CoreUI Pro
+<p>The documentation for the Vue Argon Design System is hosted at our <a href="https://demos.creative-tim.com/vue-argon-design-system">website</a>.</p>
 
-* 💪  [CoreUI Pro Bootstrap Admin Template](https://coreui.io/pro/)
-* 💪  [CoreUI Pro Bootstrap Admin Template (Ajax)](https://coreui.io/pro/)
-* 💪  [CoreUI Pro Angular Admin Template](https://coreui.io/pro/angular)
-* 💪  [CoreUI Pro React Admin Template](https://coreui.io/pro/react)
-* 💪  [CoreUI Pro Vue Admin Template](https://coreui.io/pro/vue)
+<h2 id="file-structure">File Structure</h2>
 
-## Admin Templates built on top of CoreUI Pro
+<p>Within the download you’ll find the following directories and files:</p>
 
-| CoreUI Pro | Prime | Root | Alba | Leaf |
-| --- | --- | --- | --- | --- |
-| [![CoreUI Pro Admin Template](https://coreui.io/assets/img/example-coureui.jpg)](https://coreui.io/pro/) | [![Prime Admin Template](https://genesisui.com/assets/img/templates/prime1280.jpg)](https://genesisui.com/admin-templates/bootstrap/prime/?support=1) | [![Root Admin Template](https://genesisui.com/assets/img/templates/root1280.jpg)](https://genesisui.com/admin-templates/bootstrap/root/?support=1) | [![Alba Admin Template](https://genesisui.com/assets/img/templates/alba1280.jpg)](https://genesisui.com/admin-templates/bootstrap/alba/?support=1) | [![Leaf Admin Template](https://genesisui.com/assets/img/templates/leaf1280.jpg)](https://genesisui.com/admin-templates/bootstrap/leaf/?support=1)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>argon/
+|-- vue-argon-design-system
+    |-- App.vue
+    |-- main.js
+    |-- router.js
+    |-- assets
+    |   |-- scss
+    |   |   |-- argon.scss
+    |   |   |-- bootstrap
+    |   |   |-- custom
+    |   |-- vendor
+    |       |-- font-awesome
+    |       |   |-- css
+    |       |   |   |-- font-awesome.css
+    |       |   |   |-- font-awesome.min.css
+    |       |   |-- fonts
+    |       |       |-- FontAwesome.otf
+    |       |       |-- fontawesome-webfont.eot
+    |       |       |-- fontawesome-webfont.svg
+    |       |       |-- fontawesome-webfont.ttf
+    |       |       |-- fontawesome-webfont.woff
+    |       |       |-- fontawesome-webfont.woff2
+    |       |-- nucleo
+    |           |-- css
+    |           |   |-- nucleo-svg.css
+    |           |   |-- nucleo.css
+    |           |-- fonts
+    |               |-- nucleo-icons.eot
+    |               |-- nucleo-icons.svg
+    |               |-- nucleo-icons.ttf
+    |               |-- nucleo-icons.woff
+    |               |-- nucleo-icons.woff2
+    |-- components
+    |   |-- Badge.vue
+    |   |-- BaseButton.vue
+    |   |-- BaseCheckbox.vue
+    |   |-- BaseInput.vue
+    |   |-- BaseNav.vue
+    |   |-- BaseRadio.vue
+    |   |-- BaseSlider.vue
+    |   |-- BaseSwitch.vue
+    |   |-- Card.vue
+    |   |-- CloseButton.vue
+    |   |-- Icon.vue
+    |   |-- NavbarToggleButton.vue
+    |-- layout
+    |   |-- AppFooter.vue
+    |   |-- AppHeader.vue
+    |-- plugins
+    |   |-- argon-kit.js
+    |   |-- globalComponents.js
+    |   |-- globalDirectives.js
+    |-- views
+        |-- Components.vue
+        |-- Landing.vue
+        |-- Login.vue
+        |-- Profile.vue
+        |-- Register.vue
+        |-- components
+            |-- BasicElements.vue
+            |-- Carousel.vue
+            |-- CustomControls.vue
+            |-- DownloadSection.vue
+            |-- Examples.vue
+            |-- Hero.vue
+            |-- Icons.vue
+            |-- Inputs.vue
+            |-- JavascriptComponents.vue
+            |-- Navigation.vue
 
-## Installation
+</code></pre></div></div>
 
-### Clone repo
+<h2 id="browser-support">Browser Support</h2>
 
-``` bash
-# clone the repo
-$ git clone https://github.com/coreui/coreui-free-vue-admin-template.git CoreUI-Vue
+<p>At present, we officially aim to support the last two versions of the following browsers:</p>
 
-# go into app's directory
-$ cd CoreUI-Vue
+<p><img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64" />
+<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64" />
+<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64" />
+<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64" />
+<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64" /></p>
 
-# install app's dependencies
-$ npm install
-```
+<h2 id="resources">Resources</h2>
 
-## Usage
+<ul>
+  <li>Demo: <a href="https://demos.creative-tim.com/argon-design-system">https://demos.creative-tim.com/vue-argon-design-system</a></li>
+  <li>Download: <a href="https://www.creative-tim.com/product/vue-argon-design-system">https://www.creative-tim.com/product/vue-argon-design-system</a></li>
+  <li>License Agreement: <a href="https://www.creative-tim.com/license">https://www.creative-tim.com/license</a></li>
+  <li>Support: <a href="https://www.creative-tim.com/contact-us">https://www.creative-tim.com/contact-us</a></li>
+  <li>Issues: <a href="https://github.com/creativetimofficial/vue-argon-design-system/issues">Github Issues Page</a></li>
+</ul>
 
-``` bash
-# serve with hot reload at localhost:8080
-npm run serve
+<h2 id="reporting-issues">Reporting Issues</h2>
 
-# build for production with minification
-npm run build
+<p>We use GitHub Issues as the official bug tracker for the Vue Argon Design System. Here are some advices for our users that want to report an issue:</p>
 
-# run linter
-npm run lint
+<ol>
+  <li>Make sure that you are using the latest version of the Vue Argon Design System. Check the CHANGELOG from your copy on our <a href="https://www.creative-tim.com">website</a>.</li>
+  <li>Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.</li>
+  <li>Some issues may be browser specific, so specifying in what browser you encountered the issue might help.</li>
+</ol>
 
-# run unit tests
-npm run test:unit
+<h2 id="technical-support-or-questions">Technical Support or Questions</h2>
 
-# run e2e tests
-npm run test:e2e
+<p>If you have questions or need help integrating the product please <a href="https://www.creative-tim.com/contact-us">contact us</a> instead of opening an issue.</p>
 
-```
+<h2 id="licensing">Licensing</h2>
 
-For a detailed explanation on how things work, check out the [Vue CLI Guide](https://cli.vuejs.org/guide/).
+<ul>
+  <li>
+    <p>Copyright © 2018 Creative Tim (https://www.creative-tim.com)</p>
+  </li>
+  <li>
+    <p>Licensed under MIT (https://github.com/creativetimofficial/vue-argon-design-system/blob/master/LICENSE.md)</p>
+  </li>
+</ul>
 
-## What's included
+<h2 id="useful-links">Useful Links</h2>
 
-Within the download you'll find the following directories and files:
+<ul>
+  <li><a href="https://www.creative-tim.com/bootstrap-themes">More products</a> from Creative Tim</li>
+  <li><a href="https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w">Tutorials</a></li>
+  <li><a href="https://www.creative-tim.com/bootstrap-themes/free">Freebies</a> from Creative Tim</li>
+  <li><a href="https://www.creative-tim.com/affiliates/new">Affiliate Program</a> (earn money)</li>
+</ul>
 
-```
-CoreUI-Vue/
-├── public/              # pure static assets (directly copied)
-│   └── index.html           # index.html template
-├── src/                 # project root
-│   ├── assets/                 # module assets (processed by webpack)
-│   │   └── scss/               # user styles
-│   ├── components/             # ui components
-│   ├── containers/             # ui containers
-│   ├── router/                 # routing 
-│   ├── shared/                 # utils
-│   ├── views/                  # ui views
-│   ├── _nav.js                 # sidebar nav config
-│   ├── App.vue                 # main app component
-│   └── main.js                 # app entry file
-├── test/
-│   └── unit/            # unit tests
-│   └── e2e/             # e2e tests
-├── .eslintrc.js         # eslint config
-├── .gitignore           # defaults for gitignore
-├── .postcssrc.js        # postcss config
-├── CHANGELOG.md
-├── README.md
-├── babel.config.js      # babel config
-├── jest.config.js       # jest config
-├── vue.config.js        # vue-cli config
-├── LICENSE
-└── package.json         # build scripts and dependencies
-```
+<h2 id="social-media">Social Media</h2>
 
-## Bugs and feature requests
-
-Have a bug or a feature request? [Please open a new issue](https://github.com/coreui/coreui-free-vue-admin-template/issues).
-
-## Documentation
-
-CoreUI's documentation, is hosted on our website [CoreUI](http://coreui.io/)
-
-## Contributing
-
-Please read through our [contributing guidelines](https://github.com/coreui/coreui-free-bootstrap-admin-template/blob/master/CONTRIBUTING.md). Included are directions for opening issues, coding standards, and notes on development.
-
-Editor preferences are available in the [editor config](https://github.com/coreui/coreui-free-vue-admin-template/blob/master/.editorconfig) for easy use in common text editors. Read more and download plugins at <http://editorconfig.org>.
-
-## Versioning
-
-For transparency into our release cycle and in striving to maintain backward compatibility,CoreUI Free Admin Template is maintained under [the Semantic Versioning guidelines](http://semver.org/).
-
-See [the Releases section of our project](https://github.com/coreui/coreui-free-vue-admin-template/releases) for changelogs for each release version.
-
-## Creators
-
-**Łukasz Holeczek**
-
-* <https://twitter.com/lukaszholeczek>
-* <https://github.com/mrholek>
-
-**Andrzej Kopański**
-
-* <https://github.com/xidedix>
-
-## Community
-
-Get updates on CoreUI's development and chat with the project maintainers and community members.
-
-- Follow [@core_ui on Twitter](https://twitter.com/core_ui).
-- Read and subscribe to [CoreUI Blog](https://coreui.ui/blog/).
-
-### Community Projects
-
-Some of projects created by community but not maintained by CoreUI team.
-
-* [NuxtJS + Vue CoreUI](https://github.com/muhibbudins/nuxt-coreui)
-* [Colmena](https://github.com/colmena/colmena)
-
-## Copyright and license
-
-copyright 2017 creativeLabs Łukasz Holeczek. Code released under [the MIT license](https://github.com/coreui/coreui-free-vue-admin-template/blob/master/LICENSE).
-There is only one limitation you cannot re-distribute the `CoreUI` as stock nor if you modify the `CoreUI`. In the past we faced some problems with persons who tried to sell `CoreUI` based templates.
-
-## Support CoreUI Development
-CoreUI is an MIT licensed open source project and completely free to use. However, the amount of effort needed to maintain and develop new features for the project is not sustainable without proper financial backing. You can support development by donating on [PayPal](https://www.paypal.me/holeczek), buying [CoreUI Pro Version](https://coreui.io/pro) or buying one of our [premium admin templates](https://genesisui.com/?support=1).
-
-As of now I am exploring the possibility of working on CoreUI fulltime - if you are a business that is building core products using CoreUI, I am also open to conversations regarding custom sponsorship / consulting arrangements. Get in touch on [Twitter](https://twitter.com/lukaszholeczek).
+<ul>
+  <li>Twitter: <a href="https://twitter.com/CreativeTim">https://twitter.com/CreativeTim</a></li>
+  <li>Facebook: <a href="https://www.facebook.com/CreativeTim">https://www.facebook.com/CreativeTim</a></li>
+  <li>Dribbble: <a href="https://dribbble.com/creativetim">https://dribbble.com/creativetim</a></li>
+  <li>Google+: <a href="https://plus.google.com/+CreativetimPage">https://plus.google.com/+CreativetimPage</a></li>
+  <li>Instagram: <a href="https://www.instagram.com/CreativeTimOfficial">https://www.instagram.com/CreativeTimOfficial</a></li>
+</ul>

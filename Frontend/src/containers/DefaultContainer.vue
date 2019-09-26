@@ -5,19 +5,18 @@
 
       <SidebarToggler class="d-lg-none" display="md" mobile />
 
-      <b-link class="navbar-brand" to="/">
+      <b-link class="navbar-brand" to="/app">
         <span class="navbar-brand-minimized logo-text-min">ST</span>
-        <span class="navbar-brand-full logo-text-max">Skill Tracking</span>
+        <span class="navbar-brand-full logo-text-max logo-text">Skill Tracking</span>
       </b-link>
 
       <SidebarToggler class="d-md-down-none" display="lg" />
-
       <div class="ml-auto">
         <div class="d-flex align-items-center col-sm-12 col-12 col-md-5 col-lg-5">
-<!--          <div class="d-flex flex-column mr-1 user-info">-->
+          <div class="d-flex flex-column mr-1">
 <!--            <h5 class="mb-1"><span class="badge badge-pill badge-primary font-weight-light">Андминистратор</span></h5>-->
-<!--            <span class="text-md-left text-nowrap text-dark">User name</span>-->
-<!--          </div>-->
+            <span class="text-md-left text-nowrap text-dark user-info">{{(userName)?userName:email}}</span>
+          </div>
           <b-navbar-nav>
             <DefaultHeaderDropdownAccnt/>
           </b-navbar-nav>
@@ -36,8 +35,8 @@
         <SidebarFooter/>
         <SidebarMinimizer/>
       </AppSidebar>
-      <main class="main mt-4">
-        <div class="container-fluid">
+      <main class="main mt-xl-4 mt-lg-4 mt-md-4 mt-0">
+        <div class="container-fluid p-xl-4 p-lg-4 p-md-4 p-0">
           <router-view></router-view>
         </div>
       </main>
@@ -47,13 +46,11 @@
       </AppAside>
     </div>
 
-    <TheFooter>
+    <TheFooter class="p-3 custom-footer">
       <!--footer-->
-      <div>
-        <a target="_blank" href="https://skill-tracking.ru">Перейти на сайт</a>
-      </div>
+        <a href="/">{{$lang.defaultContainer.go_to_site}}</a>
       <div class="ml-auto">
-        <span class="mr-1">© 2019 Skill Tracking официальный сайт. Все права защищены.</span>
+        <span class="mr-1">© 2019 Skill Tracking {{$lang.defaultContainer.site}}.</span>
       </div>
     </TheFooter>
   </div>
@@ -86,10 +83,15 @@ export default {
   },
   data () {
     return {
-      nav: nav.items
+      nav: nav.get(this.$lang)
     }
   },
   computed: {
+      ...mapGetters('profile', {
+          email: 'email',
+          userName: 'name',
+          lang: 'lang',
+      }),
     name () {
       return this.$route.name
     },
@@ -106,5 +108,32 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
+    // CoreUI Icons Set
+    @import '~@coreui/icons/css/coreui-icons.min.css';
+    /* Import Font Awesome Icons Set */
+    $fa-font-path: '~font-awesome/fonts/';
+    @import '~font-awesome/scss/font-awesome.scss';
+    /* Import Simple Line Icons Set */
+    $simple-line-font-path: '~simple-line-icons/fonts/';
+    @import '~simple-line-icons/scss/simple-line-icons.scss';
+    /* Import Flag Icons Set */
+    @import '~flag-icon-css/css/flag-icon.min.css';
+    /* Import Bootstrap Vue Styles */
+    @import '~bootstrap-vue/dist/bootstrap-vue.css';
+    // Import Main styles for this application
+    @import '@/assets/scss/style';
+
+    @media (max-width: 667px) {
+        .user-info {
+            display: none;
+        }
+    }
+    .logo-text {
+        font-size: 14px;
+    }
+    .custom-footer {
+        background: #ffffff;
+        border-top: 1px solid #dcd8d8;
+    }
 </style>

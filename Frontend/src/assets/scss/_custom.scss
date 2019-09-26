@@ -1,4 +1,29 @@
 // Here you can add other styles
+@media (max-width: 425px) {
+  .card {
+    border-radius: 0;
+    margin-bottom: 10px;
+    border: 0
+  }
+  .section {
+    padding-bottom: 10px;
+  }
+}
+.app {
+  .btn-primary {
+  }
+
+  .app-header.navbar{
+    box-shadow: 0px 1px 3px rgba(0,0,0,.1);
+  }
+
+}
+
+.alert-info {
+  //background-color: #66acf7;
+  //border-color: #75b4f1;
+  //color: #2e5d8f;
+}
 
 .bg-theme {
   background-color: #f6f7f7;
@@ -19,6 +44,10 @@
     padding: 20px;
     border-radius: 3px;
   }
+}
+
+.form-control {
+  font-size: 14px;
 }
 
 .form__btn {
