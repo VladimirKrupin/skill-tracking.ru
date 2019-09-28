@@ -80,7 +80,7 @@ services:
     build:
       context: ./
       dockerfile: Docker/composer_dockerfile
-    command: php -S localhost:3054
+    command: php -S localhost:8085
     volumes:
       - ./Backend:/app
     networks:
