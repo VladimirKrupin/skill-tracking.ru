@@ -13,8 +13,8 @@ export default {
         };
       case 'prod':
         return {
-          'apiHost': 'http://api.skill-tracking.ru',
-          'frontHost': 'http://skill-tracking.ru'
+          'apiHost': 'http://api.skill-tracking.com',
+          'frontHost': 'http://skill-tracking.com'
         };
     }
   },
