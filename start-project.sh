@@ -34,6 +34,9 @@ then
     ${user_permissions} docker exec -it ${env}_docker_composer_1 composer install
     printf "${GREEN}DONE${NC} ${PURPLE}${user_permissions} docker exec -it ${env}_docker_composer_1 composer install${NC}${N}"
 
+    ${user_permissions} docker exec -it ${env}_docker_php_1 php artisan config:clear
+    printf "${GREEN}DONE${NC} ${PURPLE}${user_permissions} exec -it ${env}_docker_php_1 php artisan config:clear${NC}${N}"
+
     ${user_permissions} docker exec -it ${env}_docker_php_1 php artisan cache:clear
     printf "${GREEN}DONE${NC} ${PURPLE}${user_permissions} exec -it ${env}_docker_php_1 php artisan cache:clear${NC}${N}"
 

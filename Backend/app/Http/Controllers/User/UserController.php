@@ -49,7 +49,7 @@ class UserController extends Controller
         ];
         $validator = Validator::make($input, [
             'email' => 'required|email|unique:users|unique:register_confirmation',
-            'host' => 'required|string|max:25',
+            'host' => 'required|string|max:30',
         ]);
         if ($validator->fails()) {
             $error_str = '';
