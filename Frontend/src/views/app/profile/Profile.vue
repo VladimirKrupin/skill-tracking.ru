@@ -8,7 +8,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-3 order-lg-2">
                                 <div class="card-profile-image">
-                                    <a href="#">
+                                    <a href="#" v-on:click="avatarUpload()">
                                         <img v-lazy="'img/user/no-pic.png'" class="rounded-circle">
                                     </a>
                                 </div>
@@ -352,6 +352,9 @@ export default {
         checkChangeSettings: function () {
             this.setting = !(this.name || this.surname);
         },
+        avatarUpload: function () {
+            console.log('avatar upload');
+        }
     },
     mounted: function () {
         this.userData = JSON.parse(JSON.stringify(this.data));
