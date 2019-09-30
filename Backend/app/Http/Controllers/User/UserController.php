@@ -161,7 +161,7 @@ class UserController extends Controller
         //валидация запроса
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'host' => 'required|string|max:25',
+            'host' => 'required|string|max:30',
         ]);
 
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
@@ -263,7 +263,7 @@ class UserController extends Controller
             'password.oldPassword' => 'required|max:50',
             'password.newPasswordConfirm' => 'required|max:50',
             'password.newPassword' => 'required|max:50',
-            'host' => 'required|string|max:25',
+            'host' => 'required|string|max:30',
         ]);
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
 
