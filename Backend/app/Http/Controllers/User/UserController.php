@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -359,7 +360,7 @@ class UserController extends Controller
     }
 
     public function avatarUploader(Request $request){
-        $file = $request->file('image');
+        $file = $request->file('avatar');
 
         //Display File Name
         echo 'File Name: '.$file->getClientOriginalName();
@@ -380,9 +381,7 @@ class UserController extends Controller
         //Display File Mime Type
         echo 'File Mime Type: '.$file->getMimeType();
 
-        //Move Uploaded File
-        $destinationPath = 'uploads';
-        $file->move($destinationPath,$file->getClientOriginalName());
+        Storage::disk('local')->put('usersFiles/'.Auth::user()['id'].'/avatar/'.$file->getClientOriginalName(), file_get_contents($file->getRealPath()));
     }
 
 }

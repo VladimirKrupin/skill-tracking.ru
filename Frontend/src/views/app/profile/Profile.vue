@@ -8,8 +8,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-3 order-lg-2">
                                 <div class="card-profile-image">
-                                    <a href="#" v-on:click="avatarUpload()">
-                                        <img v-lazy="'img/user/no-pic.png'" class="rounded-circle">
+                                    <a href="#">
+                                        <input class="avatar-uploader" type="file" id="avatar" ref="avatar" v-on:change="handleFileUploads()" >
+                                        <img v-on:click="avatarUpload()" v-lazy="'img/user/no-pic.png'" class="rounded-circle">
                                     </a>
                                 </div>
                             </div>
@@ -269,6 +270,7 @@ export default {
     },
     data() {
         return {
+            avatar: false,
             lang: localStorage.getItem('lang'),
             setting: false,
             errors: false,
@@ -308,7 +310,6 @@ export default {
             };
             axios(options)
                 .then(response => {
-                    console.log(response.data);
                     this.loader = false;
                     this.disabled = false;
                     this.success = true;
@@ -350,11 +351,39 @@ export default {
             return res;
         },
         checkChangeSettings: function () {
-            this.setting = !(this.name || this.surname);
+            this.setting = !(this.name || !this.surname);
+        },
+        handleFileUploads: function () {
+            console.log('avatar upload');
+            this.avatar = this.$refs.avatar.files[0];
+            console.log(this.avatar);
+            this.fileUpload();
         },
         avatarUpload: function () {
-            console.log('avatar upload');
-        }
+            this.$refs.avatar.click();
+        },
+        fileUpload: function () {
+            let formData = new FormData();
+
+            formData.append('avatar',this.avatar);
+
+            this.disabled = true;
+
+            axios.post(this.apiHost+'/api/avatarUploader/',
+                formData,
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(response => {
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e.response.data);
+            });
+        },
     },
     mounted: function () {
         this.userData = JSON.parse(JSON.stringify(this.data));
@@ -390,5 +419,11 @@ export default {
     }
     .flag-image {
         margin-top: -2px;
+    }
+    .rounded-circle {
+        z-index: 1;
+    }
+    .avatar-uploader {
+        opacity: 0;
     }
 </style>
