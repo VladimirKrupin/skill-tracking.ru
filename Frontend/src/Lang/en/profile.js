@@ -7,7 +7,7 @@ module.exports = {
     lang : 'Language',
     name : 'Name',
     surname : 'Surname',
-    age : 'Date of Birth (month/day/year)',
+    age : 'Date of Birth',
     country : 'Country',
     city : 'Сity',
     work : 'Work',
