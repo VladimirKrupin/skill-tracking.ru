@@ -354,8 +354,8 @@ export default {
         },
     },
     mounted: function () {
-        this.checkChangeSettings();
         this.userData = JSON.parse(JSON.stringify(this.data));
+        this.checkChangeSettings();
     }
 };
 </script>
