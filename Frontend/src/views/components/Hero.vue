@@ -21,6 +21,13 @@
                         <p class="lead text-white mt-4 mb-5">{{$lang.landing.awesome_text}}</p>
                         <div class="btn-wrapper">
                             <base-button tag="a"
+                                         href="/#/app"
+                                         class="mb-3 mb-sm-0"
+                                         type="warning"
+                                         icon="fa fa-play">
+                                Web app
+                            </base-button>
+                            <base-button tag="a"
                                          href="#"
                                          class="mb-3 mb-sm-0"
                                          type="info"
