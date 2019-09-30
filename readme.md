@@ -76,4 +76,8 @@ and serving containers:
     
 
 
-test contributors
+WARNING!
+
+        docker rmi $(docker images -q)
+        docker system prune -a
+        docker builder prune
