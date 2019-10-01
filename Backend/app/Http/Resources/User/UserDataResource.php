@@ -17,14 +17,15 @@ class UserDataResource extends Resource
     {
         $data['lang'] = '';
         $data['name'] = '';
-        $data['surname'] = '';
-        $data['gender'] = 'Not specified';
-        $data['age'] = '';
-        $data['country'] = '';
-        $data['city'] = '';
-        $data['work'] = '';
-        $data['position'] = '';
-        $data['about'] = '';
+        $data['nickname'] = '';
+//        $data['surname'] = '';
+//        $data['gender'] = 'Not specified';
+//        $data['age'] = '';
+//        $data['country'] = '';
+//        $data['city'] = '';
+//        $data['work'] = '';
+//        $data['position'] = '';
+//        $data['about'] = '';
         if (!is_null($this['settings'])) {
             foreach ($this['settings'] as $setting) {
                 $data[$setting['key']] = $setting['value'];
@@ -33,15 +34,16 @@ class UserDataResource extends Resource
         $userData = [
             'email' => $this['email'],
             'lang' => $data['lang'],
-            'name' => $data['name'],
-            'surname' => $data['surname'],
-            'gender' => $data['gender'],
-            'age' => $data['age'],
-            'country' => $data['country'],
-            'city' => $data['city'],
-            'work' => $data['work'],
-            'position' => $data['position'],
-            'about' => $data['about'],
+            'nickname' => $data['nickname'],
+//            'name' => $data['name'],
+//            'surname' => $data['surname'],
+//            'gender' => $data['gender'],
+//            'age' => $data['age'],
+//            'country' => $data['country'],
+//            'city' => $data['city'],
+//            'work' => $data['work'],
+//            'position' => $data['position'],
+//            'about' => $data['about'],
         ];
         return [
             'data' => $userData,

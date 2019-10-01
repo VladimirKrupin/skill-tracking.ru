@@ -5,48 +5,51 @@ let appSettings = settings.get(env.get());
 const state = {
   lang: '',
   email: '',
-  name: '',
-  surname: '',
-  gender: '',
-  age: '',
-  country: '',
-  city: '',
-  work: '',
-  position: '',
-  about: '',
-  data: '',
+  nickname: '',
   allowedLangs: '',
+  // name: '',
+  // surname: '',
+  // gender: '',
+  // age: '',
+  // country: '',
+  // city: '',
+  // work: '',
+  // position: '',
+  // about: '',
+  data: '',
 };
 
 const getters = {
     lang: state => state.lang,
     email: state => state.email,
-    name: state => state.name,
-    surname: state => state.surname,
-    gender: state => state.gender,
-    age: state => state.age,
-    country: state => state.country,
-    city: state => state.city,
-    work: state => state.work,
-    position: state => state.position,
-    about: state => state.about,
-    data: state => state.data,
+    nickname: state => state.nickname,
     allowedLangs: state => state.allowedLangs,
+    // name: state => state.name,
+    // surname: state => state.surname,
+    // gender: state => state.gender,
+    // age: state => state.age,
+    // country: state => state.country,
+    // city: state => state.city,
+    // work: state => state.work,
+    // position: state => state.position,
+    // about: state => state.about,
+    data: state => state.data,
 };
 
 const mutations = {
     setUserData(state, payload){
         state.lang = payload.userData.lang;
         state.email = payload.userData.email;
-        state.name = payload.userData.name;
-        state.surname = payload.userData.surname;
-        state.gender = payload.userData.gender;
-        state.age = payload.userData.age;
-        state.country = payload.userData.country;
-        state.city = payload.userData.city;
-        state.work = payload.userData.work;
-        state.position = payload.userData.position;
-        state.about = payload.userData.about;
+        state.nickname = payload.userData.nickname;
+        // state.name = payload.userData.name;
+        // state.surname = payload.userData.surname;
+        // state.gender = payload.userData.gender;
+        // state.age = payload.userData.age;
+        // state.country = payload.userData.country;
+        // state.city = payload.userData.city;
+        // state.work = payload.userData.work;
+        // state.position = payload.userData.position;
+        // state.about = payload.userData.about;
         state.data = payload.userData;
     },
     setLang(state, payload) {

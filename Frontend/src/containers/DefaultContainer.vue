@@ -15,7 +15,7 @@
         <div class="d-flex align-items-center col-sm-12 col-12 col-md-5 col-lg-5">
           <div class="d-flex flex-column mr-1">
 <!--            <h5 class="mb-1"><span class="badge badge-pill badge-primary font-weight-light">Андминистратор</span></h5>-->
-            <span class="text-md-left text-nowrap text-dark user-info">{{(userName)?userName:email}}</span>
+            <span class="text-md-left text-nowrap text-dark user-info">{{(nickname)?nickname:'User0'}}</span>
           </div>
           <b-navbar-nav>
             <DefaultHeaderDropdownAccnt/>
@@ -89,7 +89,7 @@ export default {
   computed: {
       ...mapGetters('profile', {
           email: 'email',
-          userName: 'name',
+          nickname: 'nickname',
           lang: 'lang',
       }),
     name () {

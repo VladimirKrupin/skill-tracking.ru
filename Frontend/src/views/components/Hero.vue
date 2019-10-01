@@ -17,7 +17,7 @@
                 <div class="row justify-content-center align-items-center">
                     <div class="col-lg-7 text-center pt-lg">
                         <!--<img src="img/brand/white.png" style="width: 200px;" class="img-fluid">-->
-                        <h4 class="text-white">{{$lang.landing.awesome}} <span v-if="name">{{name}}!</span></h4>
+                        <h4 class="text-white">{{$lang.landing.awesome}} <span v-if="nickname">{{nickname}}!</span></h4>
                         <p class="lead text-white mt-4 mb-5">{{$lang.landing.awesome_text}}</p>
                         <div class="btn-wrapper">
                             <base-button tag="a"
@@ -65,7 +65,7 @@ import { mapGetters } from 'vuex';
 export default {
     computed: {
         ...mapGetters('profile', {
-            name: 'name',
+            nickname: 'nickname',
         }),
     },
     data: function () {
