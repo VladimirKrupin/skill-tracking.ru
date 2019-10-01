@@ -22,8 +22,8 @@
 <!--                                </div>-->
 <!--                            </div>-->
                             <i class="fa fa-cogs ml-5 settings-user" v-on:click="settings()"></i>
-                            <b-row>
-                                <div class="d-flex justify-content-center" v-if="!setting">
+                            <b-row class="col-12 d-flex justify-content-center">
+                                <div class=" " v-if="!setting">
                                     <div class="text-center mt-5 pb-3">
                                         <h3 v-if="nickname">{{nickname}}</h3>
                                         <div><i class="ni business_briefcase-24 mr-2"></i>{{$lang.profile.lang}}: {{lang}} <img v-lazy="flagImage()" class="rounded-circle flag-icon flag-image"></div>
@@ -45,7 +45,7 @@
                                     <!--                            </div>-->
                                 </div>
                             </b-row>
-                            <b-row>
+                            <b-row v-if="!setting">
                                 <div class="card-profile-stats d-flex justify-content-center">
                                     <div>
                                         <span class="heading">0</span>
@@ -448,6 +448,7 @@ export default {
         font-size: 20px;
         color: #777;
         cursor: pointer;
+        z-index: 1;
     }
 
     .settings-user:hover{
