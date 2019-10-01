@@ -36,6 +36,12 @@ export default {
         }),
         langWatcher () {
             return this.lang;
+        },
+        example: {
+            cache: false,
+            get: function () {
+                return Date.now() + this.msg
+            }
         }
     },
     watch: {
