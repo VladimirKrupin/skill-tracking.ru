@@ -396,7 +396,7 @@ export default {
             return res;
         },
         checkChangeSettings: function () {
-            this.setting = !this.nickname;
+            this.setting = this.nickname?false:true;
         },
         handleFileUploads: function () {
             console.log('avatar upload');
@@ -429,11 +429,21 @@ export default {
                 console.log(e.response.data);
             });
         },
+        setUserData: function () {
+            console.log('this.data',this.data);
+            if (this.data){
+                this.userData = JSON.parse(JSON.stringify(this.data));
+                this.checkChangeSettings();
+            }else {
+                setTimeout(function () {
+                    this.setUserData();
+                },500)
+            }
+        }
     },
     mounted: function () {
-        console.log('this.data',this.data);
-        this.userData = JSON.parse(JSON.stringify(this.data));
-        this.checkChangeSettings();
+        this.setUserData();
+
     }
 };
 </script>
