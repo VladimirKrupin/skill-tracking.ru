@@ -1,2 +1,2 @@
 <?php
-include( '../../Frontend/dist/index.html' );
+include( 'index.html' );
