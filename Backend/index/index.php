@@ -1,2 +1,2 @@
 <?php
-include( 'index.html' );
+readfile('index.html');
