@@ -1,2 +1,2 @@
 <?php
-readfile('index.html');
+echo 'hello skill!';
