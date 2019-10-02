@@ -53,7 +53,7 @@ export default new Router({
         },
         {
             path: "/",
-            name: "MainPage",
+            name: "SkillTracking",
             components: {
                 header: AppHeader,
                 default: Components,
