@@ -21,7 +21,7 @@ module.exports = {
     vk : 'Подпишись в Vk',
     tw : 'Следуй за нами в Twitter',
     git : 'Поставте нам звезду на Github',
-    coders_label : 'Команда разработчиков',
+    coders_label : 'Breeze Team',
     about_us : 'О нас',
     news : 'Новости',
     signature : 'Skill Tracking Официальный сайт.',

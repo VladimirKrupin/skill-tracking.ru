@@ -22,7 +22,7 @@ module.exports = {
     tw : 'Follow us on Twitter',
     git : 'Star us on Github',
     coders : 'Star us on Github',
-    coders_label : 'Coders team',
+    coders_label : 'Breeze Team',
     about_us : 'About Us',
     news : 'News',
     signature : 'Skill Tracking official web site.',
