@@ -13,6 +13,9 @@ import Policy from "./views/Policy.vue";
 // Containers
 const DefaultContainer = () => import('@/containers/DefaultContainer');
 const Statistic = () => import('./views/app/statistics/Statistics');
+const Main = () => import('./views/app/main/Main');
+const Skills = () => import('./views/app/skills/Skills');
+const SingleSkill = () => import('./views/app/skills/SingleSkill');
 
 Vue.use(Router);
 
@@ -31,6 +34,21 @@ export default new Router({
             name: "DefaultContainer",
             component: DefaultContainer,
             children: [
+                {
+                    path: '/app',
+                    name: 'Main',
+                    component: Main,
+                },
+                {
+                    path: '/skills',
+                    name: 'Skills',
+                    component: Skills,
+                },
+                {
+                    path: '/skills/:id',
+                    name: 'SingleSkill',
+                    component: SingleSkill,
+                },
                 {
                     path: '/statistic',
                     name: 'Statistic',

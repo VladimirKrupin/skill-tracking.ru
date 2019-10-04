@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Registry\AppRegistry;
+use App\Http\Resources\Skills\SkillsResource;
 use App\Http\Resources\User\AllowedLangsResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,7 @@ use Illuminate\Http\Request;
 
 //USER CONTROLLER REQUESTS
 Route::group(['middleware' => ['lang']], function () {
+    //user
     Route::post('/register/', 'User\UserController@register');
     Route::post('/registerConfirmation/', 'User\UserController@registerConfirmation');
     Route::post('/login/',      'User\UserController@login');
@@ -28,6 +31,8 @@ Route::group(['middleware' => ['lang']], function () {
     Route::post('/changePassword/', 'User\UserController@changePassword')->middleware('auth:api');
     Route::get('/allowedLangs/', function (){return new AllowedLangsResource(['langs' => AppRegistry::get('lang')]);});
     Route::post('/avatarUploader/', 'User\UserController@avatarUploader')->middleware('auth:api');
+    //skills
+    Route::get('/getSkills/', function (){return new SkillsResource(Auth::user());})->middleware('auth:api');
 });
 
 Route::any('/', function () {

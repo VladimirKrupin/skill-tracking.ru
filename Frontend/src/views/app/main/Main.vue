@@ -2,7 +2,7 @@
   <div class="app flex-row align-items-center bg-theme app-container">
     <div class="container">
       <b-row class="justify-content-center">
-        Statistics page
+        Main page
       </b-row>
     </div>
   </div>
@@ -11,6 +11,6 @@
 
 <script>
     export default {
-        name: 'Statistics'
+        name: 'Main'
     }
 </script>
