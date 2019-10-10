@@ -1,7 +1,7 @@
 <template>
   <div class="app flex-row  bg-theme app-container">
-    <div class="row col-12 skill-container">
-      <div class="col-sm-6 col-md-6 col-lg-4 skill-container" v-for="(item, index) in pages" :key="index">
+    <div class="row w-100 pr-md-4 pl-4 pt-2 pr-sm-0">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mr-sm-0 mr-md-5" v-for="(item, index) in pages" :key="index">
         <div class="card" :class="item.bg">
           <router-link :to="item.href" class="text-muted card-link">
             <div class="card-body">
