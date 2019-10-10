@@ -1,31 +1,35 @@
 <template>
   <div>
     <return></return>
-    <div class="app flex-row bg-theme app-container">
-          <div class="row col-12 skill-container">
-            <div class="col-sm-6 col-md-6 col-lg-4 skill-container" v-for="(item, index) in skills" :key="index">
-              <div class="card" :class="item.bg">
-                <router-link :to="'skills/'+item.title" class="text-muted card-link">
-                  <div class="card-body">
-                    <div class="h1 text-right mb-4 text-white">
-                      <i :class="item.icon"></i>
-                    </div>
-                    <div class="card-padding  text-center">
-                      <div class="h1 mb-3 text-white">{{item.title}}</div>
-                      <small class="text-uppercase text-white">{{item.description}}</small>
-                    </div>
-                  </div>
-                </router-link>
-              </div>
-            </div>
-          </div>
+      <div class="row col-12">
+        <b-card class="mr-5" :class="item.bg" v-for="(item, index) in skills" :key="index">
+          <router-link :to="'skills/'+item.title" class="text-muted card-link">
+            <b-card-body class="pb-0">
+              <b-dropdown class="float-right" variant="transparent p-0" right>
+                <template slot="button-content">
+                  <i :class="item.icon"></i>
+                </template>
+                <b-dropdown-item>Action</b-dropdown-item>
+                <b-dropdown-item>Another action</b-dropdown-item>
+                <b-dropdown-item>Something else here...</b-dropdown-item>
+                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+              </b-dropdown>
+              <h4 class="mb-0 text-white">{{item.title}}</h4>
+              <p class="text-white">{{item.description}}</p>
+            </b-card-body>
+            <card-line1-chart-example v-if="item.type === 1" chartId="card-chart-01" class="chart-wrapper px-3 overflow-visible" style="height:115px;" :height="70"/>
+            <card-line2-chart-example v-if="item.type === 2" chartId="card-chart-02" class="chart-wrapper px-3 overflow-visible" style="height:115px;" :height="70"/>
+          </router-link>
+        </b-card>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
   import Return from "../../parts/ReturnBack.vue";
+  import CardLine1ChartExample from '../dashboard/CardLine1ChartExample'
+  import CardLine2ChartExample from '../dashboard/CardLine2ChartExample'
   export default {
     name: 'Skills',
     computed: {
@@ -45,6 +49,8 @@
     },
     components: {
       Return,
+      CardLine1ChartExample,
+      CardLine2ChartExample,
     }
   }
 </script>

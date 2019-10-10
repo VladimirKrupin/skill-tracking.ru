@@ -24,7 +24,15 @@ class SkillsResource extends Resource
               'description'=>'my reading books',
               'bg'=>'bg-success',
               'icon'=>'icon-book-open',
-          ]
+              'type' => 1
+          ],
+            [
+                'title'=>'sport',
+                'description'=>'sport exercises',
+                'bg'=>'bg-info',
+                'icon'=>'icon-fire',
+                'type' => 2
+            ],
         ];
         return [
             'skills' => $skills,
