@@ -54,6 +54,9 @@ export default {
                     this.$store.dispatch('profile/changeLang',{lang:lang});
                     this.$store.dispatch('profile/setDbLang',{lang:lang});
                 },
+                returnBack: function (){
+                    this.$router.go(-1)
+                },
             }
         }
     }

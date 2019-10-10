@@ -28,7 +28,6 @@ const actions = {
           };
           axios(options)
               .then(response => {
-                  console.log(response.data.data.skills);
                   context.commit('setSkills', { skills: response.data.data.skills });
               })
               .catch(e => {

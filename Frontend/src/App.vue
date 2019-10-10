@@ -81,4 +81,13 @@ export default {
     .app-container {
         min-height: calc(100vh - 214px) !important;
     }
+
+    .card-padding {
+        padding: 30px 20px 70px 20px;
+        text-align: center;
+    }
+    .return-back-link {
+        color: #0c85d0;
+        cursor: pointer;
+    }
 </style>
