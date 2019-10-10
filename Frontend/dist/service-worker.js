@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.02f6a3ada061454393eb390f70512fc6.js"
+  "/precache-manifest.c848411258a740f43c94b240d057c07c.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "skil-tracking"});
