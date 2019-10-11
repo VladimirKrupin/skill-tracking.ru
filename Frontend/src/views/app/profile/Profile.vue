@@ -61,22 +61,6 @@
                                     </div>
                                 </div>
                             </b-row>
-                            <b-row v-if="!setting">
-                                <div class="card-profile-stats d-flex justify-content-center">
-                                    <div>
-                                        <span class="heading">0</span>
-                                        <span class="description">{{$lang.profile.skills}}</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">0</span>
-                                        <span class="description">{{$lang.profile.subscriptions}}</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">0</span>
-                                        <span class="description">{{$lang.profile.subscribers}}</span>
-                                    </div>
-                                </div>
-                            </b-row>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 pt-5 m-auto" v-if="setting">
                             <b-row>
