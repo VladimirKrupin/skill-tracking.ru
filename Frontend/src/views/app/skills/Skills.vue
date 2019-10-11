@@ -22,6 +22,7 @@
           <card-line2-chart-example v-if="item.type === 2" chartId="card-chart-02" class="chart-wrapper px-3 overflow-visible" style="height:115px;" :height="70"/>
 
         </b-card>
+        <div class="glyphicon glyphicon-plus"></div>
       </div>
     </div>
 </template>

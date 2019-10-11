@@ -6,6 +6,7 @@
     <div class="app flex-row align-items-center bg-theme app-container">
     </div>
   </div>
+
 </template>
 
 <script>
@@ -20,7 +21,9 @@
       methods:{
       },
       mounted() {
-        console.log(this.$route);
+      },
+      created(){
+          this.$route.meta.label = this.$route.params.id;
       }
     }
 </script>

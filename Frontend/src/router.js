@@ -24,23 +24,32 @@ export default new Router({
   routes: [
         {
             path: '/app',
-            name: "DefaultContainer",
+            redirect: '/app',
+            name: "Main",
             component: DefaultContainer,
             children: [
                 {
                     path: '/app',
-                    name: 'Main',
+                    name: 'Home',
                     component: Main,
                 },
                 {
                     path: '/skills',
-                    name: 'Skills',
-                    component: Skills,
-                },
-                {
-                    path: '/skills/:id',
-                    name: 'SingleSkill',
-                    component: SingleSkill,
+                    meta: { label: 'skills'},
+                    component: {
+                        render (c) { return c('router-view') }
+                    },
+                    children: [
+                        {
+                            path: '',
+                            component: Skills,
+                        },
+                        {
+                            path: ':id',
+                            name: 'SingleSkill',
+                            component: SingleSkill,
+                        },
+                    ]
                 },
                 {
                     path: '/statistic',

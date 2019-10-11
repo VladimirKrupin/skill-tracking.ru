@@ -35,7 +35,8 @@
         <SidebarFooter/>
         <SidebarMinimizer/>
       </AppSidebar>
-      <main class="main mt-xl-4 mt-lg-4 mt-md-4 mt-0">
+      <main class="main">
+          <Breadcrumb :list="list"/>
         <div class="container-fluid p-xl-4 p-lg-4 p-md-4 p-0">
           <router-view></router-view>
         </div>
@@ -96,7 +97,7 @@ export default {
       return this.$route.name
     },
     list () {
-      return this.$route.matched.filter((route) => route.name || route.meta.label )
+      return this.$route.matched.filter((route) => (route.meta.label)?route.meta.label:route.name )
     },
   },
   methods: {
@@ -105,7 +106,11 @@ export default {
       localStorage.removeItem('access_token');
       this.$router.push({ name: 'Login' });
     }
-  }
+  },
+    mounted: function () {
+
+        console.log(this.$route);
+    }
 }
 </script>
 <style lang="scss">
