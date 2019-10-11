@@ -27,7 +27,6 @@ import App from "./App.vue";
 import router from "./router";
 import Auth from "./plugins/Auth";
 import Argon from "./plugins/argon-kit";
-import './registerServiceWorker'
 import { store } from './store'
 import commonMixin from './mixin/common';
 import env from "./config/env";

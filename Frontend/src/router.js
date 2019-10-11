@@ -19,13 +19,6 @@ const SingleSkill = () => import('./views/app/skills/SingleSkill');
 
 Vue.use(Router);
 
-console.log(window.location);
-let location = window.location.host;
-let skillArray = ['localhost:8080','skill', 'skill-tracking.ru', 'skill-tracking.com'];
-let breezeArray = ['localhost:8080','breeze', 'breeze-team.ru', 'breeze-team.com'];
-console.log(skillArray.indexOf(location));
-console.log(typeof skillArray.indexOf(location));
-
 export default new Router({
   linkExactActiveClass: "active",
   routes: [
