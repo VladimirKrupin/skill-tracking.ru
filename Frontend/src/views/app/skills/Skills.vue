@@ -18,11 +18,12 @@
               <p class="text-white">{{item.description}}</p>
             </b-card-body>
             </router-link>
+
           <card-line1-chart-example v-if="item.type === 1" chartId="card-chart-01" class="chart-wrapper px-3 overflow-visible" style="height:115px;" :height="70"/>
           <card-line2-chart-example v-if="item.type === 2" chartId="card-chart-02" class="chart-wrapper px-3 overflow-visible" style="height:115px;" :height="70"/>
-
         </b-card>
-        <div class="glyphicon glyphicon-plus"></div>
+        <div class="add-skill">
+        </div>
       </div>
     </div>
 </template>
@@ -56,10 +57,44 @@
     }
   }
 </script>
-<style>
+<style lang="scss">
   @media (max-width: 768px) {
     .skill-container {
       padding-right: 0 !important;
     }
+  }
+  .add-skill {
+    width: 100px;
+    position: relative;
+    opacity: .7;
+    margin-top: 12%;
+    height: 100px;
+    cursor: pointer;
+  }
+  .add-skill:hover, .add-skill:active {
+    opacity: 1;
+    transition: 1s;
+    margin-top: calc("50%-2px");
+  }
+  .add-skill::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      background: #00ff00;
+      top: 0;
+  }
+  .add-skill::before {
+      content: '';
+      position: absolute;
+      transform: rotate(90deg);
+      width: 100%;
+      height: 3px;
+      background: #00ff00;
+      top: 0;
+  }
+
+  .add-skill-text {
+    position: absolute;
   }
 </style>
