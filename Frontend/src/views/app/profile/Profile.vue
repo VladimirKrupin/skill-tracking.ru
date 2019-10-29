@@ -268,7 +268,7 @@
                                 </b-row>
                             <b-row>
                                 <div class="d-flex">
-                                    <b-button  variant="outline-primary" class="mb-4 mr-3" v-on:click="sendSettings()" :disabled="disabled">{{$lang.profile.save_changes}}<div v-if="loader" class="loader loader-btn"></div></b-button>
+                                    <b-button  variant="outline-primary" class="mb-4 mr-3" v-on:click="saveSettings()" :disabled="disabled">{{$lang.form.save_changes}}<div v-if="loader" class="loader loader-btn"></div></b-button>
                                 </div>
                             </b-row>
                             <b-row>
@@ -280,7 +280,7 @@
                             <b-row>
                                 <b-col class="p-0">
                                     <div class="alert alert-success alert-dismissable text-dark" v-if="success">
-                                        {{$lang.profile.success}}
+                                        {{$lang.form.success}}
                                     </div>
                                 </b-col>
                             </b-row>
@@ -339,7 +339,7 @@ export default {
         settings: function () {
             this.setting = !this.setting;
         },
-        sendSettings: function () {
+        saveSettings: function () {
             this.valid();
             // if (!this.validCheck()){return false;}
             this.errors = '';
