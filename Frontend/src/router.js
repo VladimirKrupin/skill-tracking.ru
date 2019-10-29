@@ -16,6 +16,7 @@ const Statistic = () => import('./views/app/statistics/Statistics');
 const Main = () => import('./views/app/main/Main');
 const Skills = () => import('./views/app/skills/Skills');
 const SingleSkill = () => import('./views/app/skills/SingleSkill');
+const CreateSkill = () => import('./views/app/skills/CreateSkill');
 
 Vue.use(Router);
 
@@ -35,7 +36,7 @@ export default new Router({
                 },
                 {
                     path: '/skills',
-                    meta: { label: 'skills'},
+                    meta: { label: 'Skills'},
                     component: {
                         render (c) { return c('router-view') }
                     },
@@ -50,6 +51,11 @@ export default new Router({
                             component: SingleSkill,
                         },
                     ]
+                },
+                {
+                    path: '/createSkill',
+                    name: 'CreateSkill',
+                    component: CreateSkill,
                 },
                 {
                     path: '/statistic',

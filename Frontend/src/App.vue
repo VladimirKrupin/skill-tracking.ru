@@ -90,4 +90,13 @@ export default {
         color: #0c85d0;
         cursor: pointer;
     }
+
+    .arrow-back {
+        margin-top: -30px;
+    }
+    @media (max-width: 768px) {
+        .arrow-back {
+            margin-top: 10px;
+        }
+    }
 </style>

@@ -19,13 +19,13 @@ class SkillsResource extends Resource
     {
         $skills = User::where('id',$this['id'])->first()->toArray();
         $skills = [
-          [
+            [
               'title'=>'reading',
               'description'=>'my reading books',
               'bg'=>'bg-success',
               'icon'=>'icon-book-open',
               'type' => 1
-          ],
+            ],
             [
                 'title'=>'sport',
                 'description'=>'sport exercises',

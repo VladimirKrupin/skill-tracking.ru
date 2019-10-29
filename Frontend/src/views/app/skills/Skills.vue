@@ -19,10 +19,11 @@
             </b-card-body>
             </router-link>
 
-          <card-line1-chart-example v-if="item.type === 1" chartId="card-chart-01" class="chart-wrapper px-3 overflow-visible" style="height:115px;" :height="70"/>
-          <card-line2-chart-example v-if="item.type === 2" chartId="card-chart-02" class="chart-wrapper px-3 overflow-visible" style="height:115px;" :height="70"/>
+          <card-line1-chart-example v-if="item.type === 1" chartId="card-chart-01" class="chart-wrapper px-3 overflow-visible" />
+          <card-line2-chart-example v-if="item.type === 2" chartId="card-chart-02" class="chart-wrapper px-3 overflow-visible" />
         </b-card>
-        <div class="add-skill">
+        <div class="add-skill-container col-xl-3 col-lg-5 col-md-5 col-sm-5 mr-sm-0 mr-md-5 d-flex justify-content-center align-items-center">
+          <router-link  class="add-skill" :to="'/createSkill'"></router-link>
         </div>
       </div>
     </div>
@@ -47,7 +48,6 @@
     methods:{
     },
     mounted() {
-      console.log(this.$route);
       this.$store.dispatch('skills/getSkills');
     },
     components: {
@@ -63,35 +63,41 @@
       padding-right: 0 !important;
     }
   }
+  .card-height {
+    height:115px;
+  }
+  .add-skill-container {
+    margin-bottom: 1.5rem;
+  }
   .add-skill {
     width: 100px;
     position: relative;
     opacity: .7;
-    margin-top: 12%;
+    /*margin-top: 60px;*/
     height: 100px;
     cursor: pointer;
   }
   .add-skill:hover, .add-skill:active {
-    opacity: 1;
+    /*opacity: 1;*/
     transition: 1s;
-    margin-top: calc("50%-2px");
+    margin-top: -2px;
   }
   .add-skill::after {
       content: '';
       position: absolute;
       width: 100%;
-      height: 3px;
+      height: 4px;
       background: #00ff00;
-      top: 0;
+      top: calc(50% - 2px);
   }
   .add-skill::before {
       content: '';
       position: absolute;
       transform: rotate(90deg);
       width: 100%;
-      height: 3px;
+      height: 4px;
       background: #00ff00;
-      top: 0;
+      top: calc(50% - 2px);
   }
 
   .add-skill-text {

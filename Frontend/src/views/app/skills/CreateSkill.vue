@@ -10,7 +10,7 @@
 <script>
   import Return from "../../parts/ReturnBack.vue";
     export default {
-      name: 'SingleSkill',
+      name: 'CreateSkill',
       components: {
         Return,
       },
