@@ -3,7 +3,8 @@
     <return></return>
     <div class="px-4">
         <div class="row bg-white skill-row">
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 pt-5 ">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 pt-2 ">
+                <h1 class="h3 input-margin pl-1 pb-2">{{$lang.app.add}}</h1>
                 <b-row>
                     <b-col class="pl-1">
                         <h3 class="h5 font-sm">{{$lang.form.name}}</h3>
@@ -40,41 +41,25 @@
                 </b-row>
                 <b-row>
                     <b-col class="pl-1">
-                        <h3 class="h5 font-sm">{{$lang.profile.icon}}</h3>
+                        <h3 class="h5 font-sm">{{$lang.form.icon}}</h3>
                     </b-col>
                 </b-row>
                 <b-row>
                     <b-col class="mb-4 p-0 col-12">
                         <b-form-group class="mb-0">
-<!--                            <b-form-select id="basicSelect"-->
-<!--                                           :plain="true"-->
-<!--                                           :options="skillIcons"-->
-<!--                                           :value=lang-->
-<!--                                           v-model="skill.icon"-->
-<!--                            >-->
-<!--                            </b-form-select>-->
-                                    <div slot="header">
-                                        <i class="fa fa-align-justify"></i><strong> Collapse </strong> <small>multiple elements</small>
-                                    </div>
-                                    <div>
-                                        <!-- Single button triggers two b-collapse components -->
-                                        <b-btn class="icon-btn" v-b-toggle.collapseA.collapseB>
-                                            <div class="icon-closed"><i class=" text-green" :class="skill.icon"></i></div>
-                                        </b-btn>
-                                        <i class="icon-book-open ml-1"></i>
-
-                                        <!-- elements to collapse -->
-                                        <b-collapse id="collapseA" class="mt-2">
-                                            <b-card class="d-flex flex-nowrap card-body-container">
-                                                <label class="mr-2">
-                                                    <input type="radio" name="skill-icon" id="icon-book-open" value="icon-book-open"><i class="icon-book-open ml-1"></i>
-                                                </label>
-                                                <label>
-                                                    <input checked="checked" type="radio" name="skill-icon" id="icon-fire" value="icon-fire"><i class="icon-fire ml-1"></i>
-                                                </label>
-                                            </b-card>
-                                        </b-collapse>
-                                    </div>
+                            <div>
+                                <b-btn class="icon-btn" v-b-toggle.collapseA>
+                                    <div class="icon-closed"><i class="icon-arrow-down text-green"></i></div>
+                                </b-btn>
+                                <i :class="skill.icon"></i>
+                                <b-collapse id="collapseA" class="mt-2">
+                                    <b-card class="d-flex flex-nowrap card-body-container">
+                                        <label v-on:click="tryIcon(icon)" v-for="(icon,key) in icons" class="mr-2" v-bind:key="key">
+                                            <input style="opacity: 0" type="radio" name="skill-icon" :id="icon" :value="icon"><i class="ml-1" :class="icon"></i>
+                                        </label>
+                                    </b-card>
+                                </b-collapse>
+                            </div>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -118,8 +103,39 @@
             skill: {
                 name: '',
                 description: '',
-                icon: 'icon-arrow-down',
+                icon: 'icon-fire',
             },
+            icons: [
+                'icon-fire','icon-user','icon-people','icon-user-female','icon-user-follow',
+                'icon-user-following','icon-user-unfollow','icon-login', 'icon-logout','icon-emotsmile','icon-phone',
+                'icon-call-end','icon-call-in','icon-call-out','icon-map','icon-location-pin','icon-direction',
+                'icon-directions','icon-compass','icon-layers', 'icon-menu','icon-list','icon-options-vertical',
+                'icon-options','icon-check','icon-plus','icon-close', 'icon-trophy','icon-screen-smartphone',
+                'icon-screen-desktop', 'icon-plane','icon-notebook','icon-mustache','icon-mouse','icon-magnet',
+                'icon-energy','icon-disc', 'icon-cursor','icon-cursor-move','icon-chemistry', 'icon-speedometer',
+                'icon-shield','icon-screen-tablet','icon-magic-wand','icon-hourglass','icon-graduation','icon-ghost',
+                'icon-game-controller','icon-fire','icon-eyeglass', 'icon-envelope-open','icon-envelope-letter',
+                'icon-bell','icon-badge','icon-anchor','icon-wallet','icon-vector', 'icon-speech','icon-puzzle',
+                'icon-printer', 'icon-present','icon-playlist','icon-pin','icon-picture','icon-handbag',
+                'icon-globe-alt','icon-globe', 'icon-folder-alt','icon-folder','icon-film', 'icon-feed','icon-drop',
+                'icon-docs','icon-doc','icon-diamond','icon-cup','icon-calculator', 'icon-bubbles','icon-briefcase',
+                'icon-book-open', 'icon-basket-loaded','icon-basket','icon-bag','icon-action-undo','icon-action-redo',
+                'icon-wrench','icon-umbrella', 'icon-trash','icon-tag','icon-support', 'icon-frame','icon-size-fullscreen',
+                'icon-size-actual','icon-shuffle','icon-share','icon-rocket','icon-question', 'icon-pie-chart',
+                'icon-pencil','icon-note', 'icon-loop','icon-music-tone-alt','icon-music-tone','icon-earphones-alt',
+                'icon-earphones','icon-equalizer','icon-like', 'icon-dislike','icon-control-rewind','icon-control-play',
+                'icon-control-pause','icon-control-forward','icon-volume-1','icon-volume-2','icon-volume-off',
+                'icon-calendar','icon-bulb', 'icon-chart','icon-ban','icon-bubble', 'icon-camrecorder','icon-camera',
+                'icon-cloud-download','icon-cloud-upload','icon-envelope','icon-eye','icon-flag', 'icon-heart',
+                'icon-info','icon-key', 'icon-link','icon-lock','icon-lock-open','icon-magnifier','icon-magnifier-add',
+                'icon-magnifier-remove','icon-paper-clip', 'icon-paper-plane','icon-power','icon-refresh', 'icon-reload',
+                'icon-settings','icon-star','icon-symbol-female','icon-symbol-male','icon-target','icon-credit-card',
+                'icon-paypal','icon-social-tumblr','icon-social-twitter', 'icon-social-facebook','icon-social-instagram',
+                'icon-social-linkedin','icon-social-pinterest','icon-social-github','icon-social-reddit',
+                'icon-social-skype','icon-social-dribbble','icon-social-behance', 'icon-social-foursqare',
+                'icon-social-soundcloud','icon-social-spotify','icon-social-stumbleupon','icon-social-youtube',
+                'icon-social-dropbox',
+            ],
             err: {
                 name:false,
                 description:false,
@@ -180,6 +196,9 @@
               });
               return res;
           },
+          tryIcon: function(icon) {
+              this.skill.icon = icon;
+          },
       },
       mounted() {
       },
@@ -206,5 +225,8 @@
     }
     .card-body-container .card-body {
         padding: .5rem;
+    }
+    .input-margin {
+        margin-left: -15px;
     }
 </style>
