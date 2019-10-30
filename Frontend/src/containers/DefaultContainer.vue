@@ -36,7 +36,7 @@
         <SidebarMinimizer/>
       </AppSidebar>
       <main class="main">
-          <Breadcrumb :list="list"/>
+          <Breadcrumb class="mb-3" :list="list"/>
         <div class="container-fluid p-xl-4 p-lg-4 p-md-4 p-0">
           <router-view></router-view>
         </div>

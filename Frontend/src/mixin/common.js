@@ -38,6 +38,7 @@ export default {
                     return name.length === 8;
                 },
                 validInput: function(expr){
+                    // console.log(expr);
                     return (expr)?'border-red':'';
                 },
                 logged: function () {
