@@ -13,6 +13,10 @@ module.exports = {
     tracking_name_text : 'example. Stephen king',
     units : 'Units',
 
+    //units
+    time: 'time',
+    quantity: 'quantity (qty)',
+
     //success
     success_create_skill : 'Functionality is under development =)',
 }

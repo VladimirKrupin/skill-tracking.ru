@@ -142,6 +142,7 @@
                 </div>
             </b-col>
         </b-row>
+
         <b-row class="p-0 m-0">
             <b-col class="p-0">
                 <div class="alert alert-success alert-dismissable text-dark" v-if="success">
@@ -174,13 +175,11 @@
                 points: [
                     {
                         name: '',
-                        units: 'time',
+                        units: this.getUnits()[0],
                     }
                 ],
             },
-            units: [
-              'time','quantity'
-            ],
+            units: this.getUnits(),
             colors: [
                 'bg-success','bg-info','bg-warning','bg-danger','bg-secondary','bg-primary','bg-dark'
             ],
@@ -237,21 +236,16 @@
               const options = {
                   method: 'POST',
                   headers: this.defaultHeaders,
-                  data: this.userData,
+                  data: this.skill,
                   url: this.apiHost+'/api/saveSkill/',
               };
-              this.success = true;
-              this.loader = false;
-              this.disabled = false;
-              this.success = true;
-              return false;
+
               axios(options)
                   .then(response => {
                       this.loader = false;
                       this.disabled = false;
                       this.success = true;
                       this.$store.dispatch('profile/saveSkill');
-                      this.checkChangeSettings();
                   })
                   .catch(error => {
                       if (error.response !== undefined){
@@ -308,7 +302,13 @@
               });
 
               this.err.points.push(false);
+          },
+          getUnits(){
+              console.log(this.lang);
+              console.log(this.$lang);
+              return [this.$lang.form.time,this.$lang.form.quantity]
           }
+
       },
       mounted() {
       },

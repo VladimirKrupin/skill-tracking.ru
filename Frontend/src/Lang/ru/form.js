@@ -13,6 +13,10 @@ module.exports = {
     tracking_name_text : 'нарп. Стивен Кинг',
     units : 'Единицы измерения',
 
+    //units
+    time: 'время',
+    quantity: 'количество (шт)',
+
     //success
     success_create_skill : 'Функционал находится в разработке =)',
 }

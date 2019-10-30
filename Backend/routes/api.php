@@ -33,6 +33,7 @@ Route::group(['middleware' => ['lang']], function () {
     Route::post('/avatarUploader/', 'User\UserController@avatarUploader')->middleware('auth:api');
     //skills
     Route::get('/getSkills/', function (){return new SkillsResource(Auth::user());})->middleware('auth:api');
+    Route::post('/saveSkill/',  'Skills\SkillsController@saveSkill')->middleware('auth:api');
 });
 
 Route::any('/', function () {
