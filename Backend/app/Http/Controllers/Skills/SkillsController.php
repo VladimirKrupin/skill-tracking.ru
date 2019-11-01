@@ -2,8 +2,10 @@
 namespace App\Http\Controllers\Skills;
 
 use App\Http\Controllers\Controller;
+use App\Http\Models\Skill\Skill;
 use App\Http\Response\ValidatorResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SkillsController extends Controller
@@ -20,6 +22,17 @@ class SkillsController extends Controller
         ]);
 
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
+
+        Skill::create([
+            'user_id'=>Auth::user()['id'],
+            'title'=>$request->input('name'),
+            'description'=>$request->input('description'),
+            'icon'=>$request->input('icon'),
+            'color'=>$request->input('color'),
+            'type'=>$request->input('')
+        ]);
+
+        var_dump($request->all());
 
     }
 }

@@ -12,10 +12,12 @@ module.exports = {
     tracking_name_additional : 'add tracked skills',
     tracking_name_text : 'example. Stephen king',
     units : 'Units',
+    type : 'Type',
 
     //units
     time: 'time',
     quantity: 'quantity (qty)',
+    pages: 'pages (p)',
 
     //success
     success_create_skill : 'Functionality is under development =)',

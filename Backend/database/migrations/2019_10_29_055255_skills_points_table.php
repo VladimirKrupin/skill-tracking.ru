@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Skills extends Migration
+class SkillsPointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class Skills extends Migration
      */
     public function up()
     {
-        Schema::create('skills', function (Blueprint $table) {
+        Schema::create('skills_points', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('skill_id');
             $table->string('title');
-            $table->string('description');
-            $table->string('bg');
-            $table->string('icon');
-            $table->integer('type');
+            $table->string('units');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class Skills extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skills');
+        Schema::dropIfExists('skills_points');
     }
 }

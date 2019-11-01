@@ -21,6 +21,8 @@
 
           <card-line1-chart-example v-if="item.type === 1" chartId="card-chart-01" class="chart-wrapper px-3 overflow-visible" />
           <card-line2-chart-example v-if="item.type === 2" chartId="card-chart-02" class="chart-wrapper px-3 overflow-visible" />
+          <card-line3-chart-example v-if="item.type === 3" chartId="card-chart-03" class="chart-wrapper px-3 overflow-visible" />
+          <card-bar-chart-example v-if="item.type === 4" chartId="card-chart-04" class="chart-wrapper px-3 overflow-visible" />
         </b-card>
         <div class="add-skill-container col-xl-3 col-lg-5 col-md-5 col-sm-5 mr-sm-0 mr-md-5 d-flex justify-content-center align-items-center">
           <router-link  class="add-skill" :to="'/createSkill'"></router-link>
@@ -34,6 +36,8 @@
   import Return from "../../parts/ReturnBack.vue";
   import CardLine1ChartExample from '../dashboard/CardLine1ChartExample'
   import CardLine2ChartExample from '../dashboard/CardLine2ChartExample'
+  import CardLine3ChartExample from '../dashboard/CardLine3ChartExample'
+  import CardBarChartExample from '../dashboard/CardBarChartExample'
   export default {
     name: 'Skills',
     computed: {
@@ -54,6 +58,8 @@
       Return,
       CardLine1ChartExample,
       CardLine2ChartExample,
+      CardLine3ChartExample,
+      CardBarChartExample,
     }
   }
 </script>

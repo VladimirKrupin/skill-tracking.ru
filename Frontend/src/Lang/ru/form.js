@@ -12,10 +12,12 @@ module.exports = {
     tracking_name_additional : 'добавляйте отслеживаемые навыки',
     tracking_name_text : 'нарп. Стивен Кинг',
     units : 'Единицы измерения',
+    type : 'Тип',
 
     //units
     time: 'время',
     quantity: 'количество (шт)',
+    pages: 'страницы (стр)',
 
     //success
     success_create_skill : 'Функционал находится в разработке =)',

@@ -88,6 +88,119 @@
             </b-col>
         </b-row>
         <b-row class="p-0 m-0">
+            <b-col class="pl-1 ">
+                <h3 class="h5 font-sm">{{$lang.form.type}}</h3>
+            </b-col>
+        </b-row>
+        <b-row class="p-0 m-0">
+            <b-col class="mb-4 p-0 col-xl-4 col-lg-6 col-md-12 col-sm-12">
+                <b-form-group class="mb-0">
+                    <div>
+                        <div class="d-flex no-wrap">
+                            <b-btn style="height: 35px" class="icon-btn" v-b-toggle.collapseC>
+                                <div class="icon-closed"><i class="icon-arrow-down text-green"></i></div>
+                            </b-btn>
+                            <b-col sm="6" lg="6">
+                                <b-card no-body class="bg-success type-card">
+                                    <b-card-body class="pb-0">
+                                        <b-dropdown class="float-right" variant="transparent p-0" right>
+                                            <template slot="button-content">
+                                                <i class="icon-settings"></i>
+                                            </template>
+                                            <b-dropdown-item>Action</b-dropdown-item>
+                                            <b-dropdown-item>Another action</b-dropdown-item>
+                                            <b-dropdown-item>Something else here...</b-dropdown-item>
+                                            <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+                                        </b-dropdown>
+                                        <h4 class="mb-0 text-white">skill</h4>
+                                        <p>description</p>
+                                    </b-card-body>
+                                    <card-line1-chart-example chartId="card-chart-01" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
+                                </b-card>
+                            </b-col>
+                        </div>
+                        <b-collapse id="collapseC" class="mt-2">
+                            <b-row class="d-flex no-wrap">
+                                <b-col sm="6" lg="6">
+                                    <b-card no-body class="bg-success">
+                                        <b-card-body class="pb-0">
+                                            <b-dropdown class="float-right" variant="transparent p-0" right>
+                                                <template slot="button-content">
+                                                    <i class="icon-settings"></i>
+                                                </template>
+                                                <b-dropdown-item>Action</b-dropdown-item>
+                                                <b-dropdown-item>Another action</b-dropdown-item>
+                                                <b-dropdown-item>Something else here...</b-dropdown-item>
+                                                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+                                            </b-dropdown>
+                                            <h4 class="mb-0 text-white">skill</h4>
+                                            <p>description</p>
+                                        </b-card-body>
+                                        <card-line1-chart-example chartId="card-chart-01" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
+                                    </b-card>
+                                </b-col>
+                                <b-col sm="6" lg="6">
+                                    <b-card no-body class="bg-info">
+                                        <b-card-body class="pb-0">
+                                            <b-dropdown class="float-right" variant="transparent p-0" right no-caret>
+                                                <template slot="button-content">
+                                                    <i class="icon-location-pin"></i>
+                                                </template>
+                                                <b-dropdown-item>Action</b-dropdown-item>
+                                                <b-dropdown-item>Another action</b-dropdown-item>
+                                                <b-dropdown-item>Something else here...</b-dropdown-item>
+                                                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+                                            </b-dropdown>
+                                            <h4 class="mb-0 text-white">skill</h4>
+                                            <p>description</p>
+                                        </b-card-body>
+                                        <card-line2-chart-example chartId="card-chart-02" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
+                                    </b-card>
+                                </b-col>
+                                <b-col sm="6" lg="6">
+                                    <b-card no-body class="bg-warning">
+                                        <b-card-body class="pb-0">
+                                            <b-dropdown class="float-right" variant="transparent p-0" right>
+                                                <template slot="button-content">
+                                                    <i class="icon-settings"></i>
+                                                </template>
+                                                <b-dropdown-item>Action</b-dropdown-item>
+                                                <b-dropdown-item>Another action</b-dropdown-item>
+                                                <b-dropdown-item>Something else here...</b-dropdown-item>
+                                                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+                                            </b-dropdown>
+                                            <h4 class="mb-0 text-white">skill</h4>
+                                            <p>description</p>
+                                        </b-card-body>
+                                        <card-line3-chart-example chartId="card-chart-03" class="chart-wrapper" style="height:70px;" height="70"/>
+                                    </b-card>
+                                </b-col>
+
+                                <b-col sm="6" lg="6">
+                                    <b-card no-body class="bg-danger">
+                                        <b-card-body class="pb-0">
+                                            <b-dropdown class="float-right" variant="transparent p-0" right>
+                                                <template slot="button-content">
+                                                    <i class="icon-settings"></i>
+                                                </template>
+                                                <b-dropdown-item>Action</b-dropdown-item>
+                                                <b-dropdown-item>Another action</b-dropdown-item>
+                                                <b-dropdown-item>Something else here...</b-dropdown-item>
+                                                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+                                            </b-dropdown>
+                                            <h4 class="mb-0 text-white">skill</h4>
+                                            <p>description</p>
+                                        </b-card-body>
+                                        <card-bar-chart-example chartId="card-chart-04" class="chart-wrapper px-3" style="height:70px;" height="70"/>
+                                    </b-card>
+                                </b-col>
+                            </b-row>
+                        </b-collapse>
+                    </div>
+                </b-form-group>
+            </b-col>
+        </b-row>
+        <b-row class="p-0 m-0">
             <b-col class="pl-1 pb-2 pt-2">
                 <h3 class="h4">{{$lang.form.tracking}} <span class="font-sm">{{$lang.form.tracking_name_additional}}</span></h3>
             </b-col>
@@ -121,6 +234,7 @@
                                    v-model="point.units"
                     >
                     </b-form-select>
+                    <i class="icon-close" v-on:click="skill.points = removePoint(key,skill.points)"></i>
                 </b-col>
             </b-row>
         </div>
@@ -157,29 +271,45 @@
 <script>
   import Return from "../../parts/ReturnBack.vue";
   import axios from 'axios';
+  import CardLine1ChartExample from '../dashboard/CardLine1ChartExample'
+  import CardLine2ChartExample from '../dashboard/CardLine2ChartExample'
+  import CardLine3ChartExample from '../dashboard/CardLine3ChartExample'
+  import CardBarChartExample from '../dashboard/CardBarChartExample'
 
     export default {
       name: 'CreateSkill',
       components: {
         Return,
+        CardLine1ChartExample,
+        CardLine2ChartExample,
+        CardLine3ChartExample,
+        CardBarChartExample,
       },
       computed: {
       },
       data() {
         return {
             skill: {
-                name: '',
-                description: '',
+                name: 'Программирование',
+                description: 'Мои навыки в программировании',
                 icon: 'icon-fire',
                 color: 'bg-success',
                 points: [
                     {
-                        name: '',
-                        units: this.getUnits()[0],
-                    }
+                        name: 'Скил трэкинг',
+                        units: this.getUnits(this)[0],
+                    },
+                    {
+                        name: 'Laravel уроки',
+                        units: this.getUnits(this)[1],
+                    },
+                    {
+                        name: 'ООП методы методики',
+                        units: this.getUnits(this)[2],
+                    },
                 ],
             },
-            units: this.getUnits(),
+            units: this.getUnits(this),
             colors: [
                 'bg-success','bg-info','bg-warning','bg-danger','bg-secondary','bg-primary','bg-dark'
             ],
@@ -217,7 +347,7 @@
             err: {
                 name:false,
                 description:false,
-                points: [false],
+                points: [false,false,false],
             },
             errors: false,
             success: false,
@@ -298,16 +428,21 @@
           addSkill: function () {
               this.skill.points.push({
                   name: '',
-                  units: 'time',
+                  units: this.getUnits(this)[0],
               });
 
               this.err.points.push(false);
           },
-          getUnits(){
-              console.log(this.lang);
-              console.log(this.$lang);
-              return [this.$lang.form.time,this.$lang.form.quantity]
-          }
+          getUnits: ($this) => [$this.$lang.form.time,$this.$lang.form.quantity,$this.$lang.form.pages],
+          // removePoint: function (key) {
+          //     this.skill.points = this.skill.points.filter(function(item,index)
+          //     {
+          //         if (key !== index){
+          //             return item;
+          //         }
+          //     });
+          // },
+          removePoint: (key,points) => points.filter((item,index)=>(key!==index)?item:''),
 
       },
       mounted() {
@@ -372,5 +507,12 @@
     }
     .add-skill.add-skill-small:hover {
         margin-top: 0;
+    }
+    .icon-close {
+        position: absolute;
+        right: -20px;
+        top:3px;
+        color: darkred;
+        cursor: pointer;
     }
 </style>

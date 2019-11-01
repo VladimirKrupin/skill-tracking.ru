@@ -33,6 +33,20 @@ class SkillsResource extends Resource
                 'icon'=>'icon-fire',
                 'type' => 2
             ],
+            [
+                'title'=>'programmind',
+                'description'=>'sport exercises',
+                'bg'=>'bg-info',
+                'icon'=>'icon-fire',
+                'type' => 3
+            ],
+            [
+                'title'=>'music',
+                'description'=>'sport exercises',
+                'bg'=>'bg-info',
+                'icon'=>'icon-fire',
+                'type' => 4
+            ],
         ];
         return [
             'skills' => $skills,
