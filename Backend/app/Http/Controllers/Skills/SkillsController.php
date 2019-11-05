@@ -32,7 +32,7 @@ class SkillsController extends Controller
         $skill = Skill::create([
             'user_id'=>Auth::user()['id'],
             'title'=>$request->input('title'),
-            'description'=>$request->input('description'),
+            'description'=>($request->input('description'))?$request->input('description'):'',
             'icon'=>$request->input('icon'),
             'color'=>$request->input('color'),
             'type'=>$request->input('type')
