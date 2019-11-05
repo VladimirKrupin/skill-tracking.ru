@@ -12,7 +12,8 @@ module.exports = {
     tracking_name_additional : 'add tracked skills',
     tracking_name_text : 'example. Stephen king',
     units : 'Units',
-    type : 'Type',
+    type : 'Type graph',
+    skill : 'Skill',
 
     //units
     time: 'time',
@@ -20,5 +21,5 @@ module.exports = {
     pages: 'pages (p)',
 
     //success
-    success_create_skill : 'Functionality is under development =)',
+    success_create_skill : 'New skill saved successfully',
 }

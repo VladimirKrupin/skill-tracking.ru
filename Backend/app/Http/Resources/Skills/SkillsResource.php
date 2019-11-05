@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Skills;
 
+use App\Http\Models\Skill\Skill;
 use App\Http\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\Resource;
@@ -17,39 +18,8 @@ class SkillsResource extends Resource
      */
     public function toArray($request)
     {
-        $skills = User::where('id',$this['id'])->first()->toArray();
-        $skills = [
-            [
-              'title'=>'reading',
-              'description'=>'my reading books',
-              'bg'=>'bg-success',
-              'icon'=>'icon-book-open',
-              'type' => 1
-            ],
-            [
-                'title'=>'sport',
-                'description'=>'sport exercises',
-                'bg'=>'bg-info',
-                'icon'=>'icon-fire',
-                'type' => 2
-            ],
-            [
-                'title'=>'programmind',
-                'description'=>'sport exercises',
-                'bg'=>'bg-info',
-                'icon'=>'icon-fire',
-                'type' => 3
-            ],
-            [
-                'title'=>'music',
-                'description'=>'sport exercises',
-                'bg'=>'bg-info',
-                'icon'=>'icon-fire',
-                'type' => 4
-            ],
-        ];
         return [
-            'skills' => $skills,
+            'skills' => Skill::where('user_id',Auth::user()['id'])->with('points')->get()->toArray(),
         ];
     }
 }

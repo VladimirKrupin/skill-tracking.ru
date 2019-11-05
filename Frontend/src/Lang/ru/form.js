@@ -12,7 +12,8 @@ module.exports = {
     tracking_name_additional : 'добавляйте отслеживаемые навыки',
     tracking_name_text : 'нарп. Стивен Кинг',
     units : 'Единицы измерения',
-    type : 'Тип',
+    type : 'Тип графика',
+    skill : 'Скил',
 
     //units
     time: 'время',
@@ -20,5 +21,5 @@ module.exports = {
     pages: 'страницы (стр)',
 
     //success
-    success_create_skill : 'Функционал находится в разработке =)',
+    success_create_skill : 'Новый скил успешно сохранен',
 }

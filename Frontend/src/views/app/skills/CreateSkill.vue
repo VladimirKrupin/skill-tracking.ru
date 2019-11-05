@@ -8,14 +8,23 @@
                 <h3 class="h5 font-sm">{{$lang.form.name}}</h3>
             </b-col>
         </b-row>
+
+          <b-row class="p-0 m-0">
+              <b-col class="p-0">
+                  <div v-html="errors" class="alert alert-danger alert-dismissable text-dark" v-if="errors">
+                  </div>
+              </b-col>
+          </b-row>
         <b-row class="p-0 m-0">
             <b-col class="mb-4 p-0 col-xl-2 col-lg-4 col-md-4 col-sm-12">
                 <b-form-group class="mb-0">
                     <b-form-input type="text" id="skill-name"
-                                  v-bind:class="validInput(err.name)"
+                                  v-bind:class="validInput(err.title)"
                                   :placeholder=$lang.form.name_text
                                   class="form-control form-control-lg"
-                                  v-model="skill.name"></b-form-input>
+                                  v-model="skill.title"
+                                  v-on:input="checkTitle(skill.title)"
+                    ></b-form-input>
 
                 </b-form-group>
             </b-col>
@@ -101,97 +110,36 @@
                                 <div class="icon-closed"><i class="icon-arrow-down text-green"></i></div>
                             </b-btn>
                             <b-col sm="6" lg="6">
-                                <b-card no-body class="bg-success type-card">
-                                    <b-card-body class="pb-0">
-                                        <b-dropdown class="float-right" variant="transparent p-0" right>
-                                            <template slot="button-content">
-                                                <i class="icon-settings"></i>
-                                            </template>
-                                            <b-dropdown-item>Action</b-dropdown-item>
-                                            <b-dropdown-item>Another action</b-dropdown-item>
-                                            <b-dropdown-item>Something else here...</b-dropdown-item>
-                                            <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-                                        </b-dropdown>
-                                        <h4 class="mb-0 text-white">skill</h4>
-                                        <p>description</p>
-                                    </b-card-body>
-                                    <card-line1-chart-example chartId="card-chart-01" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
+                                <b-card no-body class="pt-3 type-card" :class="skill.color">
+                                    <card-line1-chart-example v-if="skill.type === 1" :bg="skill.colorGraph" chartId="card-chart-01" class="chart-wrapper px-3" :height="70"/>
+                                    <card-line2-chart-example v-if="skill.type === 2" :bg="skill.colorGraph" chartId="card-chart-01" class="chart-wrapper px-3" :height="70"/>
+                                    <card-line3-chart-example v-if="skill.type === 3" :bg="skill.colorGraph" chartId="card-chart-01" class="chart-wrapper px-3" :height="70"/>
+                                    <card-bar-chart-example v-if="skill.type === 4" :bg="skill.colorGraph" chartId="card-chart-01" class="chart-wrapper px-3" :height="70"/>
                                 </b-card>
                             </b-col>
                         </div>
+
                         <b-collapse id="collapseC" class="mt-2">
                             <b-row class="d-flex no-wrap">
-                                <b-col sm="6" lg="6">
-                                    <b-card no-body class="bg-success">
-                                        <b-card-body class="pb-0">
-                                            <b-dropdown class="float-right" variant="transparent p-0" right>
-                                                <template slot="button-content">
-                                                    <i class="icon-settings"></i>
-                                                </template>
-                                                <b-dropdown-item>Action</b-dropdown-item>
-                                                <b-dropdown-item>Another action</b-dropdown-item>
-                                                <b-dropdown-item>Something else here...</b-dropdown-item>
-                                                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-                                            </b-dropdown>
-                                            <h4 class="mb-0 text-white">skill</h4>
-                                            <p>description</p>
-                                        </b-card-body>
-                                        <card-line1-chart-example chartId="card-chart-01" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
+                                <b-col sm="6" lg="6" v-on:click="changeType(1)">
+                                    <b-card no-body class="pt-3 bg-success">
+                                        <card-line1-chart-example :bg="'success'" chartId="card-chart-01" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
                                     </b-card>
                                 </b-col>
                                 <b-col sm="6" lg="6">
-                                    <b-card no-body class="bg-info">
-                                        <b-card-body class="pb-0">
-                                            <b-dropdown class="float-right" variant="transparent p-0" right no-caret>
-                                                <template slot="button-content">
-                                                    <i class="icon-location-pin"></i>
-                                                </template>
-                                                <b-dropdown-item>Action</b-dropdown-item>
-                                                <b-dropdown-item>Another action</b-dropdown-item>
-                                                <b-dropdown-item>Something else here...</b-dropdown-item>
-                                                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-                                            </b-dropdown>
-                                            <h4 class="mb-0 text-white">skill</h4>
-                                            <p>description</p>
-                                        </b-card-body>
-                                        <card-line2-chart-example chartId="card-chart-02" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
+                                    <b-card no-body class="pt-3 bg-info" v-on:click="changeType(2)">
+                                        <card-line2-chart-example :bg="'info'" chartId="card-chart-02" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
                                     </b-card>
                                 </b-col>
                                 <b-col sm="6" lg="6">
-                                    <b-card no-body class="bg-warning">
-                                        <b-card-body class="pb-0">
-                                            <b-dropdown class="float-right" variant="transparent p-0" right>
-                                                <template slot="button-content">
-                                                    <i class="icon-settings"></i>
-                                                </template>
-                                                <b-dropdown-item>Action</b-dropdown-item>
-                                                <b-dropdown-item>Another action</b-dropdown-item>
-                                                <b-dropdown-item>Something else here...</b-dropdown-item>
-                                                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-                                            </b-dropdown>
-                                            <h4 class="mb-0 text-white">skill</h4>
-                                            <p>description</p>
-                                        </b-card-body>
-                                        <card-line3-chart-example chartId="card-chart-03" class="chart-wrapper" style="height:70px;" height="70"/>
+                                    <b-card no-body class="pt-3 bg-warning" v-on:click="changeType(3)">
+                                        <card-line3-chart-example :bg="'warning'" chartId="card-chart-03" class="chart-wrapper" style="height:70px;" height="70"/>
                                     </b-card>
                                 </b-col>
 
                                 <b-col sm="6" lg="6">
-                                    <b-card no-body class="bg-danger">
-                                        <b-card-body class="pb-0">
-                                            <b-dropdown class="float-right" variant="transparent p-0" right>
-                                                <template slot="button-content">
-                                                    <i class="icon-settings"></i>
-                                                </template>
-                                                <b-dropdown-item>Action</b-dropdown-item>
-                                                <b-dropdown-item>Another action</b-dropdown-item>
-                                                <b-dropdown-item>Something else here...</b-dropdown-item>
-                                                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-                                            </b-dropdown>
-                                            <h4 class="mb-0 text-white">skill</h4>
-                                            <p>description</p>
-                                        </b-card-body>
-                                        <card-bar-chart-example chartId="card-chart-04" class="chart-wrapper px-3" style="height:70px;" height="70"/>
+                                    <b-card no-body class="pt-3 bg-danger" v-on:click="changeType(4)">
+                                        <card-bar-chart-example :bg="'danger'" chartId="card-chart-04" class="chart-wrapper px-3" style="height:70px;" height="70"/>
                                     </b-card>
                                 </b-col>
                             </b-row>
@@ -221,7 +169,7 @@
                                       v-bind:class="validInput(err.points[key])"
                                       :placeholder=$lang.form.tracking_name_text
                                       class="form-control form-control-lg"
-                                      v-model="point.name"></b-form-input>
+                                      v-model="point.title"></b-form-input>
 
                     </b-form-group>
                 </b-col>
@@ -245,6 +193,7 @@
                 </div>
             </b-col>
         </b-row>
+
         <b-row class="p-0 m-0">
             <div class="d-flex">
                 <b-button  variant="outline-primary" class="mb-4 mr-3" v-on:click="saveSkill()" :disabled="disabled">{{$lang.form.save_changes}}<div v-if="loader" class="loader loader-btn"></div></b-button>
@@ -290,22 +239,17 @@
       data() {
         return {
             skill: {
-                name: 'Программирование',
-                description: 'Мои навыки в программировании',
+                title: '',
+                description: '',
                 icon: 'icon-fire',
                 color: 'bg-success',
+                colorGraph: 'success',
+                type: 1,
                 points: [
                     {
-                        name: 'Скил трэкинг',
+                        title: '',
                         units: this.getUnits(this)[0],
-                    },
-                    {
-                        name: 'Laravel уроки',
-                        units: this.getUnits(this)[1],
-                    },
-                    {
-                        name: 'ООП методы методики',
-                        units: this.getUnits(this)[2],
+                        unitsType: this.getUnitType(0),
                     },
                 ],
             },
@@ -345,9 +289,9 @@
                 'icon-social-dropbox',
             ],
             err: {
-                name:false,
+                title:false,
                 description:false,
-                points: [false,false,false],
+                points: [false],
             },
             errors: false,
             success: false,
@@ -379,9 +323,11 @@
                   })
                   .catch(error => {
                       if (error.response !== undefined){
+                          console.log(error.response);
                           let err = this.err;
                           let errors = this.errors;
                           Object.keys(error.response.data).map(function(objectKey, index) {
+                              console.log(error.response.data[objectKey]);
                               err[objectKey] = true;
                               errors += error.response.data[objectKey]+"<br>";
                           });
@@ -392,14 +338,14 @@
                   });
           },
           valid: function() {
-              this.err.name=(this.skill.name)?!this.vStr(this.skill.name):true;
+              this.err.title=(this.skill.title)?!this.vStr(this.skill.title):true;
               this.err.description=(this.skill.description)?!this.vStr(this.skill.description):false;
               let points = this.err.points;
               this.err.points = [];
               let points_values = this.skill.points;
               let vFunc = this.vStr;
               Object.keys(points).map(function(objectKey, index) {
-                  points[objectKey] = (points_values[objectKey].name)?!vFunc(points_values[objectKey].name):true;
+                  points[objectKey] = (points_values[objectKey].title)?!vFunc(points_values[objectKey].title):true;
               });
               this.err.points = points;
           },
@@ -424,26 +370,62 @@
           },
           tryColor: function(color) {
               this.skill.color = color;
+              this.skill.colorGraph = color.replace('bg-', '');
           },
           addSkill: function () {
               this.skill.points.push({
-                  name: '',
+                  title: '',
                   units: this.getUnits(this)[0],
+                  unitsType: this.getUnitType(0),
               });
-
               this.err.points.push(false);
           },
           getUnits: ($this) => [$this.$lang.form.time,$this.$lang.form.quantity,$this.$lang.form.pages],
-          // removePoint: function (key) {
-          //     this.skill.points = this.skill.points.filter(function(item,index)
-          //     {
-          //         if (key !== index){
-          //             return item;
-          //         }
-          //     });
-          // },
+          getUnitType: function(point){
+              let type = 'time';
+              switch (point) {
+                  case 0:
+                      type = 'time';
+                      break;
+                  case 1:
+                      type = 'quantity';
+                      break;
+                  case 2:
+                      type = 'pages';
+                      break;
+              }
+              return type;
+          },
           removePoint: (key,points) => points.filter((item,index)=>(key!==index)?item:''),
+          changeType: function (index) {
+              // console.log(index);
+              this.skill.type = index;
+          },
+          checkTitle: function (title) {
+              this.err.title = false;
+              this.errors = false;
+              const options = {
+                  method: 'POST',
+                  headers: this.defaultHeaders,
+                  data: this.skill,
+                  url: this.apiHost+'/api/checkTitle/',
+              };
 
+              axios(options)
+                  .then(response => {
+                  })
+                  .catch(error => {
+                      if (error.response !== undefined){
+                          let err = this.err;
+                          let errors = (this.errors)?this.errors:'';
+                          Object.keys(error.response.data).map(function(objectKey, index) {
+                              err[objectKey] = true;
+                              errors += error.response.data[objectKey]+"<br>";
+                          });
+                          this.errors = errors;
+                      }
+                  });
+          }
       },
       mounted() {
       },

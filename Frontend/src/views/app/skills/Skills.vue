@@ -2,7 +2,7 @@
   <div>
     <return></return>
       <div class="row pr-4 pl-4">
-        <b-card class="col-xl-3 col-lg-5 col-md-5 col-sm-5 mr-sm-0 mr-md-5" :class="item.bg" v-for="(item, index) in skills" :key="index">
+        <b-card class="col-xl-3 col-lg-5 col-md-5 col-sm-5 mr-sm-0 mr-md-5" :class="item.color" v-for="(item, index) in skills" :key="index">
           <router-link :to="'skills/'+item.title" class="text-muted card-link">
             <b-card-body class="pb-0">
               <b-dropdown class="float-right" variant="transparent p-0" right>
@@ -19,10 +19,10 @@
             </b-card-body>
             </router-link>
 
-          <card-line1-chart-example v-if="item.type === 1" chartId="card-chart-01" class="chart-wrapper px-3 overflow-visible" />
-          <card-line2-chart-example v-if="item.type === 2" chartId="card-chart-02" class="chart-wrapper px-3 overflow-visible" />
-          <card-line3-chart-example v-if="item.type === 3" chartId="card-chart-03" class="chart-wrapper px-3 overflow-visible" />
-          <card-bar-chart-example v-if="item.type === 4" chartId="card-chart-04" class="chart-wrapper px-3 overflow-visible" />
+          <card-line1-chart-example v-if="item.type === 1" :bg="item.color.replace('bg-', '')" chartId="card-chart-01" class="chart-wrapper px-3" :height="70"/>
+          <card-line2-chart-example v-if="item.type === 2" :bg="item.color.replace('bg-', '')" chartId="card-chart-01" class="chart-wrapper px-3" :height="70"/>
+          <card-line3-chart-example v-if="item.type === 3" :bg="item.color.replace('bg-', '')" chartId="card-chart-01" class="chart-wrapper px-3" :height="70"/>
+          <card-bar-chart-example v-if="item.type === 4" :bg="item.color.replace('bg-', '')" chartId="card-chart-01" class="chart-wrapper px-3" :height="70"/>
         </b-card>
         <div class="add-skill-container col-xl-3 col-lg-5 col-md-5 col-sm-5 mr-sm-0 mr-md-5 d-flex justify-content-center align-items-center">
           <router-link  class="add-skill" :to="'/createSkill'"></router-link>
