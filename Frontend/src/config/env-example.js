@@ -1,4 +1,4 @@
 export default {
-    get: () => 'prod',
+    get: () => 'prod', //local prod dev
     production: () => true,
 }

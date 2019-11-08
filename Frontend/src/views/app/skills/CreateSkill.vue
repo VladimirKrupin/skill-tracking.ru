@@ -2,19 +2,18 @@
   <div>
     <return></return>
       <card shadow class="card-profile" body>
-        <h1 class="h3 input-margin pl-1 pb-2">{{$lang.app.add}}</h1>
-        <b-row class="p-0 m-0">
-            <b-col class="pl-1">
-                <h3 class="h5 font-sm">{{$lang.form.name}}</h3>
-            </b-col>
-        </b-row>
-
+        <h1 class="h3 input-margin pl-1 pb-2">{{getTitle()}}</h1>
           <b-row class="p-0 m-0">
               <b-col class="p-0">
                   <div v-html="errors" class="alert alert-danger alert-dismissable text-dark" v-if="errors">
                   </div>
               </b-col>
           </b-row>
+        <b-row class="p-0 m-0">
+            <b-col class="pl-1">
+                <h3 class="h5 font-sm">{{$lang.form.name}}</h3>
+            </b-col>
+        </b-row>
         <b-row class="p-0 m-0">
             <b-col class="mb-4 p-0 col-xl-2 col-lg-4 col-md-4 col-sm-12">
                 <b-form-group class="mb-0">
@@ -180,6 +179,7 @@
                                    :options="units"
                                    value="hours"
                                    v-model="point.units"
+                                   v-on:change="pointHandler(point)"
                     >
                     </b-form-select>
                     <i class="icon-close" v-on:click="skill.points = removePoint(key,skill.points)"></i>
@@ -218,12 +218,13 @@
 </template>
 
 <script>
-  import Return from "../../parts/ReturnBack.vue";
-  import axios from 'axios';
-  import CardLine1ChartExample from '../dashboard/CardLine1ChartExample'
-  import CardLine2ChartExample from '../dashboard/CardLine2ChartExample'
-  import CardLine3ChartExample from '../dashboard/CardLine3ChartExample'
-  import CardBarChartExample from '../dashboard/CardBarChartExample'
+    import { mapGetters } from 'vuex'
+    import Return from "../../parts/ReturnBack.vue";
+    import axios from 'axios';
+    import CardLine1ChartExample from '../dashboard/CardLine1ChartExample'
+    import CardLine2ChartExample from '../dashboard/CardLine2ChartExample'
+    import CardLine3ChartExample from '../dashboard/CardLine3ChartExample'
+    import CardBarChartExample from '../dashboard/CardBarChartExample'
 
     export default {
       name: 'CreateSkill',
@@ -235,6 +236,9 @@
         CardBarChartExample,
       },
       computed: {
+          ...mapGetters('skills', {
+              skills: 'skills',
+          })
       },
       data() {
         return {
@@ -245,6 +249,7 @@
                 color: 'bg-success',
                 colorGraph: 'success',
                 type: 1,
+                edit: this.getSaveType(),
                 points: [
                     {
                         title: '',
@@ -300,6 +305,9 @@
         };
       },
       methods:{
+          getTitle: function(){
+              return (this.$route.name === 'EditSkill')?this.$lang.app.edit:this.$lang.app.add;
+          },
           saveSkill: function () {
               this.valid();
               if (!this.validCheck()){return false;}
@@ -337,6 +345,7 @@
                       this.disabled = false;
                   });
           },
+          getSaveType: function() { return 'EditSkill' === this.$route.name},
           valid: function() {
               this.err.title=(this.skill.title)?!this.vStr(this.skill.title):true;
               this.err.description=(this.skill.description)?!this.vStr(this.skill.description):false;
@@ -425,9 +434,59 @@
                           this.errors = errors;
                       }
                   });
+          },
+          editSkill: function () {
+              let skills = this.skills;
+              let route = this.$route;
+              let skill = this.skill;
+              let edit = this.getSaveType();
+              if (this.$route.name === 'EditSkill'){
+                  Object.keys(skills).map(function(objectKey, index) {
+                      if (skills[objectKey].web_title === route.params.id){
+                          skill = {
+                              title: skills[objectKey].title,
+                              description: skills[objectKey].description,
+                              icon: skills[objectKey].icon,
+                              color: skills[objectKey].color,
+                              colorGraph: skills[objectKey].color.replace('bg-', ''),
+                              type: skills[objectKey].type,
+                              edit: edit,
+                              points: [],
+                          };
+                          let points = skills[objectKey].points;
+                          Object.keys(points).map(function(objectKey, index) {
+                              skill.points.push({
+                                  title: points[objectKey].title,
+                                  units: points[objectKey].units,
+                                  unitsType: points[objectKey].units_type,
+                              });
+                          });
+                      }
+                  });
+                  this.skill = skill;
+              }
+          },
+          pointHandler: function (point) {
+              point.unitsType = this.getPointType(point.units);
+          },
+          getPointType: function (units) {
+              let type = 'time';
+              switch (units) {
+                  case this.$lang.form.time:
+                      type = 'time';
+                      break;
+                  case this.$lang.form.quantity:
+                      type = 'quantity';
+                      break;
+                  case this.$lang.form.pages:
+                      type = 'pages';
+                      break;
+              }
+              return type;
           }
       },
       mounted() {
+        this.editSkill();
       },
       created(){
       }

@@ -58,6 +58,11 @@ export default new Router({
                     component: CreateSkill,
                 },
                 {
+                    path: '/editSkill/:id',
+                    name: 'EditSkill',
+                    component: CreateSkill,
+                },
+                {
                     path: '/statistic',
                     name: 'Statistic',
                     component: Statistic,

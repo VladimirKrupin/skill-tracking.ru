@@ -18,32 +18,47 @@ class SkillsController extends Controller
             'description' => 'nullable|string|min:1|max:255',
             'icon' => 'required|string|min:1|max:255',
             'color' => 'required|string|min:1|max:255',
+            'edit' => 'required|bool',
             'points.*.title' => 'required|string|min:1|max:255',
             'points.*.units' => 'required|string|min:1|max:255',
         ]);
-
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
-
-
-        if ($check_title = $this->checkSkillTitle($request)){
-            return ValidatorResponse::get($check_title);
-        }
-
-        $skill = Skill::create([
-            'user_id'=>Auth::user()['id'],
-            'title'=>$request->input('title'),
-            'description'=>($request->input('description'))?$request->input('description'):'',
-            'icon'=>$request->input('icon'),
-            'color'=>$request->input('color'),
-            'type'=>$request->input('type')
-        ]);
-
-        foreach ($request->input('points') as $point){
-            SkillsPoint::create([
-               'skill_id' => $skill['id'],
-               'title' => $point['title'],
-               'units' => $point['unitsType'],
+        if ($request->input('edit')){
+            Skill::where('title',$request->input('title'))->update([
+                'title'=>$request->input('title'),
+                'description'=>($request->input('description'))?$request->input('description'):'',
+                'icon'=>$request->input('icon'),
+                'color'=>$request->input('color'),
+                'type'=>$request->input('type')
             ]);
+            foreach ($request->input('points') as $point){
+                SkillsPoint::where('title',$point['title'])->update([
+                    'title' => $point['title'],
+                    'units' => $point['units'],
+                    'units_type' => $point['unitsType'],
+                ]);
+            }
+        }else{
+            if ($check_title = $this->checkSkillTitle($request)){
+                return ValidatorResponse::get($check_title);
+            }
+            $skill = Skill::create([
+                'user_id'=>Auth::user()['id'],
+                'title'=>$request->input('title'),
+                'description'=>($request->input('description'))?$request->input('description'):'',
+                'icon'=>$request->input('icon'),
+                'color'=>$request->input('color'),
+                'type'=>$request->input('type')
+            ]);
+            foreach ($request->input('points') as $point){
+                SkillsPoint::create([
+                    'skill_id' => $skill['id'],
+                    'title' => $point['title'],
+                    'units' => $point['units'],
+                    'units_type' => $point['unitsType'],
+                ]);
+            }
+
         }
 
         return new SuccessResponse();

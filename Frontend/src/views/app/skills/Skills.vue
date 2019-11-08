@@ -3,16 +3,16 @@
     <return></return>
       <div class="row pr-4 pl-4">
         <b-card class="col-xl-3 col-lg-5 col-md-5 col-sm-5 mr-sm-0 mr-md-5" :class="item.color" v-for="(item, index) in skills" :key="index">
-          <router-link :to="'skills/'+item.title" class="text-muted card-link">
+          <router-link :to="'skills/'+item.web_title" class="text-muted card-link">
             <b-card-body class="pb-0">
               <b-dropdown class="float-right" variant="transparent p-0" right>
                 <template slot="button-content">
                   <i :class="item.icon"></i>
                 </template>
-                <b-dropdown-item>Action</b-dropdown-item>
-                <b-dropdown-item>Another action</b-dropdown-item>
-                <b-dropdown-item>Something else here...</b-dropdown-item>
-                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+                <b-dropdown-item disabled>{{$lang.skill.fin_in}}</b-dropdown-item>
+                <b-dropdown-item  :to="'/editSkill/'+item.web_title">{{$lang.skill.edit}}</b-dropdown-item>
+                <b-dropdown-item disabled>{{$lang.skill.copy}}</b-dropdown-item>
+                <b-dropdown-item disabled>{{$lang.skill.share}}</b-dropdown-item>
               </b-dropdown>
               <h4 class="mb-0 text-white">{{item.title}}</h4>
               <p class="text-white">{{item.description}}</p>

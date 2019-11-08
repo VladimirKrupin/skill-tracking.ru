@@ -13,7 +13,6 @@
 import { FadeTransition } from "vue2-transitions";
 import { mapGetters } from 'vuex';
 
-
 export default {
   components: {
     FadeTransition
@@ -29,6 +28,7 @@ export default {
     },
     mounted: function () {
         this.$store.dispatch('profile/changeLang',{lang:this.checkLang()});
+        this.$store.dispatch('skills/getSkills');
     },
     computed: {
         ...mapGetters('profile', {
