@@ -172,7 +172,7 @@
 
                     </b-form-group>
                 </b-col>
-                <b-col class="mb-4 p-0 ml-3 offset-1 col-sm-4 col-md-2 col-lg-2 col-xl-1">
+                <b-col v-if="point.edit === true" class="mb-4 p-0 ml-3 mr-2 offset-1 col-sm-2 col-md-2 col-lg-2 col-xl-1">
                     <b-form-select id="basicSelect"
                                    class="h-100"
                                    :plain="true"
@@ -182,6 +182,10 @@
                                    v-on:change="pointHandler(point)"
                     >
                     </b-form-select>
+                    <i class="icon-close" v-on:click="skill.points = removePoint(key,skill.points)"></i>
+                </b-col>
+                <b-col v-if="point.edit === false" class="font-sm mb-4 p-0 ml-3 mr-2 offset-1 col-sm-2 col-md-2 col-lg-2 col-xl-1">
+                    {{$lang.skill.not_available}}
                     <i class="icon-close" v-on:click="skill.points = removePoint(key,skill.points)"></i>
                 </b-col>
             </b-row>
@@ -255,6 +259,7 @@
                         title: '',
                         units: this.getUnits(this)[0],
                         unitsType: this.getUnitType(0),
+                        edit: true,
                     },
                 ],
             },
@@ -357,6 +362,7 @@
                   points[objectKey] = (points_values[objectKey].title)?!vFunc(points_values[objectKey].title):true;
               });
               this.err.points = points;
+              console.log(this.err.points);
           },
           validCheck: function() {
               let err = this.err;
@@ -386,6 +392,7 @@
                   title: '',
                   units: this.getUnits(this)[0],
                   unitsType: this.getUnitType(0),
+                  edit: true,
               });
               this.err.points.push(false);
           },
@@ -439,8 +446,10 @@
               let skills = this.skills;
               let route = this.$route;
               let skill = this.skill;
+              let err = this.err;
               let edit = this.getSaveType();
               if (this.$route.name === 'EditSkill'){
+                  err.points = [];
                   Object.keys(skills).map(function(objectKey, index) {
                       if (skills[objectKey].web_title === route.params.id){
                           skill = {
@@ -459,7 +468,9 @@
                                   title: points[objectKey].title,
                                   units: points[objectKey].units,
                                   unitsType: points[objectKey].units_type,
+                                  edit: false,
                               });
+                              err.points.push(false);
                           });
                       }
                   });

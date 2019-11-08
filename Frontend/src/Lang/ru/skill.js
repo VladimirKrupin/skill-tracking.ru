@@ -4,4 +4,5 @@ module.exports = {
     edit : 'Редактировать',
     copy : 'Скопировать',
     share : 'Отправить',
+    not_available: 'Не доступно',
 }

@@ -97,10 +97,10 @@ export default {
       return this.$route.name
     },
     list () {
-          // console.log(this.$route);
+          console.log(this.$route);
         let matches = this.$route.matched.filter((route) => (route.meta.label)?route.meta.label:route.name);
         matches[matches.length-1].meta.label = this.$route.params.id;
-      return matches;
+        return matches;
     },
   },
   methods: {

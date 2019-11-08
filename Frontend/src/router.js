@@ -36,13 +36,25 @@ export default new Router({
                 },
                 {
                     path: '/skills',
+                    redirect: '/skills',
+                    name: 'Skills',
                     meta: { label: 'Skills'},
                     component: {
                         render (c) { return c('router-view') }
                     },
                     children: [
                         {
-                            path: '',
+                            path: 'createSkill',
+                            name: 'CreateSkill',
+                            component: CreateSkill,
+                        },
+                        {
+                            path: '/editSkill/:id',
+                            name: 'EditSkill',
+                            component: CreateSkill,
+                        },
+                        {
+                            path: '/skills',
                             component: Skills,
                         },
                         {
@@ -51,16 +63,6 @@ export default new Router({
                             component: SingleSkill,
                         },
                     ]
-                },
-                {
-                    path: '/createSkill',
-                    name: 'CreateSkill',
-                    component: CreateSkill,
-                },
-                {
-                    path: '/editSkill/:id',
-                    name: 'EditSkill',
-                    component: CreateSkill,
                 },
                 {
                     path: '/statistic',

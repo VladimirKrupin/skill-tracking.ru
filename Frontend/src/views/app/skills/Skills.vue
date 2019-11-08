@@ -25,7 +25,7 @@
           <card-bar-chart-example v-if="item.type === 4" :bg="item.color.replace('bg-', '')" chartId="card-chart-01" class="chart-wrapper px-3" :height="70"/>
         </b-card>
         <div class="add-skill-container col-xl-3 col-lg-5 col-md-5 col-sm-5 mr-sm-0 mr-md-5 d-flex justify-content-center align-items-center">
-          <router-link  class="add-skill" :to="'/createSkill'"></router-link>
+          <router-link  class="add-skill" :to="'/skills/createSkill'"></router-link>
         </div>
       </div>
     </div>

@@ -4,4 +4,5 @@ module.exports = {
     edit : 'Edit',
     copy : 'Copy',
     share : 'Share',
+    not_available: 'Not available\n',
 }
