@@ -258,7 +258,7 @@
                 color: 'bg-success',
                 colorGraph: 'success',
                 type: 1,
-                edit: this.getSaveType(),
+                edit: false,
                 points: [
                     {
                         id: 0,
@@ -266,6 +266,7 @@
                         units: this.getUnits(this)[0],
                         unitsType: this.getUnitType(0),
                         edit: true,
+                        active: 1,
                     },
                 ],
             },
@@ -321,8 +322,10 @@
               return (this.$route.name === 'EditSkill')?this.$lang.app.edit:this.$lang.app.add;
           },
           saveSkill: function () {
+              console.log(1);
               this.valid();
               if (!this.validCheck()){return false;}
+              console.log(2);
               this.errors = '';
               this.loader = true;
               this.disabled = true;
@@ -375,7 +378,7 @@
                   points[objectKey] = (points_values[objectKey].title)?!vFunc(points_values[objectKey].title):true;
               });
               this.err.points = points;
-              console.log(this.err.points);
+              console.log(this.err);
           },
           validCheck: function() {
               let err = this.err;
