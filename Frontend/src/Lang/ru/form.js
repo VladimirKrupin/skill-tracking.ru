@@ -22,4 +22,5 @@ module.exports = {
 
     //success
     success_create_skill : 'Новый скил успешно сохранен',
+    success_edit_skill : 'Скил успешно изменен',
 }

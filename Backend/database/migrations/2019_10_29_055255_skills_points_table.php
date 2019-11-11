@@ -19,6 +19,7 @@ class SkillsPointsTable extends Migration
             $table->string('title');
             $table->string('units');
             $table->string('units_type');
+            $table->integer('active');
             $table->timestamps();
         });
     }

@@ -160,7 +160,7 @@
                 <h3 class="h4 font-sm">{{$lang.form.units}}</h3>
             </b-col>
         </b-row>
-        <div v-for="(point,key) in skill.points" v-bind:key="key">
+        <div v-if="point.active === 1" v-for="(point,key) in skill.points" v-bind:key="key">
             <b-row class="p-0 m-0">
                 <b-col class="mb-4 p-0 col-xl-2 col-lg-3 col-md-6 col-sm-5 ">
                     <b-form-group class="mb-0">
@@ -182,11 +182,12 @@
                                    v-on:change="pointHandler(point)"
                     >
                     </b-form-select>
-                    <i class="icon-close" v-on:click="skill.points = removePoint(key,skill.points)"></i>
+                    <i class="icon-close" v-on:click="removePoint(key,skill.points)"></i>
                 </b-col>
                 <b-col v-if="point.edit === false" class="font-sm mb-4 p-0 ml-3 mr-2 offset-1 col-sm-2 col-md-2 col-lg-2 col-xl-1">
-                    {{$lang.skill.not_available}}
-                    <i class="icon-close" v-on:click="skill.points = removePoint(key,skill.points)"></i>
+<!--                    {{$lang.skill.not_available}}-->
+                    {{point.units}}
+                    <i class="icon-close" v-on:click="removePoint(key,skill.points)"></i>
                 </b-col>
             </b-row>
         </div>
@@ -214,6 +215,9 @@
             <b-col class="p-0">
                 <div class="alert alert-success alert-dismissable text-dark" v-if="success">
                     {{$lang.form.success_create_skill}}
+                </div>
+                <div class="alert alert-success alert-dismissable text-dark" v-if="editSuccess">
+                    {{$lang.form.success_edit_skill}}
                 </div>
             </b-col>
         </b-row>
@@ -247,6 +251,7 @@
       data() {
         return {
             skill: {
+                id: 0,
                 title: '',
                 description: '',
                 icon: 'icon-fire',
@@ -256,6 +261,7 @@
                 edit: this.getSaveType(),
                 points: [
                     {
+                        id: 0,
                         title: '',
                         units: this.getUnits(this)[0],
                         unitsType: this.getUnitType(0),
@@ -305,6 +311,7 @@
             },
             errors: false,
             success: false,
+            editSuccess: false,
             loader: false,
             disabled: false,
         };
@@ -320,6 +327,7 @@
               this.loader = true;
               this.disabled = true;
               this.success = false;
+              this.editSuccess = false;
               const options = {
                   method: 'POST',
                   headers: this.defaultHeaders,
@@ -331,8 +339,13 @@
                   .then(response => {
                       this.loader = false;
                       this.disabled = false;
-                      this.success = true;
-                      this.$store.dispatch('profile/saveSkill');
+                      if (this.skill.edit){
+                          this.editSuccess = true;
+                      }else {
+                          this.success = true;
+                      }
+                      this.$router.replace(this.$router);
+                      this.$router.push({name: 'Skills'});
                   })
                   .catch(error => {
                       if (error.response !== undefined){
@@ -389,10 +402,12 @@
           },
           addSkill: function () {
               this.skill.points.push({
+                  id: 0,
                   title: '',
                   units: this.getUnits(this)[0],
                   unitsType: this.getUnitType(0),
                   edit: true,
+                  active: 1,
               });
               this.err.points.push(false);
           },
@@ -412,12 +427,22 @@
               }
               return type;
           },
-          removePoint: (key,points) => points.filter((item,index)=>(key!==index)?item:''),
+          // removePoint: (key,points) => points.filter((item,index)=>(key!==index)?item:''),
+          removePoint: function (key,points) {
+              this.skill.points = points.filter((item,index)=>(key!==index)?item:'');
+              // this.err.points = this.err.points.filter((item,index)=>(key!==index)?item:'');
+              // delete this.err.points[key];
+              this.err.points.splice(key,1);
+              // console.log(this.err.points.filter((item,index)=>(key!==index)?item:''));
+          },
           changeType: function (index) {
               // console.log(index);
               this.skill.type = index;
           },
           checkTitle: function (title) {
+              if (this.skill.edit){
+                  return false;
+              }
               this.err.title = false;
               this.errors = false;
               const options = {
@@ -453,6 +478,7 @@
                   Object.keys(skills).map(function(objectKey, index) {
                       if (skills[objectKey].web_title === route.params.id){
                           skill = {
+                              id: skills[objectKey].id,
                               title: skills[objectKey].title,
                               description: skills[objectKey].description,
                               icon: skills[objectKey].icon,
@@ -465,10 +491,12 @@
                           let points = skills[objectKey].points;
                           Object.keys(points).map(function(objectKey, index) {
                               skill.points.push({
+                                  id: points[objectKey].id,
                                   title: points[objectKey].title,
                                   units: points[objectKey].units,
                                   unitsType: points[objectKey].units_type,
                                   edit: false,
+                                  active: points[objectKey].active,
                               });
                               err.points.push(false);
                           });
@@ -494,7 +522,7 @@
                       break;
               }
               return type;
-          }
+          },
       },
       mounted() {
         this.editSkill();

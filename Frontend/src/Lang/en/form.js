@@ -22,4 +22,5 @@ module.exports = {
 
     //success
     success_create_skill : 'New skill saved successfully',
+    success_edit_skill : 'Skill successfully changed',
 }

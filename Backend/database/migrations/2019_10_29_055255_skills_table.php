@@ -21,6 +21,7 @@ class SkillsTable extends Migration
             $table->string('color');
             $table->string('icon');
             $table->integer('type');
+            $table->integer('active');
             $table->timestamps();
         });
     }
