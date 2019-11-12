@@ -58,6 +58,23 @@ export default {
                 returnBack: function (){
                     this.$router.go(-1)
                 },
+                getSkill: function (skills,) {
+                    let route = this.$route;
+                    let skill = false;
+                    Object.keys(skills).map(function(objectKey, index) {
+                        if (skills[objectKey].web_title === route.params.id){
+                            skill = skills[objectKey];
+                        }
+                    });
+                    return skill;
+                },
+                numberGenerator: function (start,end) {
+                    let result = [];
+                    for(let i = start;i<=end;i++){
+                        result.push(i);
+                    }
+                    return result;
+                }
             }
         }
     }

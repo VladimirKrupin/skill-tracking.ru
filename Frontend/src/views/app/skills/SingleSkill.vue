@@ -2,7 +2,19 @@
   <div>
     <return></return>
     <card shadow class="card-profile" body>
-      <h1 class="h3 input-margin pl-1 pb-2">{{skill.title}}</h1>
+      <div class="d-flex justify-content-between align-items-center" slot="header">
+        <span class="font-lg font-weight-bold">{{skill.title}}</span>
+        <div class="card-header-actions">
+          <div class="navbar-small">
+            <i class="navbar-icon icon-settings"></i>
+            <b-nav-item-dropdown class="" text="" right>
+              <b-dropdown-item  :to="'/editSkill/'+skill.web_title">{{$lang.skill.edit}}</b-dropdown-item>
+            </b-nav-item-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <write-skill-data></write-skill-data>
 
       <b-row>
         <b-col sm="5">
@@ -57,6 +69,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import WriteSkillData from "../../parts/Skill/WriteSkillData.vue";
   import Return from "../../parts/ReturnBack.vue";
   import MainChartExample from '../dashboard/MainChartExample'
     export default {
@@ -64,10 +77,12 @@
       components: {
         Return,
         MainChartExample,
+        WriteSkillData
       },
       computed: {
         ...mapGetters('skills', {
           skills: 'skills',
+          skillsData: 'skillsData',
         })
       },
       data() {
@@ -79,20 +94,19 @@
       methods:{
       },
       mounted() {
-        let skills = this.skills;
-        let route = this.$route;
-        let skill = this.skill;
-        Object.keys(skills).map(function(objectKey, index) {
-          if (skills[objectKey].web_title === route.params.id){
-            skill = skills[objectKey];
-          }
-        });
-        this.skill = skill;
-        console.log(this.skill);
+        this.skill = this.getSkill(this.skills);
+        console.log(this.skillsData);
       },
       created(){
       }
     }
 </script>
 <style>
+  .navbar-small {
+    position: relative;
+  }
+  .navbar-icon {
+    position: absolute;
+    top:30%;
+  }
 </style>

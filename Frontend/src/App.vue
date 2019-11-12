@@ -49,7 +49,6 @@ export default {
             console.log('langWatcher '+oldlang+' -> '+newlang);
             this.$store.dispatch('profile/changeLang',{lang:newlang});
             this.$lang.setLang(newlang);
-
         }
     },
 };

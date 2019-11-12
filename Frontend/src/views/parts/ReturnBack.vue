@@ -16,7 +16,6 @@
         methods:{
         },
         mounted() {
-            this.$store.dispatch('skills/getSkills');
         }
     }
 </script>

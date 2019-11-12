@@ -322,10 +322,8 @@
               return (this.$route.name === 'EditSkill')?this.$lang.app.edit:this.$lang.app.add;
           },
           saveSkill: function () {
-              console.log(1);
               this.valid();
               if (!this.validCheck()){return false;}
-              console.log(2);
               this.errors = '';
               this.loader = true;
               this.disabled = true;
@@ -375,10 +373,10 @@
               let points_values = this.skill.points;
               let vFunc = this.vStr;
               Object.keys(points).map(function(objectKey, index) {
+                  console.log(points_values[objectKey]);
                   points[objectKey] = (points_values[objectKey].title)?!vFunc(points_values[objectKey].title):true;
               });
               this.err.points = points;
-              console.log(this.err);
           },
           validCheck: function() {
               let err = this.err;
@@ -443,9 +441,9 @@
               this.skill.type = index;
           },
           checkTitle: function (title) {
-              if (this.skill.edit){
-                  return false;
-              }
+              // if (this.skill.edit){
+              //     return false;
+              // }
               this.err.title = false;
               this.errors = false;
               const options = {
