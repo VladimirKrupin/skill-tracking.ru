@@ -5,4 +5,6 @@ module.exports = {
     copy : 'Скопировать',
     share : 'Отправить',
     not_available: 'Не доступно',
+    point_write: 'Заполнение данных',
+    point_write_description: 'Введите значения прогресса по вашим скилам',
 }

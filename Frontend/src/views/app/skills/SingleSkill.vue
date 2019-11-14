@@ -82,7 +82,7 @@
       computed: {
         ...mapGetters('skills', {
           skills: 'skills',
-          skillsData: 'skillsData',
+          // skillsData: 'skillsData',
         })
       },
       data() {
@@ -95,7 +95,6 @@
       },
       mounted() {
         this.skill = this.getSkill(this.skills);
-        console.log(this.skillsData);
       },
       created(){
       }

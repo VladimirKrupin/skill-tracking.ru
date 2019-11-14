@@ -24,7 +24,6 @@
     methods:{
     },
     mounted() {
-      console.log(this.$route);
     },
     components: {
       Return,

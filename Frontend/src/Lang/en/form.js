@@ -14,11 +14,19 @@ module.exports = {
     units : 'Units',
     type : 'Type graph',
     skill : 'Skill',
+    date : 'Date',
 
     //units
     time: 'time',
     quantity: 'quantity (qty)',
     pages: 'pages (p)',
+
+    //time abbreviation
+    h: 'h',
+    m: 'm',
+    s: 's',
+    q: 'qty',
+    p: 'p',
 
     //success
     success_create_skill : 'New skill saved successfully',

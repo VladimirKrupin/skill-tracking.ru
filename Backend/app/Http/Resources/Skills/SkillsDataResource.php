@@ -18,12 +18,11 @@ class SkillsDataResource extends Resource
      */
     public function toArray($request)
     {
-        $skills = Skill::where('user_id',Auth::user()['id'])->with('points')->get()->toArray();
-        foreach ($skills as &$skill){
-            $skill['web_title'] = AppHelper::slug($skill['title']);
-        }
+        $skill_data = [
+            'point_id'
+        ];
         return [
-            'skillData' => $skills,
+            'skillData' => [],
         ];
     }
 }

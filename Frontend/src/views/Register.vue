@@ -142,7 +142,6 @@ export default {
     },
     methods: {
         register: function (){
-            console.log(this.agree);
             this.valid();
             if (this.validValues()){
                 let formData;
@@ -209,7 +208,6 @@ export default {
         },
     },
     mounted() {
-        console.log(this.$route.query.hash);
         if (this.$route.query.hash){
             this.loaderMessage = true;
             this.confirmationSuccess = false;

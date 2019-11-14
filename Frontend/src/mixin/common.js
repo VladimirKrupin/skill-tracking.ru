@@ -1,7 +1,6 @@
 import settings from "../config/settings";
 import env from "../config/env";
 let appSettings = settings.get(env.get());
-
 export default {
     get: function(){
         return {
@@ -23,7 +22,7 @@ export default {
                     defaultHeaders: {
                         'Lang':localStorage.getItem('lang'),
                         'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                    }
+                    },
                 }
             },
             methods: {
@@ -74,7 +73,16 @@ export default {
                         result.push(i);
                     }
                     return result;
-                }
+                },
+                removeZero: function (number) {
+                    let result = number;
+                    if (number[0] === '0' && number[1] === '0'){
+                        result = 0;
+                    }else if(number[0] === '0'){
+                        result = number[1];
+                    }
+                    return Number(result);
+                },
             }
         }
     }

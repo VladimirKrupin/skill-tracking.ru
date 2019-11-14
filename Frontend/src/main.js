@@ -30,9 +30,7 @@ import Argon from "./plugins/argon-kit";
 import { store } from './store'
 import commonMixin from './mixin/common';
 import env from "./config/env";
-import VueMask from 'v-mask'
 
-Vue.use(VueMask);
 Vue.use(BootstrapVue);
 Vue.use(Auth);
 

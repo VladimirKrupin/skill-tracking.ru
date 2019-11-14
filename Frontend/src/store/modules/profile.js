@@ -56,7 +56,6 @@ const mutations = {
         state.lang = payload.lang;
     },
     setAllowedLangs(state, payload) {
-        console.log(payload.allowedLangs);
         state.allowedLangs = payload.allowedLangs;
     }
 };

@@ -133,14 +133,12 @@ export default {
             };
             axios(options)
                 .then(response => {
-                    console.log(response.data);
                     localStorage.setItem('access_token', response.data.data.token);
                     this.$store.dispatch('profile/setUserData');
                     this.success = true;
                     this.loader = false;
                 })
                 .catch(error => {
-                    console.log(error);
                     if (error.response !== undefined){
                         this.errors = [error.response.data.error];
                     }

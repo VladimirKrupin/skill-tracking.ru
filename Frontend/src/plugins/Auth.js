@@ -18,7 +18,6 @@ export default function (Vue) {
       let promise = new Promise((resolve, reject) => {
         axios.post(Env.apiHost+'/api/login', params)
           .then(response => {
-            console.log(response.data);
             if (response.data.access_token !== undefined) {
               vm.setToken(
                 response.data.access_token,

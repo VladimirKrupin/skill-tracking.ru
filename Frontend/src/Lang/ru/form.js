@@ -14,11 +14,19 @@ module.exports = {
     units : 'Единицы измерения',
     type : 'Тип графика',
     skill : 'Скил',
+    date : 'Дата',
 
     //units
     time: 'время',
     quantity: 'количество (шт)',
     pages: 'страницы (стр)',
+
+    //time abbreviation
+    h: 'ч',
+    m: 'м',
+    s: 'с',
+    q: 'шт',
+    p: 'стр',
 
     //success
     success_create_skill : 'Новый скил успешно сохранен',

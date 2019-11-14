@@ -12,6 +12,7 @@
 <script>
 import { FadeTransition } from "vue2-transitions";
 import { mapGetters } from 'vuex';
+import 'vue-date-pick/dist/vueDatePick.css';
 
 export default {
   components: {

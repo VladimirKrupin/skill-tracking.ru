@@ -12,4 +12,10 @@ class SkillsPoint extends Model
     public function skill(){
         return $this->belongsTo('App\Http\Models\Skill\Skill');
     }
+    public function values(){
+        return $this->hasMany('App\Http\Models\Skill\SkillsPointsValue');
+    }
+    public function value(){
+        return $this->hasOne('App\Http\Models\Skill\SkillsPointsValue');
+    }
 }
