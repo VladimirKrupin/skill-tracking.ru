@@ -1,6 +1,7 @@
 import settings from "../config/settings";
 import env from "../config/env";
 let appSettings = settings.get(env.get());
+import moment from '../../node_modules/moment';
 export default {
     get: function(){
         return {
@@ -23,6 +24,7 @@ export default {
                         'Lang':localStorage.getItem('lang'),
                         'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                     },
+                    moment: moment
                 }
             },
             methods: {

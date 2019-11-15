@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Skills;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Skill\Skill;
 use App\Http\Models\Skill\SkillsPoint;
+use App\Http\Resources\Skills\SkillPointsValuesByDateResource;
 use App\Http\Response\SuccessResponse;
 use App\Http\Response\ValidatorResponse;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -23,8 +25,6 @@ class SkillsController extends Controller
             'points.*.units' => 'nullable|string|min:1|max:255',
         ]);
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
-
-        var_dump($request->all());
 
         if ($request->input('edit')){
             $skills = Skill::where('id',$request->input('id'))
@@ -188,5 +188,29 @@ class SkillsController extends Controller
             return ['title'=>__('errors.title_busy')];
         }
         return false;
+    }
+    public function getPointsValuesByDate(Request $request){
+        $validator = Validator::make($request->all(), [
+            'date' => 'required|date|min:1',
+            'skill_id' => 'required|integer',
+        ]);
+        if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
+
+        if ($request->input('date') > Carbon::now()->format('Y-m-d')){return ValidatorResponse::get(['error'=>__('errors.date_big')]);}
+
+        $date = $request->input('date');
+
+        $points_values = Skill::where('user_id',Auth::user()['id'])->where('id',$request->input('skill_id'))
+                            ->with(['points'=>function($query)use($date){
+                                $query->with(['value'=>function($q)use($date){
+                                    $q->where('date',$date);
+                                }]);
+                            }])
+                            ->first();
+        if ($points_values){
+            return new SkillPointsValuesByDateResource($points_values);
+        }else{
+            return ValidatorResponse::get(['error'=>__('errors.data_not_found')]);
+        }
     }
 }

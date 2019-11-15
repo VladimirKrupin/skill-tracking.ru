@@ -36,6 +36,7 @@ Route::group(['middleware' => ['lang']], function () {
     Route::get('/getSkillsData/', function (){return new SkillsResource(Auth::user());})->middleware('auth:api');
     Route::post('/saveSkill/',  'Skills\SkillsController@saveSkill')->middleware('auth:api');
     Route::post('/checkTitle/',  'Skills\SkillsController@checkTitle')->middleware('auth:api');
+    Route::post('/getPointsValuesByDate/',  'Skills\SkillsController@getPointsValuesByDate')->middleware('auth:api');
 });
 
 Route::any('/', function () {

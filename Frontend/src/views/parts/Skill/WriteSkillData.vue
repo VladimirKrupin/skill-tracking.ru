@@ -4,16 +4,17 @@
             <h4 class="h5 input-margin pl-0 pb-0 mb-0 font-weight-bolder">{{$lang.skill.point_write}}</h4>
             <span class="font-weight-normal font-sm">{{$lang.skill.point_write_description}}</span>
         </div>
+        <errors class="col-12 col-md-6 col-xl-4"  :errors="errors"></errors>
         <b-row class="p-0 m-0 mb-1">
             <span class="font-weight-bolder">
                 {{$lang.form.date}}
             </span>
         </b-row>
-        <date-pick class="mb-3" v-if="skillPointsData.date" v-model="skillPointsData.date"></date-pick>
+        <date-pick class="mb-3 datepick" v-on:input="getPointsValuesByDate()" v-if="skillPointsData.date" v-model="skillPointsData.date"></date-pick>
         <div class="p-0 m-0 mb-3" v-if="skillPointsData.points !== []" v-for="(point,key) in skillPointsData.points" v-bind:key="key">
             <div class="p-0 m-0">
                 <label for="" class="font-weight-bolder mb-1">
-                    {{point.title}} <span class="font-sm font-weight-bolder">( {{point.units_type}} )</span>
+                    {{point.title}}
                 </label>
             </div>
             <div class="p-0 m-0">
@@ -79,6 +80,9 @@
                 </b-button>
             </div>
         </b-row>
+
+        <errors class="col-12 col-md-6 col-xl-4" :errors="errors"></errors>
+
         {{result}}
         <hr>
 
@@ -89,6 +93,8 @@
 <script>
     import {mapGetters} from 'vuex'
     import DatePick from 'vue-date-pick';
+    import axios from 'axios';
+    import Errors from "../../parts/errors/Errors.vue";
 
     export default {
         name: 'WriteSkillData',
@@ -98,9 +104,10 @@
                 // skillsData: 'skillsData',
             }),
         },
-        components: {DatePick},
+        components: {DatePick,Errors},
         data() {
             return {
+                errors: false,
                 result: false,
                 disabled: false,
                 loader: false,
@@ -130,13 +137,12 @@
                     }
                     if (skillPoints[objectKey].active === 1){
                         if (skillPoints[objectKey].units_type === 'time'){
-                            let timeValue = {
-                                hours: $this.removeZero(value.slice(0,-4)),
-                                minutes: $this.removeZero(value.slice(2,-2)),
-                                seconds: $this.removeZero(value.slice(4)),
-                            };
-                            console.log(timeValue);
                             if (value){
+                                let timeValue = {
+                                    hours: $this.removeZero(value.slice(0,-4)),
+                                    minutes: $this.removeZero(value.slice(2,-2)),
+                                    seconds: $this.removeZero(value.slice(4)),
+                                };
                                 newPoints.push({
                                     id: skillPoints[objectKey].id,
                                     title: skillPoints[objectKey].title,
@@ -179,13 +185,40 @@
             sendValues: function () {
                 console.log(this.skillPointsData);
                 this.result = this.skillPointsData;
+            },
+            getPointsValuesByDate: function () {
+                this.errors = false;
+                if (this.validDate()){this.errors = this.validDate();return false;}
+                const options = {
+                    method: 'POST',
+                    headers: this.defaultHeaders,
+                    data: {date: this.skillPointsData.date,skill_id: this.skill.id},
+                    url: this.apiHost+'/api/getPointsValuesByDate/',
+                };
+                axios(options)
+                    .then(response => {
+                        // console.log(response.data);
+                        if (response.data.data.points){
+                            this.setSkillPointsData(this.skillPointsData.date,response.data.data.points)
+                        }
+                    })
+                    .catch(error => {
+                        if (error.response !== undefined){
+                            this.errors = error.response.data.error;
+                        }
+                    });
+            },
+            validDate: function () {
+                return (this.moment().format('YYYY-MM-DD') < this.skillPointsData.date)?this.$lang.errors.date_big:false;
+            },
+            setSkillPointsData: function (date,points) {
+                this.skillPointsData.date = date;
+                this.skillPointsData.points = this.getPointsValues(points);
             }
         },
         mounted() {
             this.skill = this.getSkill(this.skills);
-            this.skillPointsData.date = this.skill.date;
-            this.skillPointsData.points = this.getPointsValues(this.skill.points);
-            console.log(this.skill.date);
+            this.setSkillPointsData(this.skill.date,this.skill.points);
         },
     }
 </script>
@@ -198,5 +231,14 @@
         top: 16%;
         width: 25px;
         right: -60%;
+    }
+    .datepick input{
+        color: #5c6873;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #e4e7ea;
+        padding: 5px 7px;
+        border-radius: 5px;
+        font-size: 14px;
     }
 </style>

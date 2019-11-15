@@ -8,4 +8,6 @@ return [
     'not_allowed_language' => 'Language is not supported.',
     'agree' => 'There is no consent to the processing of personal data.',
     'title_busy' => 'Name is already taken',
+    'date_big' => 'You cannot fill out data for the future',
+    'data_not_found' => 'Data not found',
 ];
