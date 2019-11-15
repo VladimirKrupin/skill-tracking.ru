@@ -10,7 +10,7 @@
                 {{$lang.form.date}}
             </span>
         </b-row>
-        <date-pick class="mb-3 datepick" v-on:input="getPointsValuesByDate()" v-if="skillPointsData.date" v-model="skillPointsData.date"></date-pick>
+        <date-pick class="mb-3 datepick" :class="validInput(skillPointsData.dateError,'border-red-input')" v-on:input="getPointsValuesByDate()" v-if="skillPointsData.date" v-model="skillPointsData.date"></date-pick>
         <div class="p-0 m-0 mb-3" v-if="skillPointsData.points !== []" v-for="(point,key) in skillPointsData.points" v-bind:key="key">
             <div class="p-0 m-0">
                 <label for="" class="font-weight-bolder mb-1">
@@ -19,11 +19,13 @@
             </div>
             <div class="p-0 m-0">
                 <b-col v-if="point.units_type !== 'time'" class="p-0 col-3 col-md-1">
-                    <div class="p-0 point-container  col-xl-5 col-md-10 col-8">
+                    <div class="p-0 point-container  col-xl-6 col-md-10 col-8">
                         <b-form-group class="mb-0 p-0">
                             <b-form-input
-                                          type="text"
+                                          :class="validInput(point.error)"
+                                          type="number"
                                           class="form-control form-control-sm "
+                                          v-on:change="inputHandler(key)"
                                           v-model="point.value"></b-form-input>
                         </b-form-group>
                         <span v-if="point.units_type !== 'quantity'" class="point-units">{{$lang.form.q}}</span>
@@ -70,7 +72,7 @@
 
         <b-row class="m-0 mt-2">
             <div class="d-flex">
-                <b-button v-on:click="sendValues()"
+                <b-button v-on:click="sendSkillPointsValues()"
                           variant="outline-primary"
                           class="mb-4 mr-3"
                           :disabled="disabled"
@@ -114,6 +116,7 @@
                 skill: false,
                 skillPointsData: {
                     date: false,
+                    dateError: false,
                     points: []
                 },
                 hours: this.numberGenerator(0,24),
@@ -150,6 +153,7 @@
                                     hours: timeValue.hours,
                                     minutes: timeValue.minutes,
                                     seconds: timeValue.seconds,
+                                    error: false,
                                 });
                             }else {
                                 newPoints.push({
@@ -159,6 +163,7 @@
                                     hours: 0,
                                     minutes: 0,
                                     seconds: 0,
+                                    error: false,
                                 });
                             }
                         }else {
@@ -168,13 +173,15 @@
                                     title: skillPoints[objectKey].title,
                                     units_type: skillPoints[objectKey].units_type,
                                     value: value,
+                                    error: false,
                                 });
                             }else {
                                 newPoints.push({
                                     id: skillPoints[objectKey].id,
                                     title: skillPoints[objectKey].title,
                                     units_type: skillPoints[objectKey].units_type,
-                                    value: '',
+                                    value: 0,
+                                    error: false,
                                 });
                             }
                         }
@@ -182,13 +189,39 @@
                 });
                 return newPoints;
             },
-            sendValues: function () {
+            sendSkillPointsValues: function () {
                 console.log(this.skillPointsData);
-                this.result = this.skillPointsData;
+                this.errors = '';
+                this.loader = true;
+                this.disabled = true;
+                this.success = false;
+                const options = {
+                    method: 'POST',
+                    headers: this.defaultHeaders,
+                    data: this.skillPointsData,
+                    url: this.apiHost+'/api/sendSkillPointsValues/',
+                };
+                axios(options)
+                    .then(response => {
+                        this.loader = false;
+                        this.disabled = false;
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        if (error.response !== undefined){
+                            if (error.response.data.errors.date){
+                                this.errors = error.response.data.errors.date;
+                                this.skillPointsData.dateError = true;
+                            }
+                        }
+                        this.loader = false;
+                        this.disabled = false;
+                    });
             },
             getPointsValuesByDate: function () {
                 this.errors = false;
-                if (this.validDate()){this.errors = this.validDate();return false;}
+                this.skillPointsData.dateError = false;
+                if (this.validDate()){this.errors = this.validDate();this.skillPointsData.dateError = true;return false;}
                 const options = {
                     method: 'POST',
                     headers: this.defaultHeaders,
@@ -214,6 +247,9 @@
             setSkillPointsData: function (date,points) {
                 this.skillPointsData.date = date;
                 this.skillPointsData.points = this.getPointsValues(points);
+            },
+            inputHandler: function (key) {
+                this.skillPointsData.points[key].value = parseInt(this.skillPointsData.points[key].value );
             }
         },
         mounted() {

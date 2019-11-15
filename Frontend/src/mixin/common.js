@@ -38,9 +38,9 @@ export default {
                 vDate: function (name) {
                     return name.length === 8;
                 },
-                validInput: function(expr){
+                validInput: function(expr,errInput = 'border-red'){
                     // console.log(expr);
-                    return (expr)?'border-red':'';
+                    return (expr)?errInput:'';
                 },
                 logged: function () {
                     return (

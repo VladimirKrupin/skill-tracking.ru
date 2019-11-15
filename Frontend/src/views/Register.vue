@@ -242,9 +242,6 @@ export default {
     .btn-disabled {
         opacity: .4;
     }
-    .border-red {
-        border: 1px solid red !important;
-    }
     .checkbox-error .custom-control-label::before {
         border: 1px solid red;
     }

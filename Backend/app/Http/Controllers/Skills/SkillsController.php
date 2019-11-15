@@ -213,4 +213,24 @@ class SkillsController extends Controller
             return ValidatorResponse::get(['error'=>__('errors.data_not_found')]);
         }
     }
+    public function sendSkillPointsValues(Request $request){
+        $validator = Validator::make($request->all(), [
+            'date' => 'required|date',
+            'points.*.value' => 'nullable|integer|min:0|max:255',
+            'points.*.hours' => 'nullable|integer|min:0|max:24',
+            'points.*.minutes' => 'nullable|integer|min:0|max:60',
+            'points.*.seconds' => 'nullable|integer|min:0|max:60',
+        ]);
+
+        if ($request->input('date') > Carbon::now()->format('Y-m-d')){return ValidatorResponse::get(['errors'=>['date'=>__('errors.date_big')]]);}
+
+        if ($validator->fails()) {
+            $error_str = '';
+            foreach ($validator->errors()->all() as $error){
+                $error_str .= ' '.$error;
+            }
+            return ValidatorResponse::get(['error' => "$error_str"]);
+        }
+
+    }
 }

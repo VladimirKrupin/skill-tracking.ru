@@ -99,4 +99,10 @@ export default {
             margin-top: 10px;
         }
     }
+    .border-red {
+        border: 1px solid red !important;
+    }
+    .border-red-input input{
+        border: 1px solid red !important;
+    }
 </style>
