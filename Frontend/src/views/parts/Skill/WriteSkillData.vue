@@ -35,6 +35,7 @@
                 <b-col v-if="point.units_type === 'time'" class="d-flex p-0">
                     <div class="point-container mr-4">
                         <b-form-select class="form-control form-control-sm p-2 "
+                                       :class="validInput(point.errorH)"
                                        :id="'hours_'+key"
                                        :plain="true"
                                        :options="hours"
@@ -46,6 +47,7 @@
                     </div>
                     <div class="point-container mr-4">
                         <b-form-select class="form-control form-control-sm p-2 "
+                                       :class="validInput(point.errorM)"
                                        :id="'minutes_'+key"
                                        :plain="true"
                                        :options="minutes"
@@ -57,6 +59,7 @@
                     </div>
                     <div class="point-container mr-4">
                         <b-form-select class="form-control form-control-sm p-2"
+                                       :class="validInput(point.errorS)"
                                        :id="'seconds_'+key"
                                        :plain="true"
                                        :options="seconds"
@@ -115,13 +118,14 @@
                 loader: false,
                 skill: false,
                 skillPointsData: {
+                    skill_id: false,
                     date: false,
                     dateError: false,
                     points: []
                 },
-                hours: this.numberGenerator(0,24),
-                minutes: this.numberGenerator(0,60),
-                seconds: this.numberGenerator(0,60),
+                hours: this.numberGenerator(0,25),
+                minutes: this.numberGenerator(-1,62),
+                seconds: this.numberGenerator(0,62),
                 time: {
                     hours: 0,
                     minutes: 0,
@@ -153,7 +157,9 @@
                                     hours: timeValue.hours,
                                     minutes: timeValue.minutes,
                                     seconds: timeValue.seconds,
-                                    error: false,
+                                    errorH: false,
+                                    errorM: false,
+                                    errorS: false,
                                 });
                             }else {
                                 newPoints.push({
@@ -163,7 +169,9 @@
                                     hours: 0,
                                     minutes: 0,
                                     seconds: 0,
-                                    error: false,
+                                    errorH: false,
+                                    errorM: false,
+                                    errorS: false,
                                 });
                             }
                         }else {
@@ -190,7 +198,7 @@
                 return newPoints;
             },
             sendSkillPointsValues: function () {
-                console.log(this.skillPointsData);
+                if (this.valid()){return false;}
                 this.errors = '';
                 this.loader = true;
                 this.disabled = true;
@@ -212,6 +220,8 @@
                             if (error.response.data.errors.date){
                                 this.errors = error.response.data.errors.date;
                                 this.skillPointsData.dateError = true;
+                            }else {
+                                this.errors = error.response.data.errors.error;
                             }
                         }
                         this.loader = false;
@@ -230,9 +240,8 @@
                 };
                 axios(options)
                     .then(response => {
-                        // console.log(response.data);
                         if (response.data.data.points){
-                            this.setSkillPointsData(this.skillPointsData.date,response.data.data.points)
+                            this.setSkillPointsData(this.skillPointsData.date,response.data.data.points,this.skill)
                         }
                     })
                     .catch(error => {
@@ -244,17 +253,39 @@
             validDate: function () {
                 return (this.moment().format('YYYY-MM-DD') < this.skillPointsData.date)?this.$lang.errors.date_big:false;
             },
-            setSkillPointsData: function (date,points) {
+            setSkillPointsData: function (date,points,skill) {
                 this.skillPointsData.date = date;
+                this.skillPointsData.skill_id = skill.id;
                 this.skillPointsData.points = this.getPointsValues(points);
             },
             inputHandler: function (key) {
                 this.skillPointsData.points[key].value = parseInt(this.skillPointsData.points[key].value );
+            },
+            valid: function () {
+                let points = this.skillPointsData.points;
+                let result = false;
+                Object.keys(points).map(function (key,index) {
+                        console.log(points[key]);
+                        if (points[key].units_type === 'time'){
+                            points[key].errorH = (points[key].hours < 0 || points[key].hours > 24);
+                            points[key].errorM = (points[key].minutes < 0 || points[key].minutes > 60);
+                            points[key].errorS = (points[key].seconds < 0 || points[key].seconds > 60);
+                            if (points[key].errorH || points[key].errorM || points[key].errorS){
+                                result = true;
+                            }
+                        }else {
+                            points[key].error = (points[key].value < 0 || points[key].value > 999);
+                            if (points[key].error){
+                                result = true;
+                            }
+                        }
+                });
+                return result;
             }
         },
         mounted() {
             this.skill = this.getSkill(this.skills);
-            this.setSkillPointsData(this.skill.date,this.skill.points);
+            this.setSkillPointsData(this.skill.date,this.skill.points,this.skill);
         },
     }
 </script>

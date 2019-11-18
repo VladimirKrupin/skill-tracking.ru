@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Skills;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Skill\Skill;
 use App\Http\Models\Skill\SkillsPoint;
+use App\Http\Models\Skill\SkillsPointsValue;
 use App\Http\Resources\Skills\SkillPointsValuesByDateResource;
 use App\Http\Response\SuccessResponse;
 use App\Http\Response\ValidatorResponse;
@@ -216,7 +217,7 @@ class SkillsController extends Controller
     public function sendSkillPointsValues(Request $request){
         $validator = Validator::make($request->all(), [
             'date' => 'required|date',
-            'points.*.value' => 'nullable|integer|min:0|max:255',
+            'points.*.value' => 'nullable|integer|min:0|max:999',
             'points.*.hours' => 'nullable|integer|min:0|max:24',
             'points.*.minutes' => 'nullable|integer|min:0|max:60',
             'points.*.seconds' => 'nullable|integer|min:0|max:60',
@@ -229,8 +230,28 @@ class SkillsController extends Controller
             foreach ($validator->errors()->all() as $error){
                 $error_str .= ' '.$error;
             }
-            return ValidatorResponse::get(['error' => "$error_str"]);
+            return ValidatorResponse::get(['errors'=>['error' => "$error_str",'date' => false]]);
         }
 
+        $date = $request->input('date');
+        $skill = Skill::where('user_id',Auth::user()['id'])->where('id',$request->input('skill_id'))
+            ->with(['points'=>function($query)use($date){
+                $query->with(['value'=>function($q)use($date){
+                    $q->where('date',$date);
+                }]);
+            }])
+            ->first();
+
+        var_dump($skill->toArray());
+        var_dump($request->all());
+        foreach ($skill->points as $skill_point){
+            if ($skill_point['active'] === 1 && $skill_point['id']){
+
+            }
+            foreach ($request->input('points') as $point){
+
+            }
+
+        }
     }
 }
