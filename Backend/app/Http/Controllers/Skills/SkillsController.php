@@ -2,12 +2,15 @@
 namespace App\Http\Controllers\Skills;
 
 use App\Http\Controllers\Controller;
-use App\Http\Models\Skill\Skill;
+use App\Http\Models\Skill\Skill as SkillModel;
 use App\Http\Models\Skill\SkillsPoint;
 use App\Http\Models\Skill\SkillsPointsValue;
 use App\Http\Resources\Skills\SkillPointsValuesByDateResource;
 use App\Http\Response\SuccessResponse;
 use App\Http\Response\ValidatorResponse;
+use App\Http\Workers\Skills\Skill\Skill;
+use App\Http\Workers\Skills\SkillException;
+use App\Http\Workers\Skills\SkillPoints\SkillPointAbstractFactory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +31,7 @@ class SkillsController extends Controller
         if ($validator->fails()) {return ValidatorResponse::get($validator->errors());}
 
         if ($request->input('edit')){
-            $skills = Skill::where('id',$request->input('id'))
+            $skills = SkillModel::where('id',$request->input('id'))
                 ->where('user_id',Auth::user()['id'])
                 ->with('points')
                 ->first();
@@ -149,7 +152,7 @@ class SkillsController extends Controller
             if ($check_title = $this->checkSkillTitle($request)){
                 return ValidatorResponse::get($check_title);
             }
-            $skill = Skill::create([
+            $skill = SkillModel::create([
                 'user_id'=>Auth::user()['id'],
                 'title'=>$request->input('title'),
                 'description'=>($request->input('description'))?$request->input('description'):'',
@@ -185,7 +188,7 @@ class SkillsController extends Controller
     }
 
     public function checkSkillTitle(Request $request){
-        if (Skill::where('user_id',Auth::user()['id'])->where('title',$request->input('title'))->first()){
+        if (SkillModel::where('user_id',Auth::user()['id'])->where('title',$request->input('title'))->first()){
             return ['title'=>__('errors.title_busy')];
         }
         return false;
@@ -201,7 +204,7 @@ class SkillsController extends Controller
 
         $date = $request->input('date');
 
-        $points_values = Skill::where('user_id',Auth::user()['id'])->where('id',$request->input('skill_id'))
+        $points_values = SkillModel::where('user_id',Auth::user()['id'])->where('id',$request->input('skill_id'))
                             ->with(['points'=>function($query)use($date){
                                 $query->with(['value'=>function($q)use($date){
                                     $q->where('date',$date);
@@ -233,25 +236,31 @@ class SkillsController extends Controller
             return ValidatorResponse::get(['errors'=>['error' => "$error_str",'date' => false]]);
         }
 
+
+        $points = $this->shortPoints($request->input('points'));
+
+
+
         $date = $request->input('date');
-        $skill = Skill::where('user_id',Auth::user()['id'])->where('id',$request->input('skill_id'))
-            ->with(['points'=>function($query)use($date){
-                $query->with(['value'=>function($q)use($date){
-                    $q->where('date',$date);
-                }]);
-            }])
-            ->first();
 
-        var_dump($skill->toArray());
-        var_dump($request->all());
-        foreach ($skill->points as $skill_point){
-            if ($skill_point['active'] === 1 && $skill_point['id']){
-
-            }
-            foreach ($request->input('points') as $point){
-
-            }
-
+        try{
+            $skill = new Skill(Auth::user()['id'],$request->input('skill_id'));
+            $skill->setActivePoints();
+            $skill->setPointsValues($date);
+            $skill->updatePointsValues();
+        }catch (SkillException $exception){
+            return new ValidatorResponse($exception->getMessage());
         }
+    }
+    /**
+     * @param array $points
+     * @return array
+     */
+    function shortPoints($points){
+        $result = [];
+        foreach ($points as $point){
+            $result[$point['id']] = $point;
+        }
+        return $result;
     }
 }
