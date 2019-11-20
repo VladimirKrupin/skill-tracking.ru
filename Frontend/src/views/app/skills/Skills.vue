@@ -52,7 +52,6 @@
     methods:{
     },
     mounted() {
-      this.$store.dispatch('skills/getSkills');
     },
     components: {
       Return,
