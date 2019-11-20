@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Skills;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Skill\Skill as SkillModel;
 use App\Http\Models\Skill\SkillsPoint;
-use App\Http\Models\Skill\SkillsPointsValue;
+use App\Http\Models\Skill\SkillsPointsValue as SkillsPointsValueModel;
 use App\Http\Resources\Skills\SkillPointsValuesByDateResource;
 use App\Http\Response\SuccessResponse;
 use App\Http\Response\ValidatorResponse;
 use App\Http\Workers\Skills\Skill\Skill;
 use App\Http\Workers\Skills\SkillException;
 use App\Http\Workers\Skills\SkillPoints\SkillPointAbstractFactory;
+use App\Http\Workers\Skills\SkillPointValue\SkillPointValue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -220,10 +221,7 @@ class SkillsController extends Controller
     public function sendSkillPointsValues(Request $request){
         $validator = Validator::make($request->all(), [
             'date' => 'required|date',
-            'points.*.value' => 'nullable|integer|min:0|max:999',
-            'points.*.hours' => 'nullable|integer|min:0|max:24',
-            'points.*.minutes' => 'nullable|integer|min:0|max:60',
-            'points.*.seconds' => 'nullable|integer|min:0|max:60',
+            'points.*.value' => 'nullable|integer|min:0|max:86400',
         ]);
 
         if ($request->input('date') > Carbon::now()->format('Y-m-d')){return ValidatorResponse::get(['errors'=>['date'=>__('errors.date_big')]]);}
@@ -236,31 +234,35 @@ class SkillsController extends Controller
             return ValidatorResponse::get(['errors'=>['error' => "$error_str",'date' => false]]);
         }
 
-
-        $points = $this->shortPoints($request->input('points'));
-
-
-
         $date = $request->input('date');
 
-        try{
-            $skill = new Skill(Auth::user()['id'],$request->input('skill_id'));
-            $skill->setActivePoints();
-            $skill->setPointsValues($date);
-            $skill->updatePointsValues();
-        }catch (SkillException $exception){
-            return new ValidatorResponse($exception->getMessage());
+        foreach ($request->input('points') as $item) {
+            $db_point_value = SkillModel::where('user_id',Auth::user()['id'])
+                        ->where('id',$request->input('skill_id'))
+                        ->with(['point'=>function($query)use($item,$date){
+                            $query->where('id',$item['id']);
+                            $query->with(['value'=>function($q)use($date){
+                                $q->where('date',$date);
+                            }]);
+
+                        }])
+                        ->first();
+            if ($db_point_value && $db_point_value->point){
+                if (!is_null($db_point_value->point->value)){
+                    if ($item['value'] !== $db_point_value->point->value->value){
+                        SkillsPointsValueModel::where('skills_point_id',$item['id'])->update([
+                            'value'=>$item['value'],
+                        ]);
+                    }
+                }else{
+                    SkillsPointsValueModel::create([
+                        'skills_point_id'=>$item['id'],
+                        'date'=>$date,
+                        'value'=>$item['value'],
+                    ]);
+                }
+            }
         }
     }
-    /**
-     * @param array $points
-     * @return array
-     */
-    function shortPoints($points){
-        $result = [];
-        foreach ($points as $point){
-            $result[$point['id']] = $point;
-        }
-        return $result;
-    }
+
 }

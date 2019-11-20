@@ -17,7 +17,7 @@ class SkillsPointsValuesTable extends Migration
             $table->increments('id');
             $table->integer('skills_point_id');
             $table->date('date');
-            $table->string('value');
+            $table->integer('value');
             $table->timestamps();
         });
     }

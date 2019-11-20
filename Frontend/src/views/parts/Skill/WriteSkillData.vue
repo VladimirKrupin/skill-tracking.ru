@@ -10,7 +10,11 @@
                 {{$lang.form.date}}
             </span>
         </b-row>
-        <date-pick class="mb-3 datepick" :class="validInput(skillPointsData.dateError,'border-red-input')" v-on:input="getPointsValuesByDate()" v-if="skillPointsData.date" v-model="skillPointsData.date"></date-pick>
+        <date-pick class="mb-3 datepick"
+                   :class="validInput(skillPointsData.dateError,'border-red-input')"
+                   v-on:input="getPointsValuesByDate()"
+                   v-if="skillPointsData.date"
+                   v-model="skillPointsData.date"></date-pick>
         <div class="p-0 m-0 mb-3" v-if="skillPointsData.points !== []" v-for="(point,key) in skillPointsData.points" v-bind:key="key">
             <div class="p-0 m-0">
                 <label for="" class="font-weight-bolder mb-1">
@@ -41,6 +45,7 @@
                                        :options="hours"
                                        :value="point.hours"
                                        v-model="point.hours"
+                                       v-on:change="checkHour(point.hours,key)"
                         >
                         </b-form-select>
                         <span class="point-units">{{$lang.form.h}}</span>
@@ -53,6 +58,7 @@
                                        :options="minutes"
                                        :value="point.minutes"
                                        v-model="point.minutes"
+                                       v-on:change="setTimeValue(key)"
                         >
                         </b-form-select>
                         <span class="point-units">{{$lang.form.m}}</span>
@@ -65,6 +71,7 @@
                                        :options="seconds"
                                        :value="point.seconds"
                                        v-model="point.seconds"
+                                       v-on:change="setTimeValue(key)"
                         >
                         </b-form-select>
                         <span class="point-units">{{$lang.form.s}}</span>
@@ -123,9 +130,9 @@
                     dateError: false,
                     points: []
                 },
-                hours: this.numberGenerator(0,25),
-                minutes: this.numberGenerator(-1,62),
-                seconds: this.numberGenerator(0,62),
+                hours: this.numberGenerator(0,24),
+                minutes: this.numberGenerator(0,59),
+                seconds: this.numberGenerator(0,59),
                 time: {
                     hours: 0,
                     minutes: 0,
@@ -137,6 +144,7 @@
             getPointsValues: function (skillPoints) {
                 let newPoints = [];
                 let $this = this;
+                let moment = this.moment;
                 Object.keys(skillPoints).map(function(objectKey, index) {
                     let value = false;
                     if (skillPoints[objectKey].value !== null){
@@ -145,11 +153,18 @@
                     if (skillPoints[objectKey].active === 1){
                         if (skillPoints[objectKey].units_type === 'time'){
                             if (value){
+                                // let timeValue = {
+                                //     hours: $this.removeZero(value.slice(0,-4)),
+                                //     minutes: $this.removeZero(value.slice(2,-2)),
+                                //     seconds: $this.removeZero(value.slice(4)),
+                                // };
+                                var formatted = moment().startOf('day').seconds(value);
                                 let timeValue = {
-                                    hours: $this.removeZero(value.slice(0,-4)),
-                                    minutes: $this.removeZero(value.slice(2,-2)),
-                                    seconds: $this.removeZero(value.slice(4)),
+                                    hours: parseInt(formatted.format('H')),
+                                    minutes: parseInt(formatted.format('m')),
+                                    seconds: parseInt(formatted.format('s')),
                                 };
+                                console.log(timeValue);
                                 newPoints.push({
                                     id: skillPoints[objectKey].id,
                                     title: skillPoints[objectKey].title,
@@ -157,6 +172,7 @@
                                     hours: timeValue.hours,
                                     minutes: timeValue.minutes,
                                     seconds: timeValue.seconds,
+                                    value: value,
                                     errorH: false,
                                     errorM: false,
                                     errorS: false,
@@ -166,6 +182,7 @@
                                     id: skillPoints[objectKey].id,
                                     title: skillPoints[objectKey].title,
                                     units_type: skillPoints[objectKey].units_type,
+                                    value: value,
                                     hours: 0,
                                     minutes: 0,
                                     seconds: 0,
@@ -281,6 +298,22 @@
                         }
                 });
                 return result;
+            },
+            checkHour: function (hours,key) {
+                if (hours === 24){
+                    this.minutes = this.numberGenerator(0,0);
+                    this.seconds = this.numberGenerator(0,0);
+                    this.skillPointsData.points[key].minutes = 0;
+                    this.skillPointsData.points[key].seconds = 0;
+                }else if(hours < 24){
+                    this.minutes = this.numberGenerator(0,59);
+                    this.seconds = this.numberGenerator(0,59);
+                }
+                this.setTimeValue(key);
+            },
+            setTimeValue: function (key) {
+                let time = this.skillPointsData.points[key].hours+':'+this.skillPointsData.points[key].minutes+':'+this.skillPointsData.points[key].seconds;
+                this.skillPointsData.points[key].value = this.moment(time, "HH:mm:ss").diff(this.moment().startOf('day'), 'seconds');
             }
         },
         mounted() {
