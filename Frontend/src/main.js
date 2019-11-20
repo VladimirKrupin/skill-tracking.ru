@@ -44,6 +44,7 @@ Vue.use(Lang);
 
 store.dispatch('profile/getAllowedLangs');
 store.dispatch('profile/setUserData');
+store.dispatch('skills/getSkills');
 
 Vue.mixin(commonMixin.get());
 

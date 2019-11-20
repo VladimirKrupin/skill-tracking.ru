@@ -29,7 +29,6 @@ export default {
     },
     mounted: function () {
         this.$store.dispatch('profile/changeLang',{lang:this.checkLang()});
-        this.$store.dispatch('skills/getSkills');
     },
     computed: {
         ...mapGetters('profile', {
