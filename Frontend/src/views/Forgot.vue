@@ -107,7 +107,7 @@ export default {
                     })
                     .catch(error => {
                         if (error.response !== undefined){
-                            this.errors = [error.response.data.error];
+                            this.errors = [error.response.data];
                         }
                         this.loader = false;
                     });
