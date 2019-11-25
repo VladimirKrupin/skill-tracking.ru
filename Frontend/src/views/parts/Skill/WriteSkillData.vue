@@ -95,9 +95,7 @@
 
         <errors class="col-12 col-md-6 col-xl-4" :errors="errors"></errors>
 
-        {{result}}
         <hr>
-
 
     </div>
 </template>
@@ -113,7 +111,7 @@
         computed: {
             ...mapGetters('skills', {
                 skills: 'skills',
-                // skillsData: 'skillsData',
+                skillsData: 'skillsData',
             }),
         },
         components: {DatePick,Errors},
@@ -230,7 +228,8 @@
                     .then(response => {
                         this.loader = false;
                         this.disabled = false;
-                        console.log(response.data);
+                        console.log('set skill');
+                        this.$emit('changeGraph', {string:111});
                     })
                     .catch(error => {
                         if (error.response !== undefined){

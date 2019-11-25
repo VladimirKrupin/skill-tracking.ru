@@ -40,18 +40,19 @@ const actions = {
               });
       }
   },
-  getSkillData(context) {
+  getSkillData(context,payload) {
       if (localStorage.getItem('access_token') !== null){
           const options = {
               method: 'POST',
               headers: {
                   'Authorization': 'Bearer ' + localStorage.getItem('access_token')
               },
-              data: {},
+              data: {skill_id:payload.skill.id},
               url: appSettings.apiHost + '/api/getSkillsData/',
           };
           axios(options)
               .then(response => {
+                  console.log('getSkillData');
                   context.commit('setSkillData', { skillData: response.data.data.skillData });
               })
               .catch(e => {

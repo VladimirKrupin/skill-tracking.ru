@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <write-skill-data></write-skill-data>
+      <write-skill-data v-if="this.data" @changeGraph="handleChangeGraph"></write-skill-data>
 
       <b-row>
         <b-col sm="5">
@@ -32,7 +32,9 @@
           </b-button-toolbar>
         </b-col>
       </b-row>
-      <main-chart-example chartId="main-chart-01" class="chart-wrapper" style="height:300px;margin-top:40px;" height="300"></main-chart-example>
+
+      <main-chart-example v-if="setSkillData()" chartId="main-chart-01" class="chart-wrapper" style="height:300px;margin-top:40px;" height="300" :skillData="setSkillData()"></main-chart-example>
+
       <div slot="footer">
         <b-row class="text-center">
           <b-col class="mb-sm-2 mb-0">
@@ -62,7 +64,6 @@
           </b-col>
         </b-row>
       </div>
-
     </card>
   </div>
 </template>
@@ -82,19 +83,31 @@
       computed: {
         ...mapGetters('skills', {
           skills: 'skills',
-          // skillsData: 'skillsData',
+          skillData: 'skillData',
         })
       },
       data() {
         return {
           skill: false,
+          data: false,
           selected: 'Month',
         };
       },
       methods:{
+        setSkillData: function(){
+          return this.data;
+        },
+        setData: function(skillData){
+          return (skillData)?skillData:false;
+        },
+        handleChangeGraph: function (val) {
+          console.log('handleChangeGraph');
+        }
       },
       mounted() {
         this.skill = this.getSkill(this.skills);
+        this.$store.dispatch('skills/getSkillData',{skill: this.getSkill(this.skills)});
+        this.data = this.setData(this.skillData);
       },
       created(){
       }

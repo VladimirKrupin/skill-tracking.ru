@@ -250,7 +250,8 @@ class SkillsController extends Controller
             if ($db_point_value && $db_point_value->point){
                 if (!is_null($db_point_value->point->value)){
                     if ($item['value'] !== $db_point_value->point->value->value){
-                        SkillsPointsValueModel::where('skills_point_id',$item['id'])->update([
+                        SkillsPointsValueModel::where('id',$db_point_value->point->value->id)
+                            ->update([
                             'value'=>$item['value'],
                         ]);
                     }

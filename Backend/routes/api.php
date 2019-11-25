@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Registry\AppRegistry;
+use App\Http\Resources\Skills\SkillsDataResource;
 use App\Http\Resources\Skills\SkillsResource;
 use App\Http\Resources\User\AllowedLangsResource;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ Route::group(['middleware' => ['lang']], function () {
     Route::post('/avatarUploader/', 'User\UserController@avatarUploader')->middleware('auth:api');
     //skills
     Route::get('/getSkills/', function (){return new SkillsResource(Auth::user());})->middleware('auth:api');
-    Route::get('/getSkillsData/', function (){return new SkillsResource(Auth::user());})->middleware('auth:api');
+    Route::post('/getSkillsData/', function (){return new SkillsDataResource([]);})->middleware('auth:api');
     Route::post('/saveSkill/',  'Skills\SkillsController@saveSkill')->middleware('auth:api');
     Route::post('/checkTitle/',  'Skills\SkillsController@checkTitle')->middleware('auth:api');
     Route::post('/getPointsValuesByDate/',  'Skills\SkillsController@getPointsValuesByDate')->middleware('auth:api');
